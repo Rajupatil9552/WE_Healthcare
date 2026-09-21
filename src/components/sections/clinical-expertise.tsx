@@ -68,7 +68,6 @@ const SUBSPECIALTIES = [
   "Cardiothoracic",
   "Pediatric Radiology",
   "Emergency Radiology",
-  "and more",
 ];
 
 const COMMITMENT_ITEMS = [
@@ -332,7 +331,6 @@ export function ClinicalExpertise() {
               <h3 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-white leading-tight">
                 A Culture of Quality and Safety
               </h3>
-              <div className="mt-2.5 h-1 w-10 bg-sky-500 rounded-full" />
             </div>
 
             {/* Desktop Vertical Separator */}

@@ -31,6 +31,13 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
+  icons: {
+    icon: [
+      { url: "/images/WE_Logo-removebg-preview.png", type: "image/png" },
+    ],
+    shortcut: "/images/WE_Logo-removebg-preview.png",
+    apple: "/images/WE_Logo-removebg-preview.png",
+  },
 };
 
 export default function RootLayout({

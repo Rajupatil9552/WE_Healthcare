@@ -189,15 +189,8 @@ export function WhoWeServe() {
             </motion.p>
           </div>
 
-          {/* Right-side subtle quote & navigation arrow controls */}
-          <div className="flex flex-col items-start lg:items-end gap-5">
-            <div className="hidden lg:flex items-center gap-2 text-right">
-              <span className="font-mono text-[11px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
-                Diagnostic Insights — A Brighter Tomorrow
-              </span>
-              <span className="h-px w-6 bg-slate-300 dark:bg-slate-700 inline-block" />
-            </div>
-
+          {/* Right-side navigation arrow controls */}
+          <div className="flex items-center lg:items-end justify-start lg:justify-end">
             {/* Circular Carousel Controls */}
             <div className="flex items-center gap-3">
               <button

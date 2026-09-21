@@ -156,14 +156,6 @@ export function TechnologyWorkflow() {
       <Container className="relative z-10">
         {/* Header Block */}
         <div className="relative mx-auto max-w-3xl text-center">
-          {/* Subtle Top-Right Tagline Indicator on large screens */}
-          <div className="hidden lg:flex absolute -right-48 -top-2 items-center gap-2 text-right">
-            <span className="font-mono text-[11px] font-semibold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
-              Connected Radiology — Without Boundaries
-            </span>
-            <span className="h-px w-6 bg-slate-300 dark:bg-slate-700 inline-block" />
-          </div>
-
           {/* Eyebrow Badge */}
           <motion.div
             {...fadeUp}

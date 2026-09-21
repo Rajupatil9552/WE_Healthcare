@@ -274,8 +274,20 @@ export default function AirlockHero({
         className="sticky top-0 h-[100dvh] w-full overflow-hidden"
         style={{ background: palette.backdrop }}
       >
-        {/* Multi-image sequence container */}
-        {images.length > 0 ? (
+        {/* Background Media Container (Video or Multi-image sequence) */}
+        {videoSrc ? (
+          <div className="absolute inset-0 h-full w-full overflow-hidden">
+            <video
+              src={videoSrc}
+              poster={posterSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover opacity-75 filter brightness-[0.85] contrast-[1.05]"
+            />
+          </div>
+        ) : images.length > 0 ? (
           <div ref={imagesContainerRef} className="absolute inset-0 h-full w-full">
             {images.map((imgSrc, idx) => (
               <img

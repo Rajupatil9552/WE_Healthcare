@@ -13,6 +13,9 @@ import {
   XLogo,
   YoutubeLogo,
   Check,
+  Phone,
+  EnvelopeSimple,
+  MapPin,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 
@@ -92,16 +95,6 @@ export function Footer() {
               <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 via-35% to-transparent dark:from-[#0c1b26] dark:via-[#0c1b26]/80 dark:via-35% dark:to-transparent" />
             </div>
 
-            {/* Subtle Right-Side Margin Text Tag (Desktop) */}
-            <div className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col items-start pointer-events-none z-10 text-left">
-              <span className="font-mono text-[9px] font-semibold tracking-[0.24em] text-slate-400 dark:text-slate-500 uppercase leading-relaxed">
-                People <br />
-                Technology <br />
-                Better Care
-              </span>
-              <span className="h-0.5 w-6 bg-sky-400/80 mt-2" />
-            </div>
-
             {/* Left Content Area */}
             <div className="relative z-10 max-w-2xl">
               {/* Eyebrow */}
@@ -178,10 +171,10 @@ export function Footer() {
         <div className="pointer-events-none absolute -right-40 -bottom-40 size-[620px] rounded-full border border-sky-500/10" />
 
         <Container className="relative z-10">
-          {/* Main 5-Column Grid */}
+          {/* Balanced 5-Column Grid adhering to original cohesive typography */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-            {/* Column 1: Brand & Identity (Span 4) */}
-            <div className="lg:col-span-4 flex flex-col justify-between">
+            {/* Column 1: Brand & Identity (Span 3) */}
+            <div className="lg:col-span-3 flex flex-col justify-between">
               <div>
                 <Link href="/" className="inline-block transition-transform duration-200 hover:scale-[1.02]">
                   <Image
@@ -192,12 +185,6 @@ export function Footer() {
                     className="h-9 w-auto object-contain filter brightness-110 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)]"
                   />
                 </Link>
-
-                <div className="mt-2.5">
-                  <span className="font-mono text-[9px] font-semibold tracking-[0.24em] text-sky-400 uppercase">
-                    Radiology Without Boundaries
-                  </span>
-                </div>
 
                 <p className="mt-4 text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-sm">
                   Delivering high-quality, reliable teleradiology solutions to support patients and healthcare providers across the care continuum.
@@ -215,9 +202,9 @@ export function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Visit WE Healthcare on ${s.name}`}
-                      className="flex size-9 items-center justify-center rounded-full bg-white/10 hover:bg-sky-600 text-white transition-all duration-200 hover:scale-105"
+                      className="flex size-8 items-center justify-center rounded-full bg-white/10 hover:bg-sky-600 text-white transition-all duration-200 hover:scale-105"
                     >
-                      <Icon size={18} weight="fill" />
+                      <Icon size={16} weight="fill" />
                     </a>
                   );
                 })}
@@ -243,13 +230,17 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: About (Span 2) */}
+            {/* Column 3: Quick Links (Span 2) */}
             <div className="lg:col-span-2">
               <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                About
+                Quick Links
               </h3>
               <ul className="mt-4 space-y-2.5">
-                {FOOTER_NAV.about.map((link) => (
+                {[
+                  ...FOOTER_NAV.about.slice(0, 4),
+                  { label: "Case Studies", href: "#case-studies" },
+                  { label: "FAQs", href: "#faqs" },
+                ].map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -262,22 +253,52 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Column 4: Resources (Span 2) */}
-            <div className="lg:col-span-2">
+            {/* Column 4: Contact Us (Span 3) - Styled in matching cohesive typography */}
+            <div id="contact" className="lg:col-span-3 scroll-mt-28">
               <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                Resources
+                Contact Us
               </h3>
-              <ul className="mt-4 space-y-2.5">
-                {FOOTER_NAV.resources.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-xs sm:text-sm text-slate-400 hover:text-sky-300 transition-colors duration-150"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+              <ul className="mt-4 space-y-3 text-xs sm:text-sm text-slate-400">
+                {/* Phone Numbers */}
+                <li className="flex items-start gap-2.5">
+                  <Phone size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
+                  <div className="leading-snug">
+                    <a href="tel:+919511917233" className="hover:text-sky-300 transition-colors">
+                      +919511917233
+                    </a>
+                    <span className="mx-1 text-slate-600">|</span>
+                    <a href="tel:+12028106050" className="hover:text-sky-300 transition-colors">
+                      +12028106050
+                    </a>
+                  </div>
+                </li>
+
+                {/* Email Address */}
+                <li className="flex items-center gap-2.5">
+                  <EnvelopeSimple size={15} weight="bold" className="text-sky-400 shrink-0" />
+                  <a
+                    href="mailto:sales@wehealthcare.us"
+                    className="hover:text-sky-300 transition-colors leading-snug"
+                  >
+                    sales@wehealthcare.us
+                  </a>
+                </li>
+
+                {/* Pune Location */}
+                <li className="flex items-start gap-2.5">
+                  <MapPin size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">
+                    Amanora chambers, 4th floor, Office no. 421, Pune - 411028, Maharashtra, India.
+                  </span>
+                </li>
+
+                {/* USA Location */}
+                <li className="flex items-start gap-2.5">
+                  <MapPin size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">
+                    10080 Reflections Blvd West, Sunrise, Florida, 33351, USA
+                  </span>
+                </li>
               </ul>
             </div>
 
@@ -287,7 +308,7 @@ export function Footer() {
                 Stay Informed
               </h3>
               <p className="mt-4 text-xs text-slate-400 leading-relaxed font-normal">
-                Get the latest insights on teleradiology, clinical trends, and healthcare updates.
+                Get the latest insights on teleradiology and clinical trends.
               </p>
 
               {/* Newsletter Form */}
@@ -298,20 +319,16 @@ export function Footer() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email address"
+                    placeholder="Enter your email"
                     aria-label="Email address for healthcare newsletter"
-                    className="w-full rounded-xl bg-slate-900/90 border border-slate-700/80 px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none pr-10 transition-colors"
+                    className="w-full rounded-xl bg-slate-900/90 border border-slate-700/80 px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none pr-9 transition-colors"
                   />
                   <button
                     type="submit"
                     aria-label="Subscribe to newsletter"
                     className="absolute right-1 top-1 bottom-1 px-2.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center transition-colors"
                   >
-                    {isSubscribed ? (
-                      <Check size={14} weight="bold" />
-                    ) : (
-                      <ArrowRight size={14} weight="bold" />
-                    )}
+                    {isSubscribed ? <Check size={13} weight="bold" /> : <ArrowRight size={13} weight="bold" />}
                   </button>
                 </div>
                 {isSubscribed && (

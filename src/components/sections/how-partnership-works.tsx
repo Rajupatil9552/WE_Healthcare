@@ -328,24 +328,16 @@ export function HowPartnershipWorks() {
               })}
             </div>
 
-            {/* Right-Side Supporting Quote Block (Inspired by reference image) */}
+            {/* Right-Side Supporting Quote Block */}
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
               whileInView={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.3 }}
-              className="hidden xl:flex w-56 shrink-0 flex-col justify-between py-4 pl-4 border-l border-slate-200/70 dark:border-slate-800/70"
+              className="hidden xl:flex w-56 shrink-0 flex-col justify-center py-4 pl-4 border-l border-slate-200/70 dark:border-slate-800/70"
             >
-              {/* Top Handwritten / Editorial Callout */}
-              <div className="relative">
-                <span className="block font-serif italic text-2xl text-slate-700 dark:text-slate-200 tracking-tight leading-snug -rotate-3 select-none">
-                  Partnering <br /> for Better <br /> Patient Care
-                </span>
-                <div className="mt-2 h-0.5 w-14 bg-sky-400/70 rounded-full -rotate-2" />
-              </div>
-
-              {/* Bottom Quote & Subtitle */}
-              <div className="mt-auto pt-8">
+              {/* Quote & Subtitle */}
+              <div>
                 <span className="text-3xl text-slate-800 dark:text-slate-300 font-serif leading-none block select-none">
                   &ldquo;
                 </span>

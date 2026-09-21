@@ -59,7 +59,7 @@ const METRICS: MetricItem[] = [
 
 export function TrustCredibility() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-blue-50/30 to-white dark:from-[#0b1416] dark:via-[#0e1a1d] dark:to-[#0b1416] py-20 lg:py-28 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300">
+    <section id="trust-credibility" className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-blue-50/30 to-white dark:from-[#0b1416] dark:via-[#0e1a1d] dark:to-[#0b1416] py-20 lg:py-28 border-b border-slate-200/60 dark:border-slate-800/60 transition-colors duration-300">
       {/* Decorative Wave Background SVGs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-40 dark:opacity-25">
         {/* Left background wave */}
@@ -212,7 +212,7 @@ export function TrustCredibility() {
 
               <div className="flex items-center gap-2.5">
                 <FileText size={19} weight="bold" className="text-sky-600 dark:text-sky-400 shrink-0" />
-                <span>Pre-Read &amp; Final-Read Options</span>
+                <span>Pre-Read &amp; Final-Read</span>
               </div>
 
               <div className="flex items-center gap-2.5">

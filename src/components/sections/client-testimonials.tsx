@@ -178,24 +178,6 @@ export function ClientTestimonials() {
         <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-white dark:from-[#080e11]/70 dark:via-transparent dark:to-[#080e11]" />
       </div>
 
-      {/* Outer Edge Accent Labels (Desktop only) */}
-      <div className="hidden xl:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-start text-left pointer-events-none z-10">
-        <span className="h-px w-6 bg-sky-300 dark:bg-sky-700 mb-3" />
-        <span className="font-mono text-[9px] font-semibold tracking-[0.24em] text-slate-400 dark:text-slate-500 uppercase leading-relaxed">
-          People <br />
-          Technology <br />
-          Better Care
-        </span>
-      </div>
-
-      <div className="hidden xl:flex absolute right-8 top-12 flex-row items-center gap-3 text-right pointer-events-none z-10">
-        <span className="font-mono text-[9px] font-semibold tracking-[0.22em] text-slate-400 dark:text-slate-500 uppercase">
-          Radiology <br />
-          Without <br />
-          Boundaries
-        </span>
-        <span className="h-px w-6 bg-sky-300 dark:bg-sky-700" />
-      </div>
 
       <Container className="relative z-10">
         {/* Section Header */}

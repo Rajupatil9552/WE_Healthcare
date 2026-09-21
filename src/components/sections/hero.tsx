@@ -1,91 +1,83 @@
 "use client";
 
-import Link from "next/link";
-import AirlockHero from "@/components/ui/airlock-hero";
-import { buttonVariants } from "@/components/ui/button";
-import { primaryCta, secondaryHeroCta } from "@/config/site";
-import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
+import { ArrowDown } from "@phosphor-icons/react";
 
-/**
- * Healthcare Teleradiology Hero section using the multi-image Airlock scrub animation.
- * Features 4 high-resolution diagnostic images from public/images/ starting with
- * /images/accuray-nhZWIUJBVVc-unsplash.jpg.
- */
 export function Hero() {
-  const heroImages = [
-    "/images/accuray-nhZWIUJBVVc-unsplash.jpg",
-    "/images/accuray-6pQPFuD7nJY-unsplash.jpg",
-    "/images/accuray-36i9vuZrVjc-unsplash.jpg",
-    "/images/national-cancer-institute-rUfUd-7WW78-unsplash.jpg",
-  ];
+  const scrollToExplore = () => {
+    const nextSection = document.getElementById("trust-credibility");
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    }
+  };
 
   return (
-    <section className="relative w-full">
-      <AirlockHero
-        theme="medical"
-        images={heroImages}
-        title={
-          <div className="flex flex-col items-center max-w-4xl mx-auto">
-            <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-7xl lg:text-8xl leading-[1.05]">
-              Expert Radiology. <br />
-              <span className="bg-gradient-to-r from-sky-400 via-cyan-200 to-white bg-clip-text text-transparent">
-                Anytime. Anywhere.
-              </span>
-            </h1>
-            <p className="mt-6 text-base md:text-xl text-slate-300 max-w-2xl font-normal">
-              Empowering hospitals and imaging centers with dependable subspecialty coverage.
-            </p>
+    <section className="relative w-full h-[100dvh] min-h-[600px] flex flex-col justify-end overflow-hidden bg-[#03070b] text-white">
+      {/* Background Video Layer - Playing the user's realistic hospital/radiology video */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover object-center"
+        >
+          <source src="/videos/Hero Video.mp4" type="video/mp4" />
+          <source src="/videos/Hero%20Video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Directional Vignette: soft contrast on the left for crisp text readability while leaving center & right video crystal clear */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 via-45% to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none" />
+      </div>
+
+      {/* Smooth high-opacity white gradient blending Hero into the Trust section */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 sm:h-64 lg:h-80 bg-gradient-to-b from-transparent via-slate-50/50 via-30% via-slate-50/85 via-60% to-slate-50 dark:from-transparent dark:via-[#0b1416]/75 dark:via-30% dark:via-[#0b1416]/95 dark:via-60% dark:to-[#0b1416] z-[5]"
+      />
+
+      {/* Main Content Area: Placed slightly towards the left with wider text measure */}
+      <div className="relative z-10 w-full pb-12 sm:pb-16 lg:pb-20 pt-28">
+        <div className="w-full px-6 sm:px-10 md:px-14 lg:px-16 xl:px-20">
+          <div className="max-w-2xl sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl text-left">
+            {/* Headline scaled and widened to match the reference composition */}
+            <motion.h1
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl sm:text-4xl md:text-[2.85rem] lg:text-[3.45rem] xl:text-[3.9rem] font-bold tracking-tight text-white leading-[1.12] drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
+            >
+              Delivering Advanced <br />
+              Radiology Care Nationwide. <br />
+              <span className="text-sky-400 drop-shadow-[0_2px_12px_rgba(56,189,248,0.35)]">Anytime. Anywhere.</span>
+            </motion.h1>
+
+            {/* "Scroll to Explore" control with crisp contrast across both light gradient and dark video */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-6 sm:mt-8"
+            >
+              <button
+                type="button"
+                onClick={scrollToExplore}
+                aria-label="Scroll to explore"
+                className="inline-flex items-center gap-3 text-slate-900 dark:text-white/95 hover:text-sky-600 dark:hover:text-white group cursor-pointer transition-colors select-none"
+              >
+                <span className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-slate-300/80 bg-white/90 text-slate-800 shadow-md backdrop-blur-sm group-hover:border-sky-500 group-hover:bg-white dark:border-white/40 dark:bg-black/40 dark:text-white dark:group-hover:border-white dark:group-hover:bg-black/60 transition-all">
+                  <ArrowDown size={16} weight="bold" className="group-hover:translate-y-0.5 transition-transform" />
+                </span>
+                <span className="text-xs sm:text-sm font-semibold tracking-wide text-slate-800 dark:text-white drop-shadow-sm">
+                  Scroll to Explore
+                </span>
+              </button>
+            </motion.div>
           </div>
-        }
-        midTitle={
-          <div className="flex flex-col items-center max-w-4xl mx-auto">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.1]">
-              Subspecialty Accuracy. <br />
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-200 to-white bg-clip-text text-transparent">
-                Rapid Turnaround.
-              </span>
-            </h2>
-            <p className="mt-6 text-base md:text-xl text-slate-200 max-w-2xl font-normal">
-              Board-certified radiologists delivering seamless PACS/RIS integration for emergency and routine studies.
-            </p>
-          </div>
-        }
-        tagline={
-          <div className="flex flex-col items-center max-w-4xl mx-auto">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl leading-[1.15]">
-              Empowering Healthcare Providers Nationwide.
-            </h2>
-            <p className="mt-4 text-base md:text-xl text-slate-200 max-w-2xl font-normal">
-              Extend your group&apos;s reading capacity without extending burnout.
-            </p>
-          </div>
-        }
-        scrollHint="SCROLL TO EXPLORE"
-        skipLabel="Skip intro"
-        scrubDistance={2000}
-        holdDistance={400}
-      >
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
-          <Link
-            href={primaryCta.href}
-            className={cn(
-              buttonVariants({ variant: "accent", size: "lg" }),
-              "shadow-xl shadow-sky-500/25 px-8 py-6 text-base font-semibold transition-transform hover:scale-105"
-            )}
-          >
-            {primaryCta.label}
-          </Link>
-          <Link
-            href={secondaryHeroCta.href}
-            className={cn(
-              buttonVariants({ variant: "outline", size: "lg" }),
-              "border-white/30 text-white hover:bg-white/10 backdrop-blur-md px-8 py-6 text-base font-semibold transition-transform hover:scale-105"
-            )}
-          >
-            {secondaryHeroCta.label}
-          </Link>
         </div>
-      </AirlockHero>
+      </div>
     </section>
   );
 }
