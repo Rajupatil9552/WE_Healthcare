@@ -1,22 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import {
-  Queue,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle,
-  Funnel,
-  WarningCircle,
-  Clock,
-  Sparkle,
-} from "@phosphor-icons/react";
+import { motion } from "motion/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
 import { OVERFLOW_HERO_CONTENT } from "@/content/overflow-backlog-support";
 
 // Mock study queue items for the readable worklist simulation
@@ -41,7 +32,7 @@ const INITIAL_WORKLIST: WorklistRow[] = [
     priority: "STAT",
     elapsed: "11m ago",
     status: "In Review",
-    assignee: "Dr. E. Chen (Neuro)",
+    assignee: "Neuroradiology",
     flag: "Awaiting Read",
   },
   {
@@ -62,7 +53,7 @@ const INITIAL_WORKLIST: WorklistRow[] = [
     priority: "Urgent",
     elapsed: "38m ago",
     status: "In Review",
-    assignee: "Dr. K. Vance (Fellowship)",
+    assignee: "Body Imaging",
   },
   {
     id: "case-04",
@@ -83,7 +74,7 @@ const INITIAL_WORKLIST: WorklistRow[] = [
     priority: "Routine",
     elapsed: "49m ago",
     status: "Completed",
-    assignee: "Dr. M. Rivera (Thoracic)",
+    assignee: "Thoracic Imaging",
   },
   {
     id: "case-06",
@@ -97,311 +88,173 @@ const INITIAL_WORKLIST: WorklistRow[] = [
   },
 ];
 
+const PRIORITY_RANK: Record<WorklistRow["priority"], number> = { STAT: 0, Urgent: 1, Routine: 2 };
+const MODALITIES = ["All", "CT", "MRI", "X-Ray"] as const;
+const BACKLOG_REASONS = [
+  "Volume Spikes",
+  "Staffing Gaps",
+  "New Imaging Sites",
+  "Seasonal Demand",
+  "Temporary Capacity Constraints",
+];
+const HIGHLIGHTS = [
+  "Rapid overflow absorption without requiring new software",
+  "Modality-matched assignment for CT, MRI, X-ray, and ultrasound",
+  "Direct escalation for critical and unexpected acute findings",
+];
+
+const fadeIn = (delay: number) => ({
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
+});
+
 export function OverflowHero() {
-  const shouldReduceMotion = useReducedMotion();
-  const [selectedModality, setSelectedModality] = useState<string>("All");
+  const [modality, setModality] = useState<(typeof MODALITIES)[number]>("All");
+  const [isTriaged, setIsTriaged] = useState(false);
 
-  const filteredStudies =
-    selectedModality === "All"
-      ? INITIAL_WORKLIST
-      : INITIAL_WORKLIST.filter((study) => study.modality === selectedModality);
+  // Signature: the queue arrives in accession order, then re-sorts by clinical
+  // priority so STAT studies visibly move to the top.
+  useEffect(() => {
+    const t = window.setTimeout(() => setIsTriaged(true), 900);
+    return () => window.clearTimeout(t);
+  }, []);
 
-  // Controlled sequential fade
-  const fadeUp = (delay: number) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
-    animate: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    transition: {
-      duration: 0.55,
-      delay: shouldReduceMotion ? 0 : delay,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  });
+  const rows = useMemo(() => {
+    const filtered = modality === "All" ? INITIAL_WORKLIST : INITIAL_WORKLIST.filter((r) => r.modality === modality);
+    return isTriaged
+      ? [...filtered].sort((x, y) => PRIORITY_RANK[x.priority] - PRIORITY_RANK[y.priority])
+      : filtered;
+  }, [modality, isTriaged]);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-sky-50/25 to-white dark:from-[#040c14] dark:via-[#071524] dark:to-[#0a1b2e] text-slate-900 dark:text-white pt-36 pb-20 lg:pt-44 lg:pb-28 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
-      {/* Background ambient lighting - clinical cool blues */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 right-1/4 size-[580px] rounded-full bg-sky-500/10 dark:bg-sky-400/15 blur-[140px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-10 left-5 size-[460px] rounded-full bg-blue-600/5 dark:bg-blue-600/12 blur-[130px]"
-      />
-
-      <Container className="relative z-10">
-        {/* Asymmetrical Editorial Composition: Left narrative + Right radiology worklist */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* ============================================================== */}
-          {/* LEFT: Narrative & Strategic Positioning (~5 cols on xl)        */}
-          {/* ============================================================== */}
-          <div className="lg:col-span-6 xl:col-span-5 relative z-20 flex flex-col items-start pr-0 lg:pr-4">
-            
-            {/* 1. Eyebrow Badge */}
-            <motion.div
-              {...fadeUp(0.06)}
-              className="inline-flex items-center gap-2 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-950/70 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300 shadow-xs"
-            >
-              <Queue size={15} weight="bold" className="text-sky-600 dark:text-sky-400" />
-              <span>{OVERFLOW_HERO_CONTENT.eyebrow}</span>
-            </motion.div>
-
-            {/* 2. Primary H1 Headline */}
-            <motion.h1
-              {...fadeUp(0.12)}
-              className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-[50px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]"
-            >
+    <section className="relative bg-background pt-36 pb-section lg:pt-44">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-5">
+            <p className="eyebrow">{OVERFLOW_HERO_CONTENT.eyebrow}</p>
+            <motion.h1 {...HERO_HEADING_MOTION} className="mt-6 text-display-sm font-semibold text-foreground text-balance">
               {OVERFLOW_HERO_CONTENT.heading}
             </motion.h1>
-
-            {/* 3. Supporting Heading */}
-            <motion.p
-              {...fadeUp(0.2)}
-              className="mt-4 text-lg sm:text-xl font-semibold text-sky-700 dark:text-sky-200/90 leading-snug"
-            >
+            <motion.p {...fadeIn(0.1)} className="mt-6 text-lead font-medium text-primary-strong">
               {OVERFLOW_HERO_CONTENT.subheading}
             </motion.p>
-
-            {/* 4. Body Copy */}
-            <motion.p
-              {...fadeUp(0.28)}
-              className="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-xl"
-            >
+            <motion.p {...fadeIn(0.16)} className="mt-4 text-base text-foreground-muted leading-relaxed">
               {OVERFLOW_HERO_CONTENT.body}
             </motion.p>
 
-            {/* Key Operational Commitments */}
-            <motion.div
-              {...fadeUp(0.34)}
-              className="mt-6 pt-5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5 w-full"
-            >
-              <div className="flex items-center text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
-                <CheckCircle size={16} weight="fill" className="text-sky-600 dark:text-sky-400 mr-2.5 shrink-0" />
-                <span>Rapid overflow absorption without requiring new software</span>
-              </div>
-              <div className="flex items-center text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
-                <CheckCircle size={16} weight="fill" className="text-sky-600 dark:text-sky-400 mr-2.5 shrink-0" />
-                <span>Modality-matched assignment for CT, MRI, X-ray, and ultrasound</span>
-              </div>
-              <div className="flex items-center text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium">
-                <CheckCircle size={16} weight="fill" className="text-sky-600 dark:text-sky-400 mr-2.5 shrink-0" />
-                <span>Direct escalation for critical and unexpected acute findings</span>
-              </div>
-            </motion.div>
+            <motion.ul {...fadeIn(0.22)} className="mt-8 border-t border-border">
+              {HIGHLIGHTS.map((item) => (
+                <li key={item} className="py-3 border-b border-border text-sm text-foreground">
+                  {item}
+                </li>
+              ))}
+            </motion.ul>
 
-            {/* CTA Buttons */}
-            <motion.div
-              {...fadeUp(0.4)}
-              className="mt-8 flex flex-wrap items-center gap-3.5 w-full sm:w-auto"
-            >
+            <motion.div {...fadeIn(0.28)} className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href={OVERFLOW_HERO_CONTENT.primaryCta.href}
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "bg-sky-600 hover:bg-sky-500 text-white shadow-md shadow-sky-600/20 px-6 font-semibold"
-                )}
+                className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}
               >
                 <span>{OVERFLOW_HERO_CONTENT.primaryCta.label}</span>
-                <ArrowRight size={16} weight="bold" className="ml-2" />
+                <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link
-                href={OVERFLOW_HERO_CONTENT.secondaryCta.href}
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 px-6 font-medium"
-                )}
-              >
-                <span>{OVERFLOW_HERO_CONTENT.secondaryCta.label}</span>
+              <Link href={OVERFLOW_HERO_CONTENT.secondaryCta.href} className={buttonVariants({ variant: "outline", size: "lg" })}>
+                {OVERFLOW_HERO_CONTENT.secondaryCta.label}
               </Link>
             </motion.div>
           </div>
 
-          {/* ============================================================== */}
-          {/* RIGHT: High-Precision Radiology Worklist Visual (~7 cols xl)   */}
-          {/* ============================================================== */}
+          {/* Illustrative worklist: mock data, no patient information */}
           <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.98, y: 20 }}
-            animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: shouldReduceMotion ? 0 : 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 xl:col-span-7 relative"
+            initial={{ y: 16 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, ease: MOTION.easeOut }}
+            className="lg:col-span-7 overflow-hidden rounded-lg border border-border bg-card shadow-md"
           >
-            {/* Subtle glow container framing the workstation */}
-            <div className="relative rounded-2xl border border-slate-200/90 dark:border-slate-700/80 bg-white/95 dark:bg-[#081523]/95 shadow-2xl shadow-slate-900/10 dark:shadow-black/50 backdrop-blur-md overflow-hidden">
-              
-              {/* Optional Subtle Header Backdrop Banner */}
-              <div className="relative h-28 sm:h-36 w-full overflow-hidden border-b border-slate-200/80 dark:border-slate-800">
-                <Image
-                  src={OVERFLOW_HERO_CONTENT.image}
-                  alt={OVERFLOW_HERO_CONTENT.alt}
-                  fill
-                  priority
-                  className="object-cover object-center opacity-30 dark:opacity-25 filter brightness-90 contrast-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#081523] dark:via-[#081523]/80 dark:to-transparent" />
-                
-                {/* Live Diagnostic Status Bar */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                    </span>
-                    <span className="text-xs font-mono font-semibold tracking-wide uppercase text-slate-700 dark:text-slate-300">
-                      PACS Ingestion: Active
-                    </span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-100/90 dark:bg-sky-950/80 border border-sky-300/60 dark:border-sky-800 text-[11px] font-medium text-sky-800 dark:text-sky-300">
-                    <Clock size={12} weight="bold" />
-                    <span>Overflow Mode: On-Demand</span>
-                  </div>
-                </div>
-
-                {/* Worklist Title & Metrics Summary */}
-                <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between">
-                  <div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-sky-600 dark:text-sky-400">
-                      Clinical Operations Queue
-                    </span>
-                    <h2 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                      Radiology Worklist
-                    </h2>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                      Queue Load: <strong className="text-amber-600 dark:text-amber-400 font-semibold">14 Studies</strong>
-                    </span>
-                  </div>
-                </div>
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground-subtle">Clinical Operations Queue</p>
+                <p className="mt-1 text-lg font-semibold text-foreground">Radiology Worklist</p>
               </div>
+              <p className="font-mono text-xs text-foreground-subtle">
+                Queue Load: <strong className="font-semibold text-warning">{INITIAL_WORKLIST.length} Studies</strong>
+              </p>
+            </div>
 
-              {/* Worklist Filter Bar */}
-              <div className="px-4 py-2.5 bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-                  <Funnel size={13} className="text-slate-400 mr-1 shrink-0" />
-                  {["All", "CT", "MRI", "X-Ray"].map((modality) => (
-                    <button
-                      key={modality}
-                      type="button"
-                      onClick={() => setSelectedModality(modality)}
-                      className={cn(
-                        "px-2.5 py-1 rounded-md text-xs font-medium transition-colors shrink-0",
-                        selectedModality === modality
-                          ? "bg-sky-600 text-white shadow-xs"
-                          : "text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800"
-                      )}
-                    >
-                      {modality}
-                    </button>
-                  ))}
-                </div>
-                <div className="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-                  <span>Routing: Auto-Modality</span>
-                </div>
-              </div>
+            <div role="radiogroup" aria-label="Filter by modality" className="flex gap-1 border-b border-border bg-surface px-5 py-3">
+              {MODALITIES.map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  role="radio"
+                  aria-checked={modality === m}
+                  onClick={() => setModality(m)}
+                  className={cn(
+                    "rounded-sm px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    modality === m ? "bg-foreground text-background" : "text-foreground-muted hover:bg-surface-muted"
+                  )}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
 
-              {/* Table / Study Rows — High Readability */}
-              <div className="divide-y divide-slate-100 dark:divide-slate-800/80 max-h-[380px] overflow-y-auto">
-                {filteredStudies.map((study, idx) => (
-                  <motion.div
-                    key={study.id}
-                    initial={shouldReduceMotion ? false : { opacity: 0, x: 10 }}
-                    animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.35,
-                      delay: shouldReduceMotion ? 0 : 0.2 + idx * 0.05,
-                    }}
-                    className="p-3.5 sm:px-4 hover:bg-sky-50/40 dark:hover:bg-sky-950/20 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
+            <table className="w-full text-left text-sm">
+              <caption className="sr-only">Illustrative example of a radiology worklist sorted by priority</caption>
+              <thead className="text-xs text-foreground-subtle">
+                <tr className="border-b border-border">
+                  <th scope="col" className="px-5 py-2 font-medium">Priority</th>
+                  <th scope="col" className="px-2 py-2 font-medium">Study</th>
+                  <th scope="col" className="hidden md:table-cell px-2 py-2 font-medium">Reader</th>
+                  <th scope="col" className="px-5 py-2 text-right font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <motion.tr
+                    layout="position"
+                    key={row.id}
+                    transition={{ layout: { duration: 0.7, ease: MOTION.easeOut } }}
+                    className="border-b border-border align-top last:border-b-0"
                   >
-                    {/* Left details: Priority, Modality, Exam Name */}
-                    <div className="flex items-start gap-3 min-w-0">
-                      {/* Priority Tag */}
+                    <td className="px-5 py-3.5">
                       <span
                         className={cn(
-                          "px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase mt-0.5 shrink-0",
-                          study.priority === "STAT"
-                            ? "bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300 border border-red-200 dark:border-red-800/80"
-                            : study.priority === "Urgent"
-                            ? "bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80"
-                            : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+                          "inline-block rounded-sm px-2 py-0.5 font-mono text-xs font-semibold",
+                          row.priority === "STAT" && "bg-urgent-soft text-urgent",
+                          row.priority === "Urgent" && "bg-warning/10 text-warning",
+                          row.priority === "Routine" && "bg-surface-muted text-foreground-muted"
                         )}
                       >
-                        {study.priority}
+                        {row.priority}
                       </span>
-
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
-                            {study.accession}
-                          </span>
-                          <span className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
-                            {study.modality}
-                          </span>
-                          <span className="text-[11px] text-slate-400 font-mono hidden md:inline">
-                            • {study.elapsed}
-                          </span>
-                        </div>
-                        <p className="text-xs sm:text-[13px] font-medium text-slate-800 dark:text-slate-200 truncate max-w-[280px] sm:max-w-sm">
-                          {study.examName}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Right details: Status & Assigned Radiologist */}
-                    <div className="flex items-center justify-between sm:justify-end gap-3 pl-9 sm:pl-0 shrink-0">
-                      {/* Assignment */}
-                      <span className="text-[11px] text-slate-600 dark:text-slate-400 font-mono hidden sm:inline">
-                        {study.assignee}
+                    </td>
+                    <td className="px-2 py-3.5">
+                      <span className="font-mono text-xs text-foreground-subtle">
+                        {row.accession} · {row.modality} · {row.elapsed}
                       </span>
-
-                      {/* Status Badge */}
-                      <span
-                        className={cn(
-                          "px-2.5 py-0.5 rounded-full text-xs font-medium flex items-center gap-1.5",
-                          study.status === "In Review"
-                            ? "bg-blue-100 text-blue-700 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                            : study.status === "Pending"
-                            ? "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60"
-                            : "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60"
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            "size-1.5 rounded-full",
-                            study.status === "In Review"
-                              ? "bg-blue-500 animate-pulse"
-                              : study.status === "Pending"
-                              ? "bg-amber-500"
-                              : "bg-emerald-500"
-                          )}
-                        />
-                        {study.status}
-                      </span>
-                    </div>
-                  </motion.div>
+                      <span className="mt-0.5 block font-medium text-foreground">{row.examName}</span>
+                    </td>
+                    <td className="hidden md:table-cell px-2 py-3.5 text-xs text-foreground-muted">{row.assignee}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 text-right text-xs font-medium text-foreground-muted">
+                      {row.status}
+                    </td>
+                  </motion.tr>
                 ))}
-              </div>
+              </tbody>
+            </table>
 
-              {/* Worklist Footer Bar */}
-              <div className="p-3 bg-slate-50 dark:bg-slate-900/80 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={14} className="text-sky-600 dark:text-sky-400" />
-                  <span>U.S. Board-Certified Diagnostic Reads</span>
-                </div>
-                <div className="font-mono text-[11px]">
-                  Batch Processing: <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Active</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Subtle decorative operational caption */}
-            <div className="mt-3 flex items-center justify-between px-2 text-xs text-slate-500 dark:text-slate-400">
-              <span className="font-mono text-[11px]">Interface: Live Radiology Queue Synchronization</span>
-              <span className="hidden sm:inline font-mono text-[11px]">HL7 / DICOM Bi-directional</span>
-            </div>
+            <p className="border-t border-border bg-surface px-5 py-3 text-xs text-foreground-subtle">
+              U.S. Board-Certified Diagnostic Reads
+            </p>
           </motion.div>
-
         </div>
+
+        <motion.p {...fadeIn(0.35)} className="mt-16 max-w-4xl text-base leading-relaxed text-foreground-muted">
+          <span className="font-semibold text-foreground">Common Reasons Backlogs Develop: </span>
+          {BACKLOG_REASONS.join(" · ")}
+        </motion.p>
       </Container>
     </section>
   );

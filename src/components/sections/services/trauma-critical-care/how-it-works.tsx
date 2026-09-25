@@ -1,293 +1,195 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import {
-  Stack,
-  CheckCircle,
-  PhoneCall,
-  ArrowRight,
-  ArrowDown,
-  ShieldCheck,
-  Eye,
-  FileText,
-} from "@phosphor-icons/react";
+import { motion, LayoutGroup } from "motion/react";
+import { PhoneCall } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { TRAUMA_HOW_IT_WORKS_CONTENT } from "@/content/trauma-critical-care";
+import { TRAUMA_HOW_IT_WORKS_CONTENT as CONTENT } from "@/content/trauma-critical-care";
+
+const STAGE_BADGE = ["FLAGGED", "BATCHED", "IN REVIEW", "VERBAL OUTREACH"];
+/** Slight scatter for the "flagged" state: studies arrive separately. */
+const SCATTER = [
+  { rotate: -2.5, y: -6 },
+  { rotate: 2, y: 8 },
+  { rotate: 1.5, y: -4 },
+  { rotate: -2, y: 6 },
+];
+const layoutTransition = { layout: { duration: 0.7, ease: MOTION.easeOut } };
 
 export function HowItWorksSection() {
-  const shouldReduceMotion = useReducedMotion();
-  const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const stageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [stage, setStage] = useState(0);
+  const listRef = useRef<HTMLOListElement>(null);
+  const stageRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  // Subtle natural scroll tracking on desktop without scroll-locking or wheel hijacking
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const indexStr = entry.target.getAttribute("data-stage-index");
-            if (indexStr !== null) {
-              const idx = parseInt(indexStr, 10);
-              if (!isNaN(idx)) {
-                setActiveStageIndex(idx);
-              }
-            }
-          }
+  useGSAP(
+    () => {
+      stageRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 55%",
+          end: "bottom 55%",
+          onToggle: (self) => self.isActive && setStage(idx),
+          onLeaveBack: () => idx === 0 && setStage(0),
         });
-      },
-      {
-        rootMargin: "-25% 0px -40% 0px",
-        threshold: 0.2,
-      }
-    );
-
-    stageRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const activeStage = TRAUMA_HOW_IT_WORKS_CONTENT.stages[activeStageIndex];
-
-  const easeTransition = [0.16, 1, 0.3, 1] as const;
-
-  const fadeIn = (delay: number) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 12 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-60px" },
-    transition: {
-      duration: 0.5,
-      delay: shouldReduceMotion ? 0 : delay,
-      ease: easeTransition,
+      });
     },
-  });
+    { scope: listRef },
+  );
+
+  const activeStage = CONTENT.stages[stage];
 
   return (
-    <section 
-      id="how-it-works"
-      className="relative overflow-hidden bg-slate-50/60 dark:bg-[#030914] text-slate-900 dark:text-white py-20 lg:py-28 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300"
-    >
-      <Container className="relative z-10">
-        
-        {/* ============================================================== */}
-        {/* SECTION HEADER                                                 */}
-        {/* ============================================================== */}
-        <div className="max-w-3xl mb-14 lg:mb-18">
-          <motion.div
-            {...fadeIn(0.04)}
-            className="inline-flex items-center gap-2 mb-3"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-600 dark:bg-sky-400" aria-hidden="true" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-sky-800 dark:text-sky-300">
-              {TRAUMA_HOW_IT_WORKS_CONTENT.eyebrow}
-            </span>
-          </motion.div>
-
-          <motion.h2
-            {...fadeIn(0.12)}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.16]"
-          >
-            {TRAUMA_HOW_IT_WORKS_CONTENT.heading}
-          </motion.h2>
-
-          <motion.p
-            {...fadeIn(0.2)}
-            className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
-          >
-            {TRAUMA_HOW_IT_WORKS_CONTENT.supportingText}
-          </motion.p>
+    <section id="how-it-works" className="py-section lg:py-section-lg bg-surface">
+      <Container>
+        <div className="max-w-3xl">
+          <p className="eyebrow">{CONTENT.eyebrow}</p>
+          <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">{CONTENT.heading}</RevealHeading>
+          <p className="mt-6 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
         </div>
 
-        {/* ============================================================== */}
-        {/* MAIN SIGNATURE VISUAL + WORKFLOW INTERACTION                   */}
-        {/* ============================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          
-          {/* ============================================================ */}
-          {/* LEFT: MULTI-STUDY CONVERGENCE CONSOLE (~55% / 7 cols)        */}
-          {/* ============================================================ */}
-          <div className="lg:col-span-7 lg:sticky lg:top-28 flex flex-col gap-4">
-            
-            {/* Visual Frame */}
-            <div className="rounded-3xl bg-white dark:bg-[#07131e] border border-sky-100 dark:border-slate-800 p-5 sm:p-7 shadow-lg shadow-sky-950/5 relative overflow-hidden">
-              
-              {/* Header Bar */}
-              <div className="flex items-center justify-between pb-3.5 mb-5 border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-2">
-                  <Stack size={16} className="text-sky-600 dark:text-sky-400" />
-                  <span className="text-xs font-mono font-bold tracking-wider uppercase text-slate-900 dark:text-white">
-                    Multi-Study Trauma Workup
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-600 dark:bg-sky-400 animate-pulse" />
-                  <span className="text-[11px] font-mono font-bold text-sky-800 dark:text-sky-300 uppercase">
-                    Stage {activeStage.step} / 04
-                  </span>
-                </div>
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          {/* Multi-study console: the four studies re-arrange per stage */}
+          <div className="lg:col-span-7 lg:sticky lg:top-28">
+            <div className="rounded-lg border border-border bg-card p-5 sm:p-7 shadow-md">
+              <div className="flex items-center justify-between border-b border-border pb-3">
+                <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground">Multi-Study Trauma Workup</p>
+                <p className="font-mono text-xs text-primary">Stage {activeStage.step} / 04</p>
               </div>
 
-              {/* 4 Studies Grid (CT Head, CT Chest, CT Abdomen, X-Ray) */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
-                {TRAUMA_HOW_IT_WORKS_CONTENT.studies.map((study, idx) => (
-                  <div
-                    key={study.id}
+              <LayoutGroup>
+                <div className="relative mt-6 min-h-[18rem] flex items-center">
+                  <motion.div
+                    layout
+                    transition={layoutTransition}
                     className={cn(
-                      "p-3 rounded-2xl border transition-all duration-300 flex items-center gap-3 relative overflow-hidden",
-                      activeStageIndex >= 1
-                        ? "bg-sky-50/60 dark:bg-sky-950/20 border-sky-300 dark:border-sky-800/80 shadow-xs"
-                        : "bg-slate-50/80 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800"
+                      "grid w-full",
+                      stage === 0 && "grid-cols-2 gap-6",
+                      stage === 1 && "grid-cols-2 gap-1.5 rounded-md border border-primary/40 p-1.5",
+                      stage === 2 && "grid-cols-3 gap-2",
+                      stage === 3 && "grid-cols-4 gap-1.5 rounded-md border border-primary/40 p-1.5 sm:mr-28"
                     )}
                   >
-                    <div className="w-12 h-12 rounded-xl overflow-hidden relative shrink-0 border border-slate-200 dark:border-slate-800 bg-slate-950">
-                      <Image
-                        src={study.image}
-                        alt={study.alt}
-                        fill
-                        sizes="50px"
-                        className="object-cover object-center filter brightness-95"
-                      />
-                      <span className="absolute bottom-0.5 left-1 text-[8px] font-mono font-bold text-sky-300">
-                        {study.modality}
-                      </span>
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                        {study.name}
-                      </div>
-                      <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                        {study.region}
-                      </div>
-                      <div className="mt-1 flex items-center gap-1">
-                        <span className="text-[9px] font-mono font-semibold px-1.5 py-0.2 rounded bg-white/80 dark:bg-slate-800 text-sky-800 dark:text-sky-300 border border-sky-100 dark:border-slate-700">
-                          {activeStageIndex === 0 && "FLAGGED"}
-                          {activeStageIndex === 1 && "BATCHED"}
-                          {activeStageIndex === 2 && "IN REVIEW"}
-                          {activeStageIndex === 3 && "VERBAL OUTREACH"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Dynamic Workflow Transition Indicator Banner */}
-              <div className="mt-5 p-4 rounded-2xl bg-gradient-to-r from-sky-50 via-white to-sky-50/50 dark:from-[#061423] dark:via-[#081a2e] dark:to-[#05111d] border border-sky-200/80 dark:border-sky-900/50">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeStage.id}
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex items-center justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-full bg-sky-600 text-white flex items-center justify-center shrink-0 text-xs font-mono font-bold">
-                        {activeStage.step}
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tight">
-                          {activeStage.title}
-                        </div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                          {activeStage.detailBadge}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] font-mono text-sky-700 dark:text-sky-400 hidden sm:block">
-                      STEP {activeStage.step} OF 04
-                    </div>
+                    {CONTENT.studies.map((study, idx) => {
+                      const isFocus = stage === 2 && idx === 0;
+                      const isDimmed = stage === 2 && idx !== 0;
+                      return (
+                        <motion.div
+                          layout
+                          key={study.id}
+                          transition={layoutTransition}
+                          animate={{
+                            rotate: stage === 0 ? SCATTER[idx].rotate : 0,
+                            y: stage === 0 ? SCATTER[idx].y : 0,
+                            opacity: isDimmed ? 0.45 : 1,
+                          }}
+                          className={cn(
+                            "flex items-center gap-3 rounded-md border border-border bg-card p-2.5",
+                            isFocus && "col-span-3 border-primary p-3",
+                            stage === 3 && "flex-col items-start gap-2"
+                          )}
+                        >
+                          <motion.div
+                            layout
+                            transition={layoutTransition}
+                            className={cn("relative shrink-0 overflow-hidden rounded-sm bg-slate-950", isFocus ? "size-24" : "size-11")}
+                          >
+                            <Image src={study.image} alt={study.alt} fill sizes="96px" className="object-cover object-center" />
+                          </motion.div>
+                          <motion.div layout="position" transition={layoutTransition} className="min-w-0">
+                            <p className="truncate text-sm font-semibold text-foreground">{study.name}</p>
+                            <p className="truncate text-xs text-foreground-muted">{study.region}</p>
+                            <p className="mt-1 font-mono text-xs text-primary">{STAGE_BADGE[stage]}</p>
+                          </motion.div>
+                        </motion.div>
+                      );
+                    })}
                   </motion.div>
-                </AnimatePresence>
-              </div>
 
-              {/* Footer Note */}
-              <div className="mt-4 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                <span>{TRAUMA_HOW_IT_WORKS_CONTENT.disclaimer}</span>
-                <span className="font-mono text-[10px] text-slate-400">NON-PHI CONCEPTUAL</span>
-              </div>
+                  {/* Stage 4: the group connects to the care team */}
+                  <motion.div
+                    aria-hidden="true"
+                    initial={false}
+                    animate={{ opacity: stage === 3 ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: stage === 3 ? 0.4 : 0 }}
+                    className="pointer-events-none absolute right-0 top-1/2 hidden sm:flex -translate-y-1/2 items-center"
+                  >
+                    <motion.span
+                      initial={false}
+                      animate={{ scaleX: stage === 3 ? 1 : 0 }}
+                      transition={{ duration: 0.5, delay: stage === 3 ? 0.5 : 0, ease: MOTION.easeOut }}
+                      className="block h-px w-10 origin-left bg-primary"
+                    />
+                    <span className="flex size-16 flex-col items-center justify-center rounded-full border border-primary bg-primary-soft text-primary">
+                      <PhoneCall size={18} />
+                      <span className="mt-0.5 text-[11px] font-medium leading-none">Care team</span>
+                    </span>
+                  </motion.div>
+                </div>
+              </LayoutGroup>
 
+              <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4">
+                <div>
+                  <p className="text-sm font-semibold text-foreground capitalize">{activeStage.title.toLowerCase()}</p>
+                  <p className="text-xs text-foreground-muted">{activeStage.detailBadge}</p>
+                </div>
+                <p className="hidden sm:block font-mono text-xs text-foreground-subtle">Step {activeStage.step} of 04</p>
+              </div>
             </div>
+            <p className="mt-3 text-[13px] text-foreground-subtle">{CONTENT.disclaimer} Illustrative, non-PHI.</p>
           </div>
 
-          {/* ============================================================ */}
-          {/* RIGHT: 4 WORKFLOW STAGES (DESKTOP INTERACTIVE / SCROLL)      */}
-          {/* ============================================================ */}
-          <div className="lg:col-span-5 flex flex-col gap-4">
-            
-            {TRAUMA_HOW_IT_WORKS_CONTENT.stages.map((stage, idx) => {
-              const isActive = activeStageIndex === idx;
-
+          {/* Stage list: scrolling (or selecting) drives the console */}
+          <ol ref={listRef} className="lg:col-span-5 border-t border-border-strong">
+            {CONTENT.stages.map((s, idx) => {
+              const isActive = stage === idx;
               return (
-                <div
-                  key={stage.id}
+                <li
+                  key={s.id}
                   ref={(el) => {
                     stageRefs.current[idx] = el;
                   }}
-                  data-stage-index={idx}
-                  onClick={() => setActiveStageIndex(idx)}
-                  className={cn(
-                    "p-5 sm:p-6 rounded-2xl border transition-all duration-200 cursor-pointer relative",
-                    isActive
-                      ? "bg-white dark:bg-[#07131e] border-sky-300 dark:border-sky-800 shadow-md ring-1 ring-sky-500/20"
-                      : "bg-white/60 dark:bg-[#07131e]/50 border-slate-200/80 dark:border-slate-800 hover:bg-white dark:hover:bg-[#07131e]"
-                  )}
+                  className="border-b border-border lg:min-h-[38vh] lg:flex lg:items-center"
                 >
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={cn(
-                          "w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono font-bold shrink-0 transition-colors",
-                          isActive
-                            ? "bg-sky-600 text-white"
-                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
-                        )}
-                      >
-                        {stage.step}
-                      </span>
-                      <h3
-                        className={cn(
-                          "text-base sm:text-lg font-bold uppercase tracking-tight transition-colors",
-                          isActive
-                            ? "text-sky-900 dark:text-sky-200"
-                            : "text-slate-900 dark:text-white"
-                        )}
-                      >
-                        {stage.title}
-                      </h3>
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isActive}
+                    onClick={() => setStage(idx)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setStage(idx);
+                      }
+                    }}
+                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <div className="flex items-baseline gap-5">
+                      <span className={cn("font-mono text-sm tabular-nums", isActive ? "text-primary" : "text-foreground-subtle")}>{s.step}</span>
+                      <div>
+                        <h3 className={cn("text-2xl font-semibold tracking-tight capitalize transition-colors", isActive ? "text-foreground" : "text-foreground-subtle")}>
+                          {s.title.toLowerCase()}
+                        </h3>
+                        <p className="mt-1 font-mono text-xs text-primary">{s.detailBadge}</p>
+                        <p className={cn("mt-3 text-base leading-relaxed transition-colors", isActive ? "text-foreground-muted" : "text-foreground-subtle")}>
+                          {s.description}
+                        </p>
+                      </div>
                     </div>
-
-                    <span className="text-[10px] font-mono font-semibold text-slate-500 dark:text-slate-400">
-                      {stage.step} / 04
-                    </span>
                   </div>
-
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal pl-9">
-                    {stage.description}
-                  </p>
-
-                  <div className="mt-3 pl-9 flex items-center gap-2 text-[11px] text-sky-700 dark:text-sky-400 font-mono">
-                    <span className="w-1 h-1 rounded-full bg-sky-500" />
-                    <span>{stage.detailBadge}</span>
-                  </div>
-                </div>
+                </li>
               );
             })}
-
-          </div>
-
+          </ol>
         </div>
-
       </Container>
     </section>
   );
 }
+
+export default HowItWorksSection;

@@ -39,7 +39,7 @@ export interface WorksWheelProps
   /** Callback fired when the active specialty changes. */
   onActiveChange?: (index: number) => void;
   /** Controlled target index if triggered externally (e.g. mobile buttons). */
-  targetIndex?: number;
+  targetIndex?: number | { index: number; id?: number };
 }
 
 /* Geometry. The card is measured against the stage; everything else is measured
@@ -68,12 +68,12 @@ const INDEX = 0.04; // the index down the right-hand side
 const CULL = 1.6;
 
 /** How much of a wheel-notch or a dragged pixel counts as one item. */
-const WHEEL_UNITS = 900;
-const DRAG_UNITS = 420;
+const WHEEL_UNITS = 360;
+const DRAG_UNITS = 280;
 /** Quiet time after the last wheel event before the wheel settles on an item. */
-const SETTLE = 140;
+const SETTLE = 120;
 /** Fraction of the remaining distance closed each frame. 1 = no smoothing. */
-const EASE = 0.12;
+const EASE = 0.14;
 
 const clamp = (v: number, lo: number, hi: number) =>
   Math.min(hi, Math.max(lo, v));
@@ -132,17 +132,25 @@ export function WorksWheel({
   const count = items.length;
   const last = Math.max(count - 1, 0);
 
+  const to = React.useCallback(
+    (next: number) => {
+      target.current = clamp(next, 0, last + 1);
+    },
+    [last],
+  );
+
   // Notify parent of active index change
   React.useEffect(() => {
     onActiveChange?.(active);
   }, [active, onActiveChange]);
 
-  // Handle external navigation (e.g. mobile button tap)
+  // Handle external navigation (e.g. mobile button tap or indicator click)
   React.useEffect(() => {
-    if (typeof targetIndex === "number" && targetIndex >= 0 && targetIndex <= count) {
-      target.current = targetIndex;
+    const raw = typeof targetIndex === "object" ? targetIndex?.index : targetIndex;
+    if (typeof raw === "number" && raw >= 0 && raw <= count) {
+      to(raw);
     }
-  }, [targetIndex, count]);
+  }, [targetIndex, count, to]);
 
   // Read after mount, not during render: the server has no matchMedia, and
   // branching on it inline is a hydration mismatch. Reduced motion drops the
@@ -249,70 +257,43 @@ export function WorksWheel({
     return () => cancelAnimationFrame(frame);
   }, [metrics, stage.h, count, last, reduced]);
 
-  const to = React.useCallback(
-    (next: number) => {
-      target.current = clamp(next, 0, last + 1);
-    },
-    [last],
-  );
+  const settling = React.useRef(0);
+  const mouseDrag = React.useRef<{ x: number; y: number; startTarget: number } | null>(null);
 
-  // Native listener: wheel cancels only while it still has distance to turn,
-  // so normal page scrolling continues at either end instead of trapping the user.
-  // Only intercept wheel events when the wheel stage is in the middle of the viewport,
-  // allowing users to scroll naturally into the section so that all cards (including below cards)
-  // are fully visible before rotation begins.
+  // Wheel listener for desktop and native touch swipe listener for mobile
   React.useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
+
+    // Desktop Mouse Wheel & Trackpad scrolling
     const onWheel = (event: WheelEvent) => {
       const rect = el.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const stageCenter = rect.top + rect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      const distFromCenter = stageCenter - viewportCenter;
+
+      // Only respond when section is visible in the viewport
+      if (rect.bottom < 80 || rect.top > viewportHeight - 80) {
+        return;
+      }
 
       const isScrollingDown = event.deltaY > 0;
       const isScrollingUp = event.deltaY < 0;
 
-      // Allow natural page scroll down if we are at the start of the wheel (target <= 0)
-      // and the section has not yet reached the middle of the viewport (distFromCenter > 70).
-      // This ensures below cards are never cut off prematurely at section start.
-      if (target.current <= 0 && isScrollingDown) {
-        if (distFromCenter > 70) {
-          return;
-        }
-        // When entering the middle zone, smoothly assist centering so cards have maximum vertical clearance
-        if (distFromCenter > 15 && distFromCenter <= 70) {
-          window.scrollBy({ top: distFromCenter, behavior: "smooth" });
-        }
+      // At start of wheel (ring state) and scrolling up: allow natural page scroll up
+      if (target.current <= 0 && isScrollingUp) {
+        return;
       }
 
-      // Allow natural page scroll up if we are past the end of the wheel (target >= last + 1)
-      // and the section has not yet reached the middle of the viewport (distFromCenter < -70).
-      if (target.current >= last + 1 && isScrollingUp) {
-        if (distFromCenter < -70) {
-          return;
-        }
-        if (distFromCenter < -15 && distFromCenter >= -70) {
-          window.scrollBy({ top: distFromCenter, behavior: "smooth" });
-        }
+      // At end of wheel and scrolling down: allow natural page scroll down
+      if (target.current >= last + 1 && isScrollingDown) {
+        return;
       }
 
-      // If cards are in an intermediate state, don't trap scroll if the user is scrolled far away
-      if (target.current > 0 && target.current < last + 1) {
-        if (Math.abs(distFromCenter) > viewportHeight * 0.6) {
-          return;
-        }
-      }
+      // Actively browsing cards: prevent page jump and rotate drum
+      event.preventDefault();
 
-      const next = target.current + event.deltaY / WHEEL_UNITS;
-
-      // Prevent page scroll only while actively turning through cards in the middle of the section
-      if (next > 0 && next < last + 1) {
-        event.preventDefault();
-      }
-
+      const next = clamp(target.current + event.deltaY / WHEEL_UNITS, 0, last + 1);
       to(next);
+
       window.clearTimeout(settling.current);
       settling.current = window.setTimeout(
         () => to(Math.round(target.current)),
@@ -320,15 +301,87 @@ export function WorksWheel({
       );
     };
 
+    // Mobile Native Touch Gesture Swiping (horizontal swipe turns cards, vertical scrolls page)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let touchStartTarget = 0;
+    let isSwiping = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchStartTime = Date.now();
+      touchStartTarget = target.current;
+      isSwiping = false;
+      window.clearTimeout(settling.current);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      const diffX = touch.clientX - touchStartX;
+      const diffY = touch.clientY - touchStartY;
+
+      // Determine swipe direction
+      if (!isSwiping) {
+        if (Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
+          isSwiping = true;
+        } else if (Math.abs(diffY) > 10) {
+          // Intent is vertical page scrolling: do not intercept
+          return;
+        }
+      }
+
+      if (isSwiping) {
+        if (e.cancelable) e.preventDefault();
+        const stageW = el.clientWidth || window.innerWidth;
+        const dragFactor = stageW * 0.45;
+        const next = clamp(touchStartTarget - diffX / dragFactor, 0, last + 1);
+        to(next);
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const dt = Date.now() - touchStartTime;
+      const touch = e.changedTouches[0];
+      if (touch) {
+        const diffX = touch.clientX - touchStartX;
+        const diffY = touch.clientY - touchStartY;
+
+        // Quick flick swipe detection
+        if (dt < 320 && Math.abs(diffX) > 25 && Math.abs(diffX) > Math.abs(diffY)) {
+          const step = diffX < 0 ? 1 : -1;
+          const currentBase = Math.round(touchStartTarget);
+          to(clamp(currentBase + step, 0, last + 1));
+          isSwiping = false;
+          return;
+        }
+      }
+
+      if (isSwiping) {
+        isSwiping = false;
+        to(clamp(Math.round(target.current), 0, last + 1));
+      }
+    };
+
     el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: true });
+
     return () => {
       el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
       window.clearTimeout(settling.current);
     };
   }, [to, last]);
-
-  const drag = React.useRef<number | null>(null);
-  const settling = React.useRef(0);
 
   return (
     <section
@@ -343,21 +396,33 @@ export function WorksWheel({
         ref={stageRef}
         tabIndex={0}
         role="region"
-        aria-label="Interactive radiology specialties drum. Use arrow keys to navigate."
-        className="focus-visible:ring-2 focus-visible:ring-sky-500 absolute inset-0 cursor-grab touch-pan-y outline-none active:cursor-grabbing"
-        style={{ perspective: `${metrics.depth}px` }}
+        aria-label="Interactive radiology specialties drum. Scroll or swipe horizontally to navigate."
+        className="focus-visible:ring-2 focus-visible:ring-sky-500 absolute inset-0 cursor-grab outline-none active:cursor-grabbing"
+        style={{ perspective: `${metrics.depth}px`, touchAction: "pan-y" }}
         onPointerDown={(event) => {
-          drag.current = event.clientY;
+          if (event.pointerType === "touch") return; // Touch is handled by touch listeners above
+          mouseDrag.current = {
+            x: event.clientX,
+            y: event.clientY,
+            startTarget: target.current,
+          };
           event.currentTarget.setPointerCapture(event.pointerId);
         }}
         onPointerMove={(event) => {
-          if (drag.current === null) return;
-          to(target.current + (drag.current - event.clientY) / DRAG_UNITS);
-          drag.current = event.clientY;
+          if (!mouseDrag.current || event.pointerType === "touch") return;
+          const diffX = event.clientX - mouseDrag.current.x;
+          const diffY = event.clientY - mouseDrag.current.y;
+          const dominantDelta = Math.abs(diffX) > Math.abs(diffY) ? -diffX : -diffY;
+          to(clamp(mouseDrag.current.startTarget + dominantDelta / DRAG_UNITS, 0, last + 1));
         }}
-        onPointerUp={() => {
-          drag.current = null;
-          if (target.current > 1) to(Math.round(target.current));
+        onPointerUp={(event) => {
+          if (event.pointerType === "touch") return;
+          mouseDrag.current = null;
+          to(clamp(Math.round(target.current), 0, last + 1));
+        }}
+        onPointerCancel={() => {
+          mouseDrag.current = null;
+          to(clamp(Math.round(target.current), 0, last + 1));
         }}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown" || event.key === "ArrowRight") {
@@ -385,12 +450,18 @@ export function WorksWheel({
                   ref={(node: HTMLElement | null) => {
                     cardRefs.current[i] = node;
                   }}
-                  className="group absolute [backface-visibility:hidden]"
+                  onClick={(e: React.MouseEvent) => {
+                    const currentFront = Math.round(target.current - 1);
+                    if (currentFront !== i) {
+                      e.preventDefault();
+                      to(i + 1);
+                    }
+                  }}
+                  className="group absolute [backface-visibility:hidden] cursor-pointer"
                   style={{
                     width: metrics.cardW,
                     height: metrics.cardH,
                     marginLeft: -metrics.cardW / 2,
-                    marginTop: -metrics.cardH / 2,
                   }}
                 >
                   <span className="relative block size-full overflow-hidden rounded-xl border border-slate-200/80 dark:border-sky-500/25 bg-slate-900 shadow-xl shadow-slate-400/20 dark:shadow-black/50 transition-shadow group-hover:shadow-2xl">

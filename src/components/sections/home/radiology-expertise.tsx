@@ -12,18 +12,18 @@ import { cn } from "@/lib/utils";
 
 export function RadiologyExpertise() {
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const [targetIndex, setTargetIndex] = React.useState<number | undefined>(undefined);
+  const [targetIndex, setTargetIndex] = React.useState<{ index: number; id: number } | undefined>(undefined);
 
   const activeSpecialty = RADIOLOGY_SPECIALTIES[activeIndex] || RADIOLOGY_SPECIALTIES[0];
 
   const handlePrev = () => {
     const nextIdx = activeIndex <= 0 ? RADIOLOGY_SPECIALTIES.length - 1 : activeIndex - 1;
-    setTargetIndex(nextIdx + 1);
+    setTargetIndex({ index: nextIdx + 1, id: Date.now() });
   };
 
   const handleNext = () => {
     const nextIdx = activeIndex >= RADIOLOGY_SPECIALTIES.length - 1 ? 0 : activeIndex + 1;
-    setTargetIndex(nextIdx + 1);
+    setTargetIndex({ index: nextIdx + 1, id: Date.now() });
   };
 
   return (
@@ -157,7 +157,7 @@ export function RadiologyExpertise() {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setTargetIndex(i + 1)}
+                    onClick={() => setTargetIndex({ index: i + 1, id: Date.now() })}
                     aria-label={`Go to ${item.title}`}
                     className={cn(
                       "size-2 rounded-full transition-all",

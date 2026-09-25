@@ -42,51 +42,53 @@ export const WHEN_WORKLIST_GROWS_CONTENT = {
   alt: "Diagnostic radiologist analyzing high-volume case worklist on medical display",
 } as const;
 
+export interface BacklogReason {
+  readonly id: string;
+  readonly number: string;
+  readonly title: string;
+}
+
+export const COMMON_REASONS_CONTENT = {
+  eyebrow: "OPERATIONAL CATALYSTS",
+  heading: "Common Reasons Backlogs Develop",
+  reasons: [
+    {
+      id: "volume-spikes",
+      number: "01",
+      title: "Volume Spikes",
+    },
+    {
+      id: "staffing-gaps",
+      number: "02",
+      title: "Staffing Gaps",
+    },
+    {
+      id: "new-imaging-sites",
+      number: "03",
+      title: "New Imaging Sites",
+    },
+    {
+      id: "seasonal-demand",
+      number: "04",
+      title: "Seasonal Demand",
+    },
+    {
+      id: "temporary-capacity-constraints",
+      number: "05",
+      title: "Temporary Capacity Constraints",
+    },
+  ],
+} as const;
+
 export interface CommonTrigger {
   number: string;
   title: string;
-  context: string;
-  impact: string;
 }
 
-export const COMMON_TRIGGERS_CONTENT: CommonTrigger[] = [
-  {
-    number: "01",
-    title: "Post-holiday backlog",
-    context: "Accumulation of routine and outpatient elective imaging during extended holiday weekends and system downtime.",
-    impact: "Creates immediate reporting friction for daytime staff resuming regular clinical schedules.",
-  },
-  {
-    number: "02",
-    title: "Radiologist leave or vacancy",
-    context: "Planned medical sabbaticals, maternity leave, unexpected resignations, or extended recruiting cycles.",
-    impact: "Reduces daily FTE interpretation bandwidth without any decrease in inbound order volume.",
-  },
-  {
-    number: "03",
-    title: "Sudden imaging volume increases",
-    context: "Unexpected surges in emergency department visits, seasonal illness spikes, or community hospital transfers.",
-    impact: "Overwhelms normal daily queue thresholds, requiring rapid temporary reading capacity.",
-  },
-  {
-    number: "04",
-    title: "New imaging sites",
-    context: "Opening new ambulatory imaging centers, freestanding emergency rooms, or acquiring regional clinics.",
-    impact: "Generates new scan streams before permanent local radiology staffing is fully credentialed.",
-  },
-  {
-    number: "05",
-    title: "Seasonal demand",
-    context: "Predictable regional population influxes, winter tourist swells, or end-of-year deductible rushes.",
-    impact: "Strains fixed department capacity during distinct multi-week or multi-month windows.",
-  },
-  {
-    number: "06",
-    title: "Temporary capacity constraints",
-    context: "PACS migrations, RIS upgrades, technologist training periods, or institutional quality audit cycles.",
-    impact: "Temporarily impedes internal reporting throughput while clinical demand continues uninterrupted.",
-  },
-];
+export const COMMON_TRIGGERS_CONTENT: CommonTrigger[] = COMMON_REASONS_CONTENT.reasons.map((r) => ({
+  number: r.number,
+  title: r.title,
+}));
 
 export interface WorkflowStep {
   step: string;

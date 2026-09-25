@@ -1,44 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import {
+  CaretDown,
   CaretRight,
   ShieldCheck,
   CheckCircle,
-  Clock,
-  ArrowsSplit,
   Sliders,
-  FileText,
-  PhoneCall,
-  Lightning,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import { cn } from "@/lib/utils";
 import { SERVICE_LEVELS_CONTENT } from "@/content/emergency-stat-reporting";
 
 export function ServiceLevelsSection() {
-  const shouldReduceMotion = useReducedMotion();
   const [activeParamId, setActiveParamId] = useState<string>(
     SERVICE_LEVELS_CONTENT.parameters[0].id
   );
 
-  // Controlled scroll-triggered reveal
-  const fadeUp = (delay: number) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-80px" },
-    transition: {
-      duration: 0.5,
-      delay: shouldReduceMotion ? 0 : delay,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  });
 
   return (
     <section
       id="service-levels"
-      className="relative overflow-hidden bg-white dark:bg-[#030910] text-slate-900 dark:text-white py-20 lg:py-28 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300"
+      className="py-section lg:py-section-lg bg-surface"
     >
       <Container className="relative z-10">
         
@@ -54,48 +39,39 @@ export function ServiceLevelsSection() {
             
             {/* Eyebrow */}
             <motion.span
-              {...fadeUp(0.04)}
-              className="text-xs font-bold uppercase tracking-[0.18em] text-rose-600 dark:text-rose-400"
+              className="eyebrow [--eyebrow-color:var(--color-urgent)]"
             >
               {SERVICE_LEVELS_CONTENT.eyebrow}
             </motion.span>
 
             {/* Main Editorial Heading */}
-            <motion.h2
-              {...fadeUp(0.1)}
-              className="mt-3 text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
-            >
+            <RevealHeading className="mt-3 text-h2 font-semibold text-foreground text-balance">
               {SERVICE_LEVELS_CONTENT.heading}
-            </motion.h2>
+            </RevealHeading>
 
             {/* Supporting Copy */}
             <motion.p
-              {...fadeUp(0.16)}
-              className="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
+              className="mt-5 text-base sm:text-lg text-foreground-muted leading-relaxed font-normal"
             >
               {SERVICE_LEVELS_CONTENT.body}
             </motion.p>
 
             {/* Structured Governance Narrative Card */}
             <motion.div
-              {...fadeUp(0.24)}
-              className="mt-8 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 w-full"
+              className="mt-8 w-full border-l-2 border-urgent/40 pl-4"
             >
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-900 dark:text-white">
-                <Sliders size={16} className="text-rose-600 dark:text-rose-400" />
+              <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+                <Sliders size={16} className="text-urgent" />
                 <span>Pre-Launch Clinical Alignment</span>
               </div>
-              <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+              <p className="mt-2 text-xs sm:text-sm text-foreground-muted leading-relaxed font-normal">
                 Priority reporting agreements are formal clinical partnerships. All triage protocols, credentialing parameters, and notification contact trees are mutually established and validated before study transmission begins.
               </p>
               
-              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                <span className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
-                  <ShieldCheck size={14} className="text-rose-600 dark:text-rose-400" />
+              <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs text-foreground-subtle">
+                <span className="flex items-center gap-1.5 font-medium text-foreground-muted">
+                  <ShieldCheck size={14} className="text-urgent" />
                   Facility Bylaw Compliance
-                </span>
-                <span className="font-mono text-[10px]">
-                  Configured Prior to Launch
                 </span>
               </div>
             </motion.div>
@@ -104,17 +80,19 @@ export function ServiceLevelsSection() {
 
             {/* Transition Bridge Toward FAQ */}
             <motion.div
-              {...fadeUp(0.3)}
-              className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800/80 w-full"
+              className="mt-8 pt-6 border-t border-border w-full"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <span className="text-slate-600 dark:text-slate-400 font-medium">
+                <span className="text-foreground-muted font-medium">
                   {SERVICE_LEVELS_CONTENT.transition.message}
                 </span>
-                <span className="inline-flex items-center gap-1 text-rose-700 dark:text-rose-300 font-semibold shrink-0">
+                <a
+                  href="#faqs"
+                  className="inline-flex items-center gap-1 text-urgent font-semibold shrink-0 hover:underline underline-offset-4 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-urgent rounded-sm"
+                >
                   <span>{SERVICE_LEVELS_CONTENT.transition.nextSectionName}</span>
                   <CaretRight size={13} />
-                </span>
+                </a>
               </div>
             </motion.div>
 
@@ -125,98 +103,99 @@ export function ServiceLevelsSection() {
           {/* ============================================================== */}
           <div className="lg:col-span-7 flex flex-col w-full">
             
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#050e18] shadow-xl shadow-slate-200/40 dark:shadow-black/60 overflow-hidden">
+            <div className="rounded-lg border border-border bg-card shadow-md overflow-hidden">
               
               {/* Specification Panel Header */}
-              <div className="px-5 py-3.5 bg-slate-50 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+              <div className="px-5 py-3.5 bg-surface border-b border-border flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2.5">
-                  <span className="size-2 rounded-full bg-rose-600 dark:bg-rose-400" />
-                  <span className="font-semibold text-slate-900 dark:text-white uppercase tracking-wider text-[11px]">
+                  <span className="font-semibold text-foreground uppercase tracking-wider text-xs">
                     Service Operating Framework
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  4 Operational Parameters
+                <span className="font-mono text-xs text-foreground-subtle uppercase tracking-wider">
+                  {SERVICE_LEVELS_CONTENT.parameters.length} Operational Parameters
                 </span>
               </div>
 
               {/* Vertically Stacked Specification Rows */}
-              <div
-                role="tablist"
-                aria-label="Operating parameters defined prior to launch"
-                className="divide-y divide-slate-200 dark:divide-slate-800"
-              >
+              <div className="divide-y divide-border">
                 {SERVICE_LEVELS_CONTENT.parameters.map((param, index) => {
                   const isActive = param.id === activeParamId;
 
                   return (
                     <motion.div
                       key={param.id}
-                      initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                      whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
                       viewport={{ once: true, margin: "-40px" }}
                       transition={{
                         duration: 0.45,
-                        delay: shouldReduceMotion ? 0 : 0.08 + index * 0.06,
+                        delay: index * 0.04,
                         ease: [0.16, 1, 0.3, 1] as const,
                       }}
+                      className={cn(
+                        "relative transition-colors duration-200",
+                        isActive
+                          ? "bg-surface/80 "
+                          : "hover:bg-surface/40 "
+                      )}
                     >
-                      <button
-                        type="button"
-                        role="tab"
-                        id={`tab-param-${param.id}`}
-                        aria-selected={isActive}
-                        aria-controls={`panel-param-${param.id}`}
-                        tabIndex={0}
-                        onClick={() => setActiveParamId(param.id)}
-                        className={cn(
-                          "w-full text-left p-5 sm:p-6 transition-all duration-200 relative flex flex-col focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-rose-500",
-                          isActive
-                            ? "bg-slate-50/80 dark:bg-slate-900/60"
-                            : "hover:bg-slate-50/40 dark:hover:bg-slate-900/30"
-                        )}
-                      >
                         {/* Active Indicator Line */}
                         {isActive && (
                           <motion.span
                             layoutId="active-param-indicator"
-                            className="absolute left-0 top-3 bottom-3 w-1 rounded-r bg-rose-600 dark:bg-rose-400"
+                            className="absolute left-0 top-3 bottom-3 w-1 rounded-r bg-urgent"
                             transition={{ duration: 0.2 }}
                           />
                         )}
 
-                        {/* Parameter Header: Number + Title */}
-                        <div className="flex items-baseline justify-between gap-4">
+                        {/* Parameter Header: Number + Title (disclosure trigger) */}
+                        <h3>
+                        <button
+                          type="button"
+                          id={`trigger-param-${param.id}`}
+                          aria-expanded={isActive}
+                          aria-controls={`panel-param-${param.id}`}
+                          onClick={() => setActiveParamId(param.id)}
+                          className="w-full text-left px-5 pt-5 sm:px-6 sm:pt-6 flex items-baseline justify-between gap-4 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-urgent"
+                        >
                           <div className="flex items-baseline gap-3 sm:gap-4">
                             <span
                               className={cn(
                                 "font-mono text-xs sm:text-sm font-bold shrink-0 transition-colors",
                                 isActive
-                                  ? "text-rose-600 dark:text-rose-400"
-                                  : "text-slate-400 dark:text-slate-500"
+                                  ? "text-urgent "
+                                  : "text-slate-400 "
                               )}
                             >
                               {param.number}
                             </span>
-                            <h3
+                            <span
                               className={cn(
                                 "text-base sm:text-lg font-bold tracking-tight transition-colors",
                                 isActive
-                                  ? "text-slate-900 dark:text-white"
-                                  : "text-slate-700 dark:text-slate-300"
+                                  ? "text-foreground "
+                                  : "text-foreground-muted "
                               )}
                             >
                               {param.title}
-                            </h3>
+                            </span>
                           </div>
 
-                          <span className="text-[11px] font-mono uppercase text-slate-400 dark:text-slate-500">
-                            {isActive ? "Configured" : "Expand"}
-                          </span>
-                        </div>
+                          <CaretDown
+                            size={14}
+                            weight="bold"
+                            aria-hidden="true"
+                            className={cn(
+                              "shrink-0 text-slate-400 transition-transform duration-200",
+                              isActive && "rotate-180 text-urgent "
+                            )}
+                          />
+                        </button>
+                        </h3>
 
                         {/* Parameter Description */}
-                        <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 pl-7 sm:pl-8 leading-relaxed font-normal">
+                        <p className="ml-5 sm:ml-6 pr-5 sm:pr-6 mt-2 text-xs sm:text-sm text-foreground-muted pl-7 sm:pl-8 leading-relaxed font-normal">
                           {param.description}
                         </p>
 
@@ -226,14 +205,14 @@ export function ServiceLevelsSection() {
                         {isActive && (
                           <motion.div
                             id={`panel-param-${param.id}`}
-                            role="tabpanel"
-                            aria-labelledby={`tab-param-${param.id}`}
-                            initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
-                            animate={shouldReduceMotion ? {} : { opacity: 1, height: "auto" }}
+                            role="region"
+                            aria-labelledby={`trigger-param-${param.id}`}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
                             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-4 pl-7 sm:pl-8 pr-2 overflow-hidden w-full"
+                            className="mt-4 ml-5 sm:ml-6 pl-7 sm:pl-8 pr-7 overflow-hidden"
                           >
-                            <p className="text-xs text-slate-500 dark:text-slate-400 mb-3 leading-relaxed">
+                            <p className="text-xs text-foreground-subtle mb-3 leading-relaxed">
                               {param.detail}
                             </p>
 
@@ -243,19 +222,19 @@ export function ServiceLevelsSection() {
                                 {param.tiers.map((tier) => (
                                   <div
                                     key={tier.label}
-                                    className="rounded-lg bg-white dark:bg-[#07131e] border border-slate-200 dark:border-slate-800 p-2.5 shadow-2xs"
+                                    className="rounded-sm border border-border bg-card p-2.5"
                                   >
                                     <span
                                       className={cn(
                                         "block font-bold text-xs uppercase font-mono",
-                                        tier.label === "STAT" && "text-rose-600 dark:text-rose-400",
-                                        tier.label === "HIGH" && "text-amber-600 dark:text-amber-400",
-                                        tier.label === "ROUTINE" && "text-slate-600 dark:text-slate-400"
+                                        tier.label === "STAT" && "text-urgent ",
+                                        tier.label === "HIGH" && "text-warning ",
+                                        tier.label === "ROUTINE" && "text-foreground-muted "
                                       )}
                                     >
                                       {tier.label}
                                     </span>
-                                    <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                    <span className="block text-xs text-foreground-subtle mt-0.5">
                                       {tier.tag}
                                     </span>
                                   </div>
@@ -269,12 +248,12 @@ export function ServiceLevelsSection() {
                                 {param.windows.map((win) => (
                                   <div
                                     key={win.label}
-                                    className="rounded-lg bg-white dark:bg-[#07131e] border border-slate-200 dark:border-slate-800 p-2 shadow-2xs"
+                                    className="rounded-sm border border-border bg-card p-2"
                                   >
-                                    <span className="block font-bold text-[11px] text-slate-900 dark:text-white uppercase">
+                                    <span className="block font-bold text-xs text-foreground uppercase">
                                       {win.label}
                                     </span>
-                                    <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                    <span className="block text-xs text-foreground-subtle mt-0.5">
                                       {win.desc}
                                     </span>
                                   </div>
@@ -284,14 +263,14 @@ export function ServiceLevelsSection() {
 
                             {/* Parameter 03 Visual: Escalation Rules */}
                             {param.visualType === "escalation" && (
-                              <div className="flex items-center justify-between gap-1 p-2.5 rounded-lg bg-white dark:bg-[#07131e] border border-slate-200 dark:border-slate-800 text-xs">
+                              <div className="flex items-center justify-between gap-1 p-2.5 rounded-lg bg-card border border-border text-xs">
                                 {param.steps.map((st, sIdx) => (
                                   <div key={st} className="flex items-center gap-1.5 flex-1 justify-center">
-                                    <span className="font-semibold text-[11px] text-slate-800 dark:text-slate-200 text-center">
+                                    <span className="font-semibold text-xs text-foreground text-center">
                                       {st}
                                     </span>
                                     {sIdx < param.steps.length - 1 && (
-                                      <CaretRight size={12} className="text-rose-600 dark:text-rose-400 shrink-0" />
+                                      <CaretRight size={12} className="text-urgent shrink-0" />
                                     )}
                                   </div>
                                 ))}
@@ -304,12 +283,12 @@ export function ServiceLevelsSection() {
                                 {param.phases.map((ph) => (
                                   <div
                                     key={ph.phase}
-                                    className="rounded-lg bg-white dark:bg-[#07131e] border border-slate-200 dark:border-slate-800 p-2.5 shadow-2xs"
+                                    className="rounded-sm border border-border bg-card p-2.5"
                                   >
-                                    <span className="block font-bold text-[11px] text-slate-900 dark:text-white uppercase font-mono">
+                                    <span className="block font-bold text-xs text-foreground uppercase font-mono">
                                       {ph.phase}
                                     </span>
-                                    <span className="block text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                    <span className="block text-xs text-foreground-subtle mt-0.5">
                                       {ph.note}
                                     </span>
                                   </div>
@@ -319,28 +298,24 @@ export function ServiceLevelsSection() {
 
                           </motion.div>
                         )}
-
-                      </button>
+                        <div className="pb-5 sm:pb-6" aria-hidden="true" />
                     </motion.div>
                   );
                 })}
               </div>
 
               {/* Bottom Framework Annotation Bar */}
-              <div className="px-5 py-3 bg-slate-100/70 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+              <div className="px-5 py-3 bg-surface-muted/70 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-foreground-subtle">
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle size={14} weight="fill" className="text-emerald-600 dark:text-emerald-400" />
+                  <CheckCircle size={14} weight="fill" className="text-success" />
                   Service Level Commitments Codified in Written Client Agreement
-                </span>
-                <span className="font-mono text-[10px] text-slate-400">
-                  Pre-Operational Onboarding
                 </span>
               </div>
 
             </div>
 
             {/* Bottom Clarification Note */}
-            <p className="mt-4 text-xs text-slate-500 dark:text-slate-400 px-2">
+            <p className="mt-4 text-xs text-foreground-subtle px-2">
               Parameters are agreed on a per-facility basis. WE Healthcare does not publish generic universal turnaround guarantees; all commitments reflect verified operational capacity.
             </p>
 

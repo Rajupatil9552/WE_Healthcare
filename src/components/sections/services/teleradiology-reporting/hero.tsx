@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, CheckCircle } from "@phosphor-icons/react";
+import { motion } from "motion/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
 
 // Temporary radiology placeholder imagery.
 // Replace with approved production photography later.
@@ -18,154 +19,89 @@ const WORKFLOW_STEPS = [
   { step: "04", label: "Report Returned" },
 ];
 
+const fadeIn = (delay: number) => ({
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
+});
+
 export function TeleradiologyHero() {
-  const shouldReduceMotion = useReducedMotion();
-
-  // Animation variants respecting prefers-reduced-motion
-  const fadeUp = {
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 18 },
-    animate: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-  };
-
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-sky-50/40 to-white dark:from-[#061421] dark:via-[#071927] dark:to-[#091f30] text-slate-900 dark:text-white pt-36 pb-20 lg:pt-44 lg:pb-28 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
-      {/* Ambient background glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 size-[640px] rounded-full bg-sky-500/10 dark:bg-sky-500/15 blur-[140px]"
-      />
+    <section className="relative bg-background pt-36 lg:pt-44">
+      <Container>
+        <p className="eyebrow">Teleradiology Reporting</p>
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-          {/* LEFT COLUMN: 50% Editorial Content */}
-          <div className="lg:col-span-6 flex flex-col items-start">
-            {/* 1. Eyebrow Badge */}
-            <motion.div
-              {...fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-950/70 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300 shadow-xs"
-            >
-              <span>TELERADIOLOGY REPORTING</span>
-            </motion.div>
+        <motion.h1
+          {...HERO_HEADING_MOTION}
+          className="mt-6 max-w-[14ch] text-display font-semibold text-foreground text-balance"
+        >
+          Teleradiology Reporting Services
+        </motion.h1>
 
-            {/* 2. Main H1 Headline */}
-            <motion.h1
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.08 }}
-              className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]"
-            >
-              Teleradiology Reporting Services
-            </motion.h1>
-
-            {/* 3. Subheading */}
-            <motion.p
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.16 }}
-              className="mt-4 text-lg sm:text-xl font-semibold text-sky-700 dark:text-sky-200/90 leading-snug"
-            >
-              Remote radiology reporting that fits your existing workflow.
-            </motion.p>
-
-            {/* 4. Body Paragraph */}
-            <motion.p
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.24 }}
-              className="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal max-w-xl"
-            >
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
+          <motion.p {...fadeIn(0.1)} className="lg:col-span-5 text-lead font-medium text-primary-strong">
+            Remote radiology reporting that fits your existing workflow.
+          </motion.p>
+          <motion.div {...fadeIn(0.18)} className="lg:col-span-7">
+            <p className="text-base text-foreground-muted leading-relaxed max-w-[60ch]">
               WE Healthcare provides teleradiology reporting support for hospitals, imaging centers, emergency departments, and healthcare networks across the United States. Extend reporting capacity for routine, overnight, weekend, overflow, and time-sensitive imaging needs.
-            </motion.p>
-
-            {/* 5. CTA Buttons */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.32 }}
-              className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto"
-            >
-              <Link
-                href="/contact"
-                className={cn(
-                  buttonVariants({ variant: "accent", size: "lg" }),
-                  "group justify-center text-center shadow-lg shadow-emerald-950/20 dark:shadow-emerald-950/40"
-                )}
-              >
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Link href="/contact" className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}>
                 <span>Request a Consultation</span>
-                <ArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
+                <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link
-                href="#workflow"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-700/90 dark:bg-slate-900/40 dark:text-slate-200 dark:hover:bg-slate-800/80 dark:hover:text-white backdrop-blur-sm justify-center text-center"
-                )}
-              >
+              <Link href="#workflow" className={buttonVariants({ variant: "outline", size: "lg" })}>
                 See How It Works
               </Link>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
+        </div>
+      </Container>
 
-          {/* RIGHT COLUMN: 50% Visual Artwork with Floating Workflow Card */}
-          <div className="lg:col-span-6 relative mt-4 lg:mt-0">
-            {/* 6. Hero Image Container */}
+      {/* Full-width photographic band with the four-step rail on its lower edge */}
+      <div className="mt-16 lg:mt-20">
+        <Container>
+          <div className="relative overflow-hidden rounded-lg bg-slate-950">
             <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.03 }}
-              animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-700/60 shadow-2xl shadow-slate-200/60 dark:shadow-black/70 bg-white dark:bg-slate-950"
+              initial={{ scale: 1.06 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1.4, ease: MOTION.easeOut }}
+              className="relative aspect-[4/3] sm:aspect-[21/9]"
             >
               <Image
                 src="/images/teleradiology-reporting/hero-radiologist-workstation.jpg"
                 alt="Board-certified diagnostic radiologist reviewing cross-sectional medical scans at a high-resolution PACS workstation"
-                width={800}
-                height={560}
+                fill
                 priority
-                className="w-full h-auto object-cover object-center max-h-[460px] sm:max-h-[500px]"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover object-center"
               />
-              {/* Subtle vignette gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent pointer-events-none" />
             </motion.div>
+            <div aria-hidden="true" className="absolute inset-x-0 bottom-0 hidden sm:block h-2/3 bg-gradient-to-t from-slate-950/85 to-transparent" />
 
-            {/* 7. Floating Workflow Card */}
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.35 }}
-              className="mt-4 sm:mt-0 sm:absolute sm:-bottom-6 sm:right-6 sm:max-w-xs w-full rounded-xl border border-slate-200/90 dark:border-white/15 bg-white/95 dark:bg-slate-950/90 backdrop-blur-md p-4 shadow-xl shadow-slate-300/40 dark:shadow-black/60 z-20"
-            >
-              <div className="flex items-center gap-2 mb-3 pb-2.5 border-b border-slate-200/80 dark:border-white/10">
-                <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-                <span className="font-mono text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest">
-                  RADIOLOGY WORKFLOW
-                </span>
-              </div>
-
-              {/* Sequential Staggered Workflow Steps */}
-              <div className="space-y-2">
-                {WORKFLOW_STEPS.map((item, idx) => (
-                  <motion.div
-                    key={item.step}
-                    initial={shouldReduceMotion ? false : { opacity: 0, x: -8 }}
-                    animate={shouldReduceMotion ? {} : { opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.35,
-                      delay: shouldReduceMotion ? 0 : 0.45 + idx * 0.12,
-                    }}
-                    className="flex items-center justify-between text-xs"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="font-mono text-[11px] font-bold text-slate-400 dark:text-slate-400">
-                        {item.step}
-                      </span>
-                      <span className="font-medium text-slate-800 dark:text-slate-200">
-                        {item.label}
-                      </span>
-                    </div>
-                    <CheckCircle size={14} weight="fill" className="text-emerald-500 dark:text-emerald-400" />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+            <ol className="sm:absolute sm:inset-x-0 sm:bottom-0 grid grid-cols-2 sm:grid-cols-4 border-t border-white/15">
+              {WORKFLOW_STEPS.map((item, idx) => (
+                <motion.li
+                  key={item.step}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.5 + idx * 0.08, ease: MOTION.easeOut }}
+                  className={cn(
+                    "px-5 py-4 sm:py-5 text-white",
+                    idx > 0 && "sm:border-l sm:border-white/15",
+                    idx % 2 === 1 && "border-l border-white/15 sm:border-l",
+                    idx > 1 && "border-t border-white/15 sm:border-t-0"
+                  )}
+                >
+                  <span className="block font-mono text-xs text-white/60 tabular-nums">{item.step}</span>
+                  <span className="mt-1 block text-sm sm:text-base font-medium">{item.label}</span>
+                </motion.li>
+              ))}
+            </ol>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

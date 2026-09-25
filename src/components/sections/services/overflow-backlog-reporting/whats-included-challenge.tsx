@@ -1,172 +1,81 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import {
-  ListChecks,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle,
-  Pulse,
-  ShareNetwork,
-} from "@phosphor-icons/react";
+import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
-import { cn } from "@/lib/utils";
-import {
-  WHATS_INCLUDED_ITEMS,
-  CHALLENGE_SUPPORT_MATRIX,
-} from "@/content/overflow-backlog-support";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { Figure } from "@/components/sections/services/shared/figure";
+import { MOTION } from "@/lib/motion";
+import { WHATS_INCLUDED_ITEMS } from "@/content/overflow-backlog-support";
 
 export function WhatsIncludedChallengeSection() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = (delay: number = 0) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-40px" },
-    transition: {
-      duration: 0.5,
-      delay: shouldReduceMotion ? 0 : delay,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  });
-
   return (
-    <section
-      id="scope-and-solutions"
-      className="py-20 lg:py-28 bg-slate-50/70 dark:bg-[#050c12] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white transition-colors duration-300"
-    >
+    <section id="whats-included" className="py-section lg:py-section-lg bg-background">
       <Container>
-        {/* Main Section Header */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <motion.div
-            {...fadeUp(0)}
-            className="inline-flex items-center gap-2 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-950/70 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300 shadow-xs"
-          >
-            <ListChecks size={14} weight="bold" className="text-sky-600 dark:text-sky-400" />
-            <span>OPERATIONAL SCOPE &amp; SOLUTIONS</span>
-          </motion.div>
-
-          <motion.h2
-            {...fadeUp(0.08)}
-            className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]"
-          >
-            What&apos;s Included &amp; How It Solves Your Capacity Constraints
-          </motion.h2>
-
-          <motion.p
-            {...fadeUp(0.14)}
-            className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
-          >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow">Operational Scope</p>
+            <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
+              What&apos;s Included in Overflow Support
+            </RevealHeading>
+          </div>
+          <p className="lg:col-span-5 text-base text-foreground-muted leading-relaxed">
             Comprehensive backlog interpretation protocols built to adapt directly to your facility&apos;s clinical workflow and volume fluctuations.
-          </motion.p>
+          </p>
         </div>
 
-        {/* Cohesive Two-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* ============================================================== */}
-          {/* LEFT: Typographic Checklist (7 Core Inclusions) (~6 cols)      */}
-          {/* ============================================================== */}
-          <motion.div
-            {...fadeUp(0.12)}
-            className="lg:col-span-6 flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-6">
-              <span className="font-mono text-xs uppercase tracking-wider text-sky-700 dark:text-sky-400 font-semibold">
-                Core Deliverables
-              </span>
-              <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-            </div>
-
-            <div className="divide-y divide-slate-200/80 dark:divide-slate-800/80 border-t border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="lg:col-span-7">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground-subtle">Core Deliverables</p>
+            <ol className="mt-4 border-t border-border-strong">
               {WHATS_INCLUDED_ITEMS.map((item, idx) => (
-                <div
+                <motion.li
                   key={item.title}
-                  className="py-4 sm:py-5 flex items-start gap-3.5 group hover:bg-white/60 dark:hover:bg-slate-900/40 px-2 rounded-lg transition-colors"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.04, ease: MOTION.easeOut }}
+                  className="grid grid-cols-[2.5rem_1fr] gap-4 py-5 border-b border-border"
                 >
-                  <CheckCircle
-                    size={20}
-                    weight="fill"
-                    className="text-sky-600 dark:text-sky-400 shrink-0 mt-0.5"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                        {item.title}
-                      </h3>
+                  <span className="pt-1 font-mono text-sm text-foreground-subtle tabular-nums">0{idx + 1}</span>
+                  <div>
+                    <h3 className="flex flex-wrap items-baseline gap-x-3 text-lg font-semibold text-foreground">
+                      {item.title}
                       {item.verificationNote && (
-                        <span className="text-[10px] font-mono text-slate-400 px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800">
-                          Configurable
-                        </span>
+                        <span className="font-mono text-xs font-normal text-primary">Configurable</span>
                       )}
-                    </div>
-                    <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                      {item.description}
-                    </p>
+                    </h3>
+                    <p className="mt-1 text-sm text-foreground-muted leading-relaxed">{item.description}</p>
                   </div>
-                </div>
+                </motion.li>
               ))}
+            </ol>
+            <p className="mt-6 text-sm text-foreground-subtle">
+              Full compliance with your facility&apos;s credentialing bylaws, dictation templates, and local RIS/PACS.
+            </p>
+          </div>
+
+          <div className="lg:col-span-5 lg:sticky lg:top-28">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground-subtle">Operational Framework</p>
+            <Figure
+              className="mt-4"
+              src="/images/overflow-backlog-reporting/reporting-workflow.jpg"
+              alt="Diagnostic radiologist interpreting overflow cases on hospital PACS workstation"
+              aspect="aspect-[4/3]"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              caption="Direct PACS Integration — Reports route into your dictation templates without dual entry."
+            />
+            <div className="mt-8 border-l-2 border-primary/40 pl-4">
+              <p className="text-sm font-semibold text-foreground">Seamless Operational Fit</p>
+              <p className="mt-2 text-sm text-foreground-muted leading-relaxed">
+                Overflow and backlog coverage supplements your on-site team during acute volume spikes without requiring system redesign or long-term FTE commitments.
+              </p>
+              <p className="mt-3 text-sm text-foreground">Subspecialty Radiologists · Zero Minimum Study Penalties</p>
             </div>
-
-            <div className="mt-4 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-              <ShieldCheck size={16} className="text-sky-600 dark:text-sky-400" />
-              <span>Full compliance with your facility&apos;s credentialing bylaws and templates.</span>
-            </div>
-          </motion.div>
-
-          {/* ============================================================== */}
-          {/* RIGHT: Challenge → Support Connecting Visual Relationships (~6 cols) */}
-          {/* ============================================================== */}
-          <motion.div
-            {...fadeUp(0.18)}
-            className="lg:col-span-6 flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-6">
-              <span className="font-mono text-xs uppercase tracking-wider text-sky-700 dark:text-sky-400 font-semibold">
-                Operational Alignment
-              </span>
-              <span className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-            </div>
-
-            <div className="space-y-4">
-              {CHALLENGE_SUPPORT_MATRIX.map((matrix, idx) => (
-                <div
-                  key={matrix.challenge}
-                  className="rounded-xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#091522] p-4 sm:p-5 shadow-xs transition-shadow hover:shadow-md"
-                >
-                  {/* Connected Challenge -> Support pill header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100 dark:border-slate-800/80">
-                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                      {matrix.challenge}
-                    </span>
-                    <div className="flex items-center gap-2 text-xs font-semibold text-sky-700 dark:text-sky-300">
-                      <ArrowRight size={14} weight="bold" className="text-sky-500" />
-                      <span className="px-2.5 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/80 border border-sky-200 dark:border-sky-800 font-mono">
-                        {matrix.support}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Context and Solution text */}
-                  <div className="space-y-1.5 text-xs sm:text-[13px]">
-                    <p className="text-slate-500 dark:text-slate-400">
-                      <strong className="text-slate-700 dark:text-slate-300">Context:</strong> {matrix.description}
-                    </p>
-                    <p className="text-slate-600 dark:text-slate-300">
-                      <strong className="text-sky-700 dark:text-sky-400">WE Support:</strong> {matrix.solution}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4 p-4 rounded-xl border border-sky-200/60 dark:border-sky-900/50 bg-sky-50/50 dark:bg-sky-950/20 text-xs text-slate-600 dark:text-slate-300">
-              <strong className="text-slate-900 dark:text-white font-semibold">Implementation Flexibility:</strong> Coverage can scale dynamically on an hourly, daily, or seasonal cadence depending on acute department demand.
-            </div>
-          </motion.div>
-
+          </div>
         </div>
       </Container>
     </section>
   );
 }
+
+export default WhatsIncludedChallengeSection;

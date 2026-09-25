@@ -39,7 +39,23 @@
   --color-warning: var(--color-warning);
   --color-destructive: var(--color-destructive);
   --color-on-destructive: var(--color-on-destructive);
+  --color-urgent: var(--color-urgent);
+  --color-urgent-soft: var(--color-urgent-soft);
   --color-ring: var(--color-ring);
+
+  /* Type scale (fluid). Headings use weight 600 + tight tracking, not 800. */
+  --text-display: clamp(2.75rem, 1.6rem + 4.2vw, 5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  /* Display size for split heroes where the H1 sits in ~5 of 12 columns */
+  --text-display-sm: clamp(2.5rem, 1.5rem + 2.6vw, 4rem);
+  --text-display-sm--line-height: 1.04;
+  --text-display-sm--letter-spacing: -0.03em;
+  --text-h2: clamp(2rem, 1.4rem + 2.2vw, 3.25rem);
+  --text-h2--line-height: 1.06;
+  --text-h2--letter-spacing: -0.025em;
+  --text-lead: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+  --text-lead--line-height: 1.5;
 
   /* Radius */
   --radius-sm: var(--radius-sm);
@@ -98,6 +114,30 @@
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
+  }
+}
+
+/*
+ * Section label: small caps text led by a short hairline. Replaces the pill
+ * badge. Colour follows --eyebrow-color (e.g. [--eyebrow-color:var(--color-urgent)]).
+ */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--eyebrow-color, var(--color-primary));
+
+  &::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
   }
 }
 

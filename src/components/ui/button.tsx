@@ -14,6 +14,9 @@ export const buttonVariants = cva(
       variant: {
         primary: "bg-primary text-on-primary hover:bg-primary-strong",
         accent: "bg-accent text-on-accent hover:bg-accent-strong",
+        /** Site brand CTA: matches the header "Request a Demo" button. */
+        brand:
+          "bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-semibold shadow-lg shadow-sky-500/25 hover:from-sky-400 hover:to-cyan-300",
         outline:
           "border border-border-strong bg-transparent text-foreground hover:bg-surface-muted",
         ghost: "bg-transparent text-foreground hover:bg-surface-muted",

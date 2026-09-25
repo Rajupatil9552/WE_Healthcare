@@ -1,10 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
+import { cn } from "@/lib/utils";
 
 // Temporary radiology placeholder imagery.
 // Replace with approved production photography later.
@@ -44,101 +47,64 @@ const CARDS: CoverageCardData[] = [
 ];
 
 export function SubspecialtyCoverageSection() {
-  const shouldReduceMotion = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
 
-  const fadeUp = {
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.5 },
-  };
+  // Image drifts inside each card as it crosses the viewport (desktop only).
+  useGSAP(
+    () => {
+      gsap.matchMedia().add(`(min-width: 768px) and ${MOTION_OK}`, () => {
+        gsap.utils.toArray<HTMLElement>(".js-card").forEach((card) => {
+          gsap.fromTo(
+            card.querySelector(".js-card-img"),
+            { yPercent: -6 },
+            { yPercent: 6, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } },
+          );
+        });
+      });
+    },
+    { scope: root },
+  );
 
   return (
-    <section
-      id="subspecialty-coverage"
-      className="py-20 lg:py-28 bg-white dark:bg-[#080e11] border-b border-slate-200/80 dark:border-slate-800/80 transition-colors"
-    >
+    <section ref={root} id="subspecialty-coverage" className="py-section lg:py-section-lg bg-surface">
       <Container>
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <motion.div
-            {...fadeUp}
-            className="inline-flex items-center gap-2 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-950/70 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300"
-          >
-            <span>BUILT AROUND YOUR RADIOLOGY OPERATION</span>
-          </motion.div>
-
-          <motion.h2
-            {...fadeUp}
-            transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.08 }}
-            className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
-          >
+        <div className="max-w-3xl">
+          <p className="eyebrow">Built Around Your Radiology Operation</p>
+          <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
             Subspecialty Reporting and Flexible Coverage
-          </motion.h2>
+          </RevealHeading>
         </div>
 
-        {/* Two Large Premium Image Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-start">
           {CARDS.map((card, idx) => (
-            <motion.div
+            <Link
               key={card.id}
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
-              whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.55,
-                delay: shouldReduceMotion ? 0 : 0.1 + idx * 0.18, // 150-200ms stagger
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="group relative rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-800/90 bg-slate-950 shadow-xl shadow-slate-300/30 dark:shadow-black/60 min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-end"
+              href={card.href}
+              className={cn(
+                "js-card group relative flex flex-col justify-end overflow-hidden rounded-lg bg-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                idx === 0 ? "md:col-span-7 min-h-[420px] lg:min-h-[540px]" : "md:col-span-5 md:mt-24 min-h-[380px] lg:min-h-[460px]"
+              )}
             >
-              {/* Card Image with subtle 1 -> 1.04 scale on hover */}
-              <div className="absolute inset-0 size-full overflow-hidden">
+              <div className="js-card-img absolute -inset-y-[8%] inset-x-0">
                 <Image
                   src={card.image}
                   alt={card.alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                  sizes={idx === 0 ? "(max-width: 768px) 100vw, 58vw" : "(max-width: 768px) 100vw, 42vw"}
+                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent" />
 
-              {/* Dark Gradient Overlay with subtle opacity transition on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/65 to-slate-950/20 transition-opacity duration-300 group-hover:opacity-90 pointer-events-none" />
-
-              {/* Content Panel */}
-              <div className="relative z-10 p-6 sm:p-8 lg:p-10 flex flex-col justify-end">
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-                  {card.title}
-                </h3>
-
-                <p className="mt-2.5 text-sm sm:text-base text-slate-300 leading-relaxed font-normal max-w-lg">
-                  {card.description}
-                </p>
-
-                {/* Interactive Action Link with 0 -> 4px arrow translate */}
-                <div className="mt-6 pt-5 border-t border-white/15 flex items-center justify-between">
-                  <Link
-                    href={card.href}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-sky-400 group-hover:text-sky-300 transition-colors"
-                  >
-                    <span>Learn more</span>
-                    <ArrowRight
-                      size={16}
-                      weight="bold"
-                      className="transition-transform duration-300 ease-out group-hover:translate-x-1" // 4px translate
-                    />
-                  </Link>
-                  <div className="size-8 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white/80 group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-sky-400 transition-all duration-300">
-                    <ArrowRight
-                      size={14}
-                      weight="bold"
-                      className="transition-transform duration-300 ease-out group-hover:translate-x-0.5"
-                    />
-                  </div>
-                </div>
+              <div className="relative p-6 sm:p-8 lg:p-10">
+                <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">{card.title}</h3>
+                <p className="mt-3 text-base text-white/75 leading-relaxed max-w-[46ch]">{card.description}</p>
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                  <span className="underline decoration-white/30 underline-offset-4 group-hover:decoration-white">Learn more</span>
+                  <ArrowUpRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
               </div>
-            </motion.div>
+            </Link>
           ))}
         </div>
       </Container>

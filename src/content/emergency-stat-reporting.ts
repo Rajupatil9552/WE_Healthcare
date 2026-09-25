@@ -25,7 +25,7 @@ export const EMERGENCY_HERO_CONTENT = {
   },
   secondaryCta: {
     label: "Explore STAT Workflow",
-    href: "#stat-workflow",
+    href: "#how-it-works",
   },
   image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
   alt: "Board-certified radiologist reviewing acute emergent CT head neuro scans at diagnostic workstation",
@@ -140,9 +140,9 @@ export const COMMON_USE_CASES_CONTENT = {
       alt: "Teleradiology reading room multi-monitor diagnostic workstation",
     },
     {
-      id: "after-hours-critical",
+      id: "after-hours-cases",
       number: "04",
-      title: "After-Hours Critical Cases",
+      title: "After-Hours Cases",
       description:
         "Unplanned emergent imaging arriving during overnight, weekend, and holiday periods when in-house subspecialty coverage is constrained.",
       clinicalFocus: "Nocturnal coverage, emergency call relief, and subspecialty backup",
@@ -150,9 +150,9 @@ export const COMMON_USE_CASES_CONTENT = {
       alt: "Board-certified diagnostic radiologist reviewing acute scans at workstation",
     },
     {
-      id: "time-sensitive-findings",
+      id: "time-sensitive-imaging",
       number: "05",
-      title: "Time-Sensitive Findings",
+      title: "Time-Sensitive Imaging",
       description:
         "Studies with high likelihood of critical pathology—such as acute stroke, pulmonary embolism, or intracranial hemorrhage—requiring urgent direct communication.",
       clinicalFocus: "Stroke protocols, aortic dissection, and tension pneumothorax",
@@ -160,9 +160,9 @@ export const COMMON_USE_CASES_CONTENT = {
       alt: "Diagnostic monitor displaying urgent time-sensitive radiology scans",
     },
     {
-      id: "volume-spikes",
+      id: "volume-surges",
       number: "06",
-      title: "Temporary Increases in Emergency Imaging Volume",
+      title: "Volume Surges",
       description:
         "Seasonal volume surges, local mass-casualty events, or sudden ED surges that exceed standard departmental reading bandwidth.",
       clinicalFocus: "Surge absorption, queue stabilization, and backlog prevention",
@@ -180,7 +180,7 @@ export const HOW_IT_WORKS_CONTENT = {
   transition: {
     from: "Communication",
     arrow: "Defined Clinical Escalation Pathway",
-    nextSectionName: "Critical Findings Protocol",
+    nextSectionName: "Service Levels",
   },
   study: {
     exam: "CT Head w/o Contrast",
@@ -201,6 +201,10 @@ export const HOW_IT_WORKS_CONTENT = {
       priorityLabel: "STAT",
       actionDetail: "Priority tag applied upon ingestion via HL7/DICOM flag",
       queueState: "Triage Elevation Active",
+      stageHeading: "Priority Classification Triggered",
+      stageTag: "ROUTINE → STAT",
+      stageNarrative:
+        "The ordering clinician or technologist identifies an emergent clinical presentation. An acute protocol flag is appended upon study transmission, initiating priority handling.",
       badgeColor: "rose",
       image: "/images/emergency-stat-reporting/priority-radiology-worklist.jpg",
       alt: "Emergency study flagged for acute triage",
@@ -217,6 +221,10 @@ export const HOW_IT_WORKS_CONTENT = {
       priorityLabel: "STAT",
       actionDetail: "Bypasses routine queue and routes to credentialed subspecialist",
       queueState: "Top of Active Worklist",
+      stageHeading: "Intelligent Worklist Sorting",
+      stageTag: "Queue Elevation",
+      stageNarrative:
+        "The study automatically routes ahead of routine outpatient queues and matches to an appropriately credentialed, subspecialty-trained diagnostic radiologist.",
       badgeColor: "rose",
       image: "/images/emergency-stat-reporting/emergency-department-imaging.jpg",
       alt: "Prioritized emergency imaging study routed ahead of routine worklist",
@@ -233,6 +241,10 @@ export const HOW_IT_WORKS_CONTENT = {
       priorityLabel: "STAT",
       actionDetail: "Board-certified radiologist opens study on high-resolution PACS",
       queueState: "Diagnostic PACS Interpretation",
+      stageHeading: "Board-Certified Diagnostic Review",
+      stageTag: "PACS In Progress",
+      stageNarrative:
+        "The assigned radiologist opens cross-sectional series on multi-monitor diagnostic displays, evaluating critical emergent pathology according to facility protocol.",
       badgeColor: "rose",
       image: "/images/emergency-stat-reporting/trauma-radiology.jpg",
       alt: "Radiologist reviewing acute neuro CT imaging at diagnostic PACS workstation",
@@ -249,6 +261,10 @@ export const HOW_IT_WORKS_CONTENT = {
       priorityLabel: "STAT",
       actionDetail: "Direct telephone outreach to treating physician with verbal read-back",
       queueState: "Closed-Loop Escalation",
+      stageHeading: "Direct Telephone Escalation",
+      stageTag: "Closed-Loop EHR",
+      stageNarrative:
+        "Unexpected or time-sensitive critical findings trigger immediate verbal telephone communication with the emergency physician, backed by timestamped documentation.",
       badgeColor: "rose",
       image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
       alt: "Emergency physician receiving direct verbal radiologist communication",

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import {
   FileText,
   ClockCounterClockwise,
@@ -14,6 +14,8 @@ import {
   LockKey,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { MOTION } from "@/lib/motion";
 
 interface IncludedCapability {
   number: string;
@@ -103,133 +105,58 @@ const ENGAGEMENT_ASSURANCES = [
 ];
 
 export function WhatsIncludedSection() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = {
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 16 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-40px" },
-    transition: { duration: 0.5 },
-  };
-
   return (
-    <section
-      id="whats-included"
-      className="py-20 lg:py-28 bg-slate-50/70 dark:bg-[#070d11] border-b border-slate-200/80 dark:border-slate-800/80 transition-colors"
-    >
+    <section id="whats-included" className="py-section lg:py-section-lg bg-surface">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* LEFT: Editorial Context & Engagement Scope Anchor (~5 cols, sticky on lg) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28">
-            <motion.div
-              {...fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50/90 dark:bg-sky-950/70 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300"
-            >
-              <span>WHAT&apos;S INCLUDED</span>
-            </motion.div>
-
-            <motion.h2
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.08 }}
-              className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]"
-            >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="lg:col-span-4 lg:sticky lg:top-28">
+            <RevealHeading className="text-h2 font-semibold text-foreground text-balance">
               What&apos;s Included
-            </motion.h2>
-
-            <motion.p
-              {...fadeUp}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.16 }}
-              className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
-            >
+            </RevealHeading>
+            <p className="mt-5 text-base text-foreground-muted leading-relaxed">
               Depending on the engagement, reporting support may include:
-            </motion.p>
+            </p>
 
-            {/* Scope of Engagement Card */}
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.55, delay: shouldReduceMotion ? 0 : 0.24 }}
-              className="mt-8 p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-[#0c141a]/90 backdrop-blur-sm shadow-sm"
-            >
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4">
+            <div className="mt-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-foreground-subtle">
                 Service Scope Guarantees
-              </div>
-
-              <div className="space-y-4">
-                {ENGAGEMENT_ASSURANCES.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={item.title} className="flex items-start gap-3">
-                      <div className="size-8 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-100 dark:border-sky-900/50 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0 mt-0.5">
-                        <Icon size={16} weight="bold" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-slate-900 dark:text-white">
-                          {item.title}
-                        </div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          {item.detail}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* RIGHT: Executive Service Scope Ledger (~7 cols, sleek horizontal rows) */}
-          <div className="lg:col-span-7 flex flex-col gap-3.5 sm:gap-4">
-            {INCLUDED_CAPABILITIES.map((item, idx) => {
-              const ItemIcon = item.icon;
-
-              return (
-                <motion.div
-                  key={item.number}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-                  whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{
-                    duration: 0.45,
-                    delay: shouldReduceMotion ? 0 : 0.05 + idx * 0.09, // 80-120ms stagger (90ms)
-                    ease: [0.16, 1, 0.3, 1] as const,
-                  }}
-                  className="group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#0e161c] shadow-xs hover:shadow-md hover:border-sky-300 dark:hover:border-sky-700/80 hover:-translate-y-[2px] transition-all duration-200"
-                >
-                  <div className="flex items-start sm:items-center gap-4">
-                    {/* Index Number */}
-                    <span className="font-mono text-xs font-bold text-slate-400 dark:text-slate-500 tracking-wider shrink-0 w-5">
-                      {item.number}
-                    </span>
-
-                    {/* Subtle Blue Icon Container */}
-                    <div className="size-11 rounded-xl bg-sky-50 dark:bg-sky-950/70 border border-sky-100 dark:border-sky-900/60 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0 group-hover:scale-[1.08] transition-transform duration-200 ease-out">
-                      <ItemIcon size={22} weight="bold" />
-                    </div>
-
-                    {/* Title & Description */}
+              </p>
+              <ul className="mt-4 space-y-5">
+                {ENGAGEMENT_ASSURANCES.map(({ title, detail, icon: Icon }) => (
+                  <li key={title} className="flex gap-3">
+                    <Icon size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-primary" />
                     <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-400 font-normal leading-relaxed">
-                        {item.description}
-                      </p>
+                      <p className="text-sm font-semibold text-foreground">{title}</p>
+                      <p className="mt-0.5 text-sm text-foreground-muted">{detail}</p>
                     </div>
-                  </div>
-
-                  {/* Scope Tag Pill */}
-                  <div className="flex items-center gap-1.5 self-start sm:self-center pl-9 sm:pl-0 shrink-0">
-                    <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 bg-slate-100/90 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/60">
-                      <CheckCircle size={14} weight="bold" className="text-sky-600 dark:text-sky-400" />
-                      <span>{item.scopeTag}</span>
-                    </span>
-                  </div>
-                </motion.div>
-              );
-            })}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
+
+          {/* Spec sheet: index | capability | scope, on hairline rows */}
+          <ol className="lg:col-span-8 border-t border-border-strong">
+            {INCLUDED_CAPABILITIES.map((item, idx) => (
+              <motion.li
+                key={item.number}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.04, ease: MOTION.easeOut }}
+                className="grid grid-cols-[2.5rem_1fr] sm:grid-cols-[3rem_1fr_auto] gap-x-4 gap-y-2 py-6 border-b border-border"
+              >
+                <span className="pt-0.5 font-mono text-sm text-foreground-subtle tabular-nums">{item.number}</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-1 text-sm text-foreground-muted leading-relaxed">{item.description}</p>
+                </div>
+                <span className="col-start-2 sm:col-start-3 sm:pt-1 font-mono text-xs text-primary sm:text-right">
+                  {item.scopeTag}
+                </span>
+              </motion.li>
+            ))}
+          </ol>
         </div>
       </Container>
     </section>

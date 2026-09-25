@@ -1,240 +1,135 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
-import {
-  Brain,
-  Scan,
-  ShieldCheck,
-  CheckCircle,
-  PhoneCall,
-  Clock,
-  ArrowDown,
-  Sparkle,
-} from "@phosphor-icons/react";
+import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { STROKE_PROTOCOL_WORKFLOW_CONTENT } from "@/content/stroke-imaging-protocol";
+import { STROKE_PROTOCOL_WORKFLOW_CONTENT as CONTENT } from "@/content/stroke-imaging-protocol";
+
+/**
+ * Per-stage focus on the (illustrative) scan: the viewer zooms/pans to a
+ * region and outlines it. Values are % of the viewport frame.
+ */
+const FOCUS = [
+  { scale: 1, x: "0%", y: "0%", box: { left: "8%", top: "10%", width: "84%", height: "80%" } },
+  { scale: 1.25, x: "-6%", y: "3%", box: { left: "36%", top: "22%", width: "38%", height: "46%" } },
+  { scale: 1.5, x: "8%", y: "-4%", box: { left: "22%", top: "30%", width: "30%", height: "34%" } },
+  { scale: 1.15, x: "0%", y: "-3%", box: { left: "14%", top: "16%", width: "72%", height: "62%" } },
+];
 
 export function StrokeProtocolWorkflowSection() {
-  const shouldReduceMotion = useReducedMotion();
   const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const stageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const listRef = useRef<HTMLOListElement>(null);
+  const stageRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-  // Subtle natural scroll tracking on desktop without any scroll-locking or wheel hijacking
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const indexStr = entry.target.getAttribute("data-stage-index");
-            if (indexStr !== null) {
-              const idx = parseInt(indexStr, 10);
-              if (!isNaN(idx)) {
-                setActiveStageIndex(idx);
-              }
-            }
-          }
+  // The stage whose card crosses the middle of the viewport drives the viewer.
+  useGSAP(
+    () => {
+      stageRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 55%",
+          end: "bottom 55%",
+          onToggle: (self) => self.isActive && setActiveStageIndex(idx),
+          onLeaveBack: () => idx === 0 && setActiveStageIndex(0),
         });
-      },
-      {
-        rootMargin: "-25% 0px -40% 0px",
-        threshold: 0.2,
-      }
-    );
-
-    stageRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const activeStage = STROKE_PROTOCOL_WORKFLOW_CONTENT.stages[activeStageIndex];
-
-  // Subtle editorial entrance
-  const fadeIn = (delay: number) => ({
-    initial: shouldReduceMotion ? false : { opacity: 0, y: 12 },
-    whileInView: shouldReduceMotion ? {} : { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-80px" },
-    transition: {
-      duration: 0.5,
-      delay: shouldReduceMotion ? 0 : delay,
-      ease: [0.16, 1, 0.3, 1] as const,
+      });
     },
-  });
+    { scope: listRef },
+  );
+
+  const jumpTo = (idx: number) => {
+    setActiveStageIndex(idx);
+    stageRefs.current[idx]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const activeStage = CONTENT.stages[activeStageIndex];
+  const focus = FOCUS[activeStageIndex] ?? FOCUS[0];
 
   return (
-    <section 
-      id="stroke-protocol"
-      className="relative overflow-hidden bg-slate-50/60 dark:bg-[#060f1c] text-slate-900 dark:text-white py-20 lg:py-28 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300"
-    >
-      {/* Subtle ambient lighting tone */}
-      <div 
-        className="absolute top-1/3 right-0 w-[45vw] max-w-[550px] h-[450px] -translate-y-1/2 bg-gradient-to-l from-sky-100/50 via-sky-50/20 to-transparent dark:from-sky-950/25 dark:to-transparent pointer-events-none -z-0" 
-        aria-hidden="true"
-      />
-
-      <Container className="relative z-10">
-        
-        {/* Section Header */}
-        <div className="max-w-3xl mb-12 lg:mb-16">
-          <motion.div
-            {...fadeIn(0.04)}
-            className="inline-flex items-center gap-2 mb-3"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-sky-600 dark:bg-sky-400" aria-hidden="true" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-sky-800 dark:text-sky-300">
-              {STROKE_PROTOCOL_WORKFLOW_CONTENT.eyebrow}
-            </span>
-          </motion.div>
-
-          <motion.h2
-            {...fadeIn(0.12)}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.16]"
-          >
-            {STROKE_PROTOCOL_WORKFLOW_CONTENT.heading}
-          </motion.h2>
-
-          <motion.p
-            {...fadeIn(0.2)}
-            className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
-          >
-            {STROKE_PROTOCOL_WORKFLOW_CONTENT.supportingText}
-          </motion.p>
+    <section id="stroke-protocol" className="py-section lg:py-section-lg bg-background">
+      <Container>
+        <div className="max-w-3xl">
+          <p className="eyebrow">{CONTENT.eyebrow}</p>
+          <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">{CONTENT.heading}</RevealHeading>
+          <p className="mt-6 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
         </div>
 
-        {/* ============================================================== */}
-        {/* MAIN WORKFLOW GRID: Left Sticky Visual + Right Progressive Stages */}
-        {/* ============================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          
-          {/* ============================================================== */}
-          {/* LEFT: Diagnostic CT/CTA Study Visual (Sticky Desktop, 5.5 cols) */}
-          {/* ============================================================== */}
-          <div className="lg:col-span-6 lg:sticky lg:top-28 z-20">
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.98 }}
-              whileInView={shouldReduceMotion ? {} : { opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{
-                duration: 0.55,
-                delay: shouldReduceMotion ? 0 : 0.16,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="rounded-2xl overflow-hidden border border-slate-200/90 dark:border-slate-800 bg-slate-950 shadow-xl shadow-slate-200/50 dark:shadow-black/60 transition-all"
-            >
-              {/* Header Bar showing Live Active Stage Telemetry */}
-              <div className="px-4 py-2.5 bg-slate-900/90 border-b border-white/10 flex items-center justify-between text-xs text-slate-300">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-sky-400" aria-hidden="true" />
-                  <span className="font-semibold text-white">
-                    Stroke Protocol Viewer
-                  </span>
-                  <span className="text-slate-500">•</span>
-                  <span className="text-sky-300 font-mono text-[11px]">
-                    STAGE {activeStage.step}/04
-                  </span>
-                </div>
-                <div className="text-[11px] text-slate-400 font-mono">
-                  ACTIVE: {activeStage.title}
-                </div>
-              </div>
-
-              {/* Main Diagnostic Imaging Viewport */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950">
-                <Image
-                  src={STROKE_PROTOCOL_WORKFLOW_CONTENT.image}
-                  alt={STROKE_PROTOCOL_WORKFLOW_CONTENT.alt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center filter brightness-95"
-                />
-
-                {/* Subtle vignette */}
-                <div 
-                  className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-slate-950/30 pointer-events-none" 
-                  aria-hidden="true"
-                />
-
-                {/* Dynamic Protocol Overlay Box reflecting Active Stage */}
-                <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4 pointer-events-none">
-                  <div className="rounded-xl bg-slate-900/90 backdrop-blur-md border border-white/15 p-3 sm:p-3.5 shadow-xl transition-all duration-300">
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                          STAGE {activeStage.step}
-                        </span>
-                        <span className="text-xs font-bold text-white uppercase tracking-wider">
-                          {activeStage.detailBadge}
-                        </span>
-                      </div>
-                      <span className="hidden sm:inline-block text-[10px] font-mono text-slate-400">
-                        ILLUSTRATIVE NON-PHI
-                      </span>
-                    </div>
-                    <p className="text-xs text-sky-200 font-medium leading-snug">
-                      {activeStage.visualFocus}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Step Navigation Pill Indicator underneath scan */}
-              <div className="px-4 py-2.5 bg-slate-900 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="text-slate-400 text-[11px]">
-                  Protocol Pathway Progression:
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          {/* Sticky scan viewer */}
+          <figure className="lg:col-span-6 lg:sticky lg:top-28">
+            <div className="overflow-hidden rounded-lg bg-slate-950">
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 text-xs text-white/70">
+                <span className="font-medium text-white">Stroke Protocol Viewer</span>
+                <span className="font-mono">
+                  Stage {activeStage.step}/{String(CONTENT.stages.length).padStart(2, "0")}
                 </span>
-                <div className="flex items-center gap-1.5">
-                  {STROKE_PROTOCOL_WORKFLOW_CONTENT.stages.map((stg, i) => (
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <motion.div
+                  animate={{ scale: focus.scale, x: focus.x, y: focus.y }}
+                  transition={{ duration: 0.9, ease: MOTION.easeOut }}
+                  className="absolute inset-0"
+                >
+                  <Image src={CONTENT.image} alt={CONTENT.alt} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center" />
+                </motion.div>
+                <motion.div
+                  aria-hidden="true"
+                  animate={focus.box}
+                  transition={{ duration: 0.9, ease: MOTION.easeOut }}
+                  className="absolute rounded-sm border border-white/70 shadow-[0_0_0_9999px_rgb(2_6_23/0.35)]"
+                />
+                <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-950/90 to-transparent" />
+                <div className="absolute inset-x-4 bottom-4">
+                  <p className="font-mono text-xs uppercase tracking-[0.14em] text-white/70">{activeStage.detailBadge}</p>
+                  <p className="mt-1 text-sm font-medium text-white">{activeStage.visualFocus}</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between border-t border-white/10 px-4 py-2.5">
+                <span className="text-xs text-white/60">Protocol Pathway Progression</span>
+                <div className="flex gap-1.5">
+                  {CONTENT.stages.map((stg, i) => (
                     <button
                       key={stg.id}
-                      onClick={() => setActiveStageIndex(i)}
-                      className={cn(
-                        "px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all",
-                        activeStageIndex === i
-                          ? "bg-sky-500 text-white shadow-xs"
-                          : "bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700"
-                      )}
+                      type="button"
+                      onClick={() => jumpTo(i)}
                       aria-label={`Jump to stage ${stg.step}: ${stg.title}`}
+                      aria-current={activeStageIndex === i ? "step" : undefined}
+                      className={cn(
+                        "rounded-sm px-2 py-0.5 font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                        activeStageIndex === i ? "bg-white text-slate-950" : "text-white/60 hover:text-white"
+                      )}
                     >
                       {stg.step}
                     </button>
                   ))}
                 </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+            <figcaption className="mt-3 text-[13px] text-foreground-subtle">Illustrative, non-PHI.</figcaption>
+          </figure>
 
-          {/* ============================================================== */}
-          {/* RIGHT: Four Defined Protocol Stages (Natural Scroll, 6 cols)  */}
-          {/* ============================================================== */}
-          <div className="lg:col-span-6 flex flex-col gap-2.5 sm:gap-3">
-            
-            {STROKE_PROTOCOL_WORKFLOW_CONTENT.stages.map((stage, idx) => {
+          {/* Stage list: scrolling it drives the viewer */}
+          <ol ref={listRef} className="lg:col-span-6 border-t border-border-strong">
+            {CONTENT.stages.map((stage, idx) => {
               const isActive = activeStageIndex === idx;
-
               return (
-                <div
+                <li
                   key={stage.id}
-                  data-stage-index={idx}
                   ref={(el) => {
                     stageRefs.current[idx] = el;
                   }}
-                  className="relative"
+                  className="border-b border-border lg:min-h-[42vh] lg:flex lg:items-center"
                 >
-                  <motion.div
-                    initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-                    whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{
-                      duration: 0.5,
-                      delay: shouldReduceMotion ? 0 : 0.1 + idx * 0.08,
-                    }}
+                  <div
+                    role="button"
                     tabIndex={0}
+                    aria-pressed={isActive}
                     onClick={() => setActiveStageIndex(idx)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -242,77 +137,42 @@ export function StrokeProtocolWorkflowSection() {
                         setActiveStageIndex(idx);
                       }
                     }}
-                    className={cn(
-                      "p-4.5 sm:p-5.5 rounded-xl border transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
-                      isActive
-                        ? "bg-white dark:bg-[#07131e] border-sky-500/80 dark:border-sky-400/80 shadow-md shadow-sky-500/5 dark:shadow-sky-950/30"
-                        : "bg-white/70 dark:bg-[#07131e]/50 border-slate-200/80 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700"
-                    )}
+                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    {/* Header Row */}
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2.5">
-                        <span
+                    <div className="flex items-baseline gap-5">
+                      <span className={cn("font-mono text-sm tabular-nums transition-colors", isActive ? "text-primary" : "text-foreground-subtle")}>
+                        {stage.step}
+                      </span>
+                      <div>
+                        <h3
                           className={cn(
-                            "w-6 h-6 rounded-full text-[11px] font-mono font-bold flex items-center justify-center transition-colors",
-                            isActive
-                              ? "bg-sky-600 text-white"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+                            "text-2xl font-semibold tracking-tight capitalize transition-colors",
+                            isActive ? "text-foreground" : "text-foreground-subtle"
                           )}
                         >
-                          {stage.step}
-                        </span>
-                        <h3 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-                          {stage.title}
+                          {stage.title.toLowerCase()}
                         </h3>
-                      </div>
-                      
-                      <span
-                        className={cn(
-                          "text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full transition-colors",
-                          isActive
-                            ? "bg-sky-50 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 border border-sky-200/70 dark:border-sky-800/70"
-                            : "bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400"
+                        <p className="mt-1 font-mono text-xs text-primary">{stage.detailBadge}</p>
+                        <p className={cn("mt-3 text-base leading-relaxed transition-colors", isActive ? "text-foreground-muted" : "text-foreground-subtle")}>
+                          {stage.description}
+                        </p>
+                        {isActive && (
+                          <p className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                            <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
+                            Inspecting Scan
+                          </p>
                         )}
-                      >
-                        {stage.detailBadge}
-                      </span>
+                      </div>
                     </div>
-
-                    {/* Stage Narrative */}
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                      {stage.description}
-                    </p>
-
-                    {/* Active State Details Strip */}
-                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 font-medium text-[11px]">
-                        {stage.visualFocus}
-                      </span>
-                      {isActive && (
-                        <span className="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 font-semibold text-[11px]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
-                          Inspecting Scan
-                        </span>
-                      )}
-                    </div>
-                  </motion.div>
-
-                  {/* Connecting Arrow between Stages */}
-                  {idx < STROKE_PROTOCOL_WORKFLOW_CONTENT.stages.length - 1 && (
-                    <div className="flex justify-center my-0.5 text-slate-300 dark:text-slate-700" aria-hidden="true">
-                      <ArrowDown size={13} weight="bold" />
-                    </div>
-                  )}
-                </div>
+                  </div>
+                </li>
               );
             })}
-
-          </div>
-
+          </ol>
         </div>
-
       </Container>
     </section>
   );
 }
+
+export default StrokeProtocolWorkflowSection;

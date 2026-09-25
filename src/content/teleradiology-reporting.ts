@@ -503,3 +503,49 @@ export const FINAL_CTA_CONTENT = {
   image: "/images/teleradiology-reporting/final-cta-radiology.jpg",
   alt: "Healthcare leadership and radiology team discussing clinical teleradiology partnership",
 } as const;
+
+/** Rendered by the page FAQ and reused for the FAQPage JSON-LD in app/services/[slug]/page.tsx. */
+export const TELERADIOLOGY_FAQ_ITEMS: { id: string; question: string; answer: string }[] = [
+  {
+    id: "who-can-use",
+    question: "Who can use teleradiology reporting support?",
+    answer:
+      "WE Healthcare provides teleradiology reporting support for hospitals, health systems, outpatient imaging centers, emergency departments, urgent care centers, and independent radiology groups across the United States seeking reliable diagnostic capacity.",
+  },
+  {
+    id: "pacs-connectivity",
+    question: "How does WE Healthcare connect with an existing PACS or RIS?",
+    answer:
+      "We establish secure, bidirectional connections with your facility's existing PACS, RIS, and EHR systems using standard DICOM and HL7 protocols over encrypted TLS 1.3 VPN tunnels or lightweight virtual appliances. Your technologists maintain their normal scanning workflow with no disruptive proprietary software required.",
+  },
+  {
+    id: "overflow-coverage",
+    question: "Can reporting support be used for overflow or after-hours coverage?",
+    answer:
+      "Yes. Our reporting models are fully customizable around your operational needs—including dedicated overnight shifts, weekend call coverage, holiday relief, scheduled daytime overflow surges, or secondary subspecialty consultations with no punitive minimum volume mandates.",
+  },
+  {
+    id: "routing-logic",
+    question: "How are studies routed to radiologists?",
+    answer:
+      "Studies are ingested into our intelligent clinical worklist and automatically routed according to modality, clinical acuity (STAT vs. routine), facility bylaws, and state medical licensing, ensuring each case is interpreted by an appropriately credentialed, board-certified radiologist.",
+  },
+  {
+    id: "critical-findings",
+    question: "How are critical findings communicated?",
+    answer:
+      "When unexpected or acute critical findings are identified, our radiologist or 24/7 clinical coordination desk immediately initiates direct telephone contact with the referring physician or clinical care team. A closed-loop timestamped read-back confirmation is documented directly in the diagnostic report.",
+  },
+  {
+    id: "supported-modalities",
+    question: "Which modalities are supported?",
+    answer:
+      "We support all major diagnostic imaging modalities, including Magnetic Resonance Imaging (MRI), Computed Tomography (CT), Diagnostic Ultrasound, Digital Radiography (X-Ray), and Mammography across neuroradiology, musculoskeletal, body/abdominal, pediatric, and emergency subspecialties.",
+  },
+  {
+    id: "start-engagement",
+    question: "What information is needed to start an engagement?",
+    answer:
+      "To initiate discovery, our team reviews your facility's estimated study volumes, modality breakdown, desired coverage windows, medical staff credentialing bylaws, and local PACS/RIS integration endpoints to design a seamless operational workflow.",
+  },
+];

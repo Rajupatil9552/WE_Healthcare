@@ -304,3 +304,43 @@ export const FAQ_CTA_CONTENT = {
     ],
   },
 } as const;
+
+/** Rendered by the page FAQ and reused for the FAQPage JSON-LD in app/services/[slug]/page.tsx. */
+export const OVERNIGHT_FAQ_ITEMS: { id: string; question: string; answer: string }[] = [
+  {
+    id: "faq-overnight-coverage",
+    question: "Do you provide overnight radiology coverage?",
+    answer:
+      "Yes. WE Healthcare provides dedicated overnight teleradiology coverage for hospitals, health systems, outpatient imaging centers, and emergency departments across the United States. Radiologists interpret routine, acute, and emergency studies during off-hours to prevent overnight backlog.",
+  },
+  {
+    id: "faq-weekend-schedule",
+    question: "Can weekend coverage be scheduled separately?",
+    answer:
+      "Yes. Coverage models are modular and flexible. You can engage our reporting team specifically for weekend coverage—including Saturday and Sunday shifts, holiday weekends, or partial weekend blocks—without requiring a full weekday contract.",
+  },
+  {
+    id: "faq-ed-support",
+    question: "Can overnight coverage support emergency departments?",
+    answer:
+      "Yes. Our overnight coverage is structured to support high-acuity emergency department imaging. Emergency studies flagged as STAT receive immediate priority routing, expedited interpretation, and direct clinical escalation for acute findings.",
+  },
+  {
+    id: "faq-team-handover",
+    question: "How are studies handed over between teams?",
+    answer:
+      "Studies transition automatically via standard DICOM and HL7 connections established with your local PACS and RIS. At the beginning of the coverage window, pending studies and new orders route directly to our worklist. At morning shift handoff, completed reports and a shift summary are returned to your in-house team.",
+  },
+  {
+    id: "faq-urgent-escalation",
+    question: "How are urgent or critical findings escalated?",
+    answer:
+      "When critical or unexpected acute pathology is identified, our radiologist or clinical coordination desk directly initiates telephone contact with the ordering physician or emergency department care team, securing verbal confirmation and documenting a verified read-back in the EHR.",
+  },
+  {
+    id: "faq-duration-model",
+    question: "Can coverage be temporary or ongoing?",
+    answer:
+      "Yes. We support both temporary engagements (such as interim coverage for radiologist leave, vacancies, seasonal surges, or system migrations) as well as standing, long-term 24/7/365 coverage partnerships.",
+  },
+];
