@@ -16,6 +16,7 @@ import {
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
+import { routes } from "@/config/routes";
 
 interface PartnershipStep {
   stepNumber: number;
@@ -50,7 +51,7 @@ const PARTNERSHIP_STEPS: PartnershipStep[] = [
       "Map workflows",
       "Identify integration needs",
     ],
-    image: "/images/accuray-nhZWIUJBVVc-unsplash.jpg",
+    image: "/images/general/accuray-nhZWIUJBVVc-unsplash.jpg",
     alt: "Clinical and IT teams reviewing medical imaging workflows on diagnostic screens",
     icon: GearSix,
   },
@@ -63,7 +64,7 @@ const PARTNERSHIP_STEPS: PartnershipStep[] = [
       "Testing and validation",
       "Training and go-live support",
     ],
-    image: "/images/accuray-eRJCXdb3Q48-unsplash.jpg",
+    image: "/images/general/accuray-eRJCXdb3Q48-unsplash.jpg",
     alt: "Healthcare IT and radiology staff collaborating at medical workstation",
     icon: ShareNetwork,
   },
@@ -166,7 +167,8 @@ export function HowPartnershipWorks() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/20 to-slate-50/50 dark:from-[#080e11] dark:via-[#091419] dark:to-[#080e11] py-20 lg:py-28 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60">
+    <section id="our-approach" className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/20 to-slate-50/50 dark:from-[#080e11] dark:via-[#091419] dark:to-[#080e11] py-20 lg:py-28 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60 scroll-mt-24">
+      <div id="how-it-works" className="scroll-mt-24" />
       {/* Background Subtle Gradient Curve Linework */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30 dark:opacity-15">
         <svg
@@ -387,7 +389,7 @@ export function HowPartnershipWorks() {
             </div>
 
             <Link
-              href="/contact"
+              href={routes.contact}
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#1c4d74] hover:bg-[#153a57] dark:bg-sky-600 dark:hover:bg-sky-500 text-white font-semibold text-sm px-7 py-3.5 shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
             >
               <span>Request a Demo</span>

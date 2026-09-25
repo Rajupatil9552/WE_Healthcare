@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/utils";
+import { routes } from "@/config/routes";
 
 interface AudienceCard {
   id: string;
@@ -34,7 +35,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     image:
       "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=1200&q=80",
     alt: "Modern hospital building exterior and medical health system entrance",
-    href: "/solutions/hospitals",
+    href: routes.audience("hospitals-health-systems"),
     icon: Buildings,
   },
   {
@@ -42,9 +43,9 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     title: "Imaging Centers",
     description:
       "Flexible and scalable radiology support to help imaging centers maintain high turnaround times and deliver exceptional patient care.",
-    image: "/images/accuray-36i9vuZrVjc-unsplash.jpg",
+    image: "/images/general/accuray-36i9vuZrVjc-unsplash.jpg",
     alt: "Modern MRI and CT scanner suite inside an outpatient imaging center",
-    href: "/solutions/imaging-centers",
+    href: routes.audience("imaging-centers"),
     icon: CirclesThreePlus,
   },
   {
@@ -55,7 +56,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     image:
       "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=1200&q=80",
     alt: "Hospital emergency department clinical care and trauma triage",
-    href: "/services/emergency-reads",
+    href: routes.audience("emergency-departments"),
     icon: Ambulance,
   },
   {
@@ -63,9 +64,9 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     title: "Radiology Groups",
     description:
       "Trusted partnership for overflow coverage, subspecialty reads, and workforce optimization to help radiology groups focus on what they do best.",
-    image: "/images/accuray-6pQPFuD7nJY-unsplash.jpg",
+    image: "/images/general/accuray-6pQPFuD7nJY-unsplash.jpg",
     alt: "Board-certified radiologist analyzing diagnostic scans on multi-monitor workstation",
-    href: "/solutions/radiology-groups",
+    href: routes.whoWeServe, // no "Radiology Groups" page in the nav yet
     icon: UsersThree,
   },
 ];
@@ -127,7 +128,7 @@ export function WhoWeServe() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#f7fafc] dark:bg-[#080e11] py-20 lg:py-28 transition-colors duration-300">
+    <section id="who-we-serve" className="relative overflow-hidden bg-[#f7fafc] dark:bg-[#080e11] py-20 lg:py-28 transition-colors duration-300 scroll-mt-24">
       {/* Subtle decorative wave pattern in top right */}
       <div className="pointer-events-none absolute right-0 top-0 h-[450px] w-[500px] overflow-hidden opacity-30 dark:opacity-15">
         <svg

@@ -5,7 +5,9 @@ import { ArrowDown } from "@phosphor-icons/react";
 
 export function Hero() {
   const scrollToExplore = () => {
-    const nextSection = document.getElementById("trust-credibility");
+    const nextSection =
+      document.getElementById("radiology-expertise") ||
+      document.getElementById("trust-credibility");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     } else {

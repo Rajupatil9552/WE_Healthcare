@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Figtree, Noto_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Navbar } from "@/components/layout/navbar";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -29,14 +30,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
   description: siteConfig.description,
   icons: {
     icon: [
-      { url: "/images/WE_Logo-removebg-preview.png", type: "image/png" },
+      { url: "/images/branding/WE_Logo-removebg-preview.png", type: "image/png" },
     ],
-    shortcut: "/images/WE_Logo-removebg-preview.png",
-    apple: "/images/WE_Logo-removebg-preview.png",
+    shortcut: "/images/branding/WE_Logo-removebg-preview.png",
+    apple: "/images/branding/WE_Logo-removebg-preview.png",
   },
 };
 
@@ -61,8 +65,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Navbar />
+          <SiteHeader />
           {children}
+          <SiteFooter />
         </ThemeProvider>
       </body>
     </html>

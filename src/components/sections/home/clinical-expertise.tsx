@@ -103,11 +103,12 @@ export function ClinicalExpertise() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-[#080e11] py-16 lg:py-24 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60">
+    <section id="services" className="relative overflow-hidden bg-white dark:bg-[#080e11] py-16 lg:py-24 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60 scroll-mt-24">
+      <div id="modalities" className="scroll-mt-24" />
       {/* Integrated Right-Side Medical Photo with Seamless Gradient Blend */}
       <div className="pointer-events-none absolute top-0 right-0 bottom-24 lg:bottom-28 w-full md:w-[62%] lg:w-[58%] select-none overflow-hidden hidden md:block z-0">
         <Image
-          src="/images/accuray-6pQPFuD7nJY-unsplash.jpg"
+          src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
           alt="Radiologist interpreting diagnostic studies across high-resolution monitors"
           fill
           sizes="(max-width: 1024px) 100vw, 60vw"
@@ -241,7 +242,7 @@ export function ClinicalExpertise() {
             {/* Mobile Fallback Image Container (for screens < 768px where absolute background is hidden) */}
             <div className="md:hidden relative h-64 w-full rounded-2xl overflow-hidden my-4 border border-slate-200/80 dark:border-slate-800/80 shadow-md">
               <Image
-                src="/images/accuray-6pQPFuD7nJY-unsplash.jpg"
+                src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
                 alt="Radiologist interpreting diagnostic studies"
                 fill
                 className="object-cover object-center"

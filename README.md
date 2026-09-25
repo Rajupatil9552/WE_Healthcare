@@ -41,20 +41,34 @@ npm run lint    # ESLint (eslint-config-next, flat config)
 
 ```
 src/
-  app/                  Routes (App Router). layout.tsx wires fonts, theme
-                         provider, and global styles. page.tsx is a scaffold
-                         placeholder, not the real landing page.
+  app/                        Routes (App Router). One folder per URL.
+    layout.tsx                Fonts, ThemeProvider, SiteHeader + SiteFooter (every page)
+    page.tsx                  Home - composes components/sections/home/*
+    not-found.tsx             404
+    services/                 /services hub + [slug]/ (from content/services.ts)
+    modalities/               /modalities hub + [slug]/ (from content/modalities.ts)
+    who-we-serve/             /who-we-serve hub + [slug]/ (from content/audiences.ts)
+    technology/               hub + pacs-ris-integration, dicom-workflow, ...
+    quality/                  hub + radiologists, quality-control, ...
+    resources/                hub + insights, case-studies, faqs, ...
+    about/                    hub + our-approach, leadership
+    contact/  request-a-demo/
+    (legal)/                  privacy, terms, cookies (route group - no URL segment)
   components/
-    ui/                 Reusable, presentational primitives (Button, Container,
-                        navigation-menu - the Radix dropdown primitive).
-    layout/             Structural chrome. navbar.tsx renders globally from
-                        app/layout.tsx; footer.tsx not built yet.
-    sections/           Page-specific sections (hero.tsx so far).
-    providers/          Client-boundary providers (ThemeProvider).
-  lib/                  Framework-agnostic utilities (cn() class merge helper).
-  config/               Site-wide config/constants (site.ts - nav items, CTAs).
-  styles/               tokens.css - design tokens, imported into app/globals.css.
-  types/                Shared TypeScript types (NavItem/NavChildItem).
+    ui/                       Generic primitives (Button, Container, Toggle, navigation-menu)
+    layout/                   Global chrome: site-header.tsx, site-footer.tsx
+    shared/                   Blocks reused across pages (page-placeholder.tsx)
+    sections/<page>/          Sections owned by one page: home/, services/, modalities/,
+                              who-we-serve/, technology/, quality/, resources/, about/, contact/
+    providers/                Client-boundary providers (ThemeProvider)
+  config/
+    routes.ts                 Every internal URL - import instead of hard-coding paths
+    navigation.ts             Navbar/footer menu (single source of truth)
+    site.ts                   Site name, description, CTAs
+  content/                    Data behind [slug] pages (services, modalities, audiences)
+  lib/                        Framework-agnostic utilities (cn())
+  styles/                     tokens.css - design tokens, imported into app/globals.css
+  types/                      Shared TypeScript types (NavSection, NavLink, ContentEntry)
 public/
   images/               Static image assets (empty - hero currently hotlinks a
                         temporary Unsplash photo; see Known placeholders below).
@@ -100,14 +114,17 @@ toggle; `enableSystem` is off until that UI ships.
   `next.config.ts` once replaced.
 - **Logo**: `src/components/layout/navbar.tsx` renders a text wordmark ("WE"
   monogram + "Healthcare") - no logo asset exists yet.
-- **Nav destination routes** (`src/config/site.ts`): `/services`,
-  `/solutions`, `/technology`, `/about`, `/resources`, `/careers`,
-  `/contact`, `/request-a-demo`, and their sub-routes are placeholders and
-  currently 404 - only `/` (Navbar + Hero) is built.
+- **Inner pages**: every nav route exists but renders `PagePlaceholder`.
+  To build one, add its sections under `components/sections/<page>/` and
+  replace the placeholder in `app/<route>/page.tsx`.
 
 ## Conventions
 
 - Path alias `@/*` -> `src/*`.
+- Links: use `routes.*` from `config/routes.ts`; menus read `config/navigation.ts`.
+  Adding a service/modality/audience = one entry in `content/*.ts` (nav, footer
+  and page update automatically).
+- Files and folders are kebab-case; components are PascalCase named exports.
 - `cn()` in `src/lib/utils.ts` for conditional/merged class names.
 - New interactive/animated components are Client Components (`"use client"`)
   isolated as leaves; layouts and pages stay Server Components by default.

@@ -149,6 +149,7 @@ export function ClientTestimonials() {
 
   return (
     <section
+      id="resources"
       ref={sectionRef}
       tabIndex={0}
       onKeyDown={handleKeyDown}
@@ -157,8 +158,9 @@ export function ClientTestimonials() {
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
       aria-label="Client Stories and Testimonials"
-      className="relative overflow-hidden bg-gradient-to-b from-slate-50/50 via-white to-sky-50/20 dark:from-[#080e11] dark:via-[#0a1317] dark:to-[#080e11] py-20 lg:py-28 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/50"
+      className="relative overflow-hidden bg-gradient-to-b from-slate-50/50 via-white to-sky-50/20 dark:from-[#080e11] dark:via-[#0a1317] dark:to-[#080e11] py-20 lg:py-28 transition-colors duration-300 border-b border-slate-200/60 dark:border-slate-800/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/50 scroll-mt-24"
     >
+      <div id="testimonials" className="scroll-mt-24" />
       {/* Decorative Large Circular Wave on Left Side */}
       <div className="pointer-events-none absolute -left-48 lg:-left-32 top-1/2 -translate-y-1/2 size-[500px] lg:size-[680px] rounded-full border border-sky-100/70 dark:border-sky-900/20 bg-gradient-to-br from-sky-50/30 via-transparent to-transparent opacity-60 dark:opacity-20" />
       <div className="pointer-events-none absolute -left-28 lg:-left-12 top-1/2 -translate-y-1/2 size-[360px] lg:size-[480px] rounded-full border border-sky-200/40 dark:border-sky-900/30 opacity-40 dark:opacity-10" />
@@ -166,7 +168,7 @@ export function ClientTestimonials() {
       {/* Decorative Subtle Radiology Workstation Image on Far Right */}
       <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-full sm:w-[50%] lg:w-[42%] overflow-hidden select-none opacity-25 dark:opacity-10">
         <Image
-          src="/images/accuray-6pQPFuD7nJY-unsplash.jpg"
+          src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
           alt="Radiology diagnostics environment"
           fill
           sizes="(max-width: 1024px) 50vw, 42vw"

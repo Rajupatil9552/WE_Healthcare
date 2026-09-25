@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import {
   ShieldCheck,
@@ -18,29 +19,10 @@ import {
   MapPin,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
-
-const FOOTER_NAV = {
-  solutions: [
-    { label: "Hospitals & Health Systems", href: "#solutions" },
-    { label: "Imaging Centers", href: "#solutions" },
-    { label: "Emergency Departments", href: "#solutions" },
-    { label: "Radiology Groups", href: "#solutions" },
-    { label: "Subspecialty Coverage", href: "#services" },
-  ],
-  about: [
-    { label: "Our Radiologists", href: "#about" },
-    { label: "Quality & Safety", href: "#about" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Client Stories", href: "#testimonials" },
-    { label: "Careers", href: "#careers" },
-  ],
-  resources: [
-    { label: "Case Studies", href: "#case-studies" },
-    { label: "Articles & Insights", href: "#insights" },
-    { label: "FAQs", href: "#faqs" },
-    { label: "Contact Us", href: "/contact" },
-  ],
-};
+import { mainNav, legalNav } from "@/config/navigation";
+import { routes } from "@/config/routes";
+import { primaryCta } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 const SOCIAL_LINKS = [
   { name: "LinkedIn", href: "https://linkedin.com", icon: LinkedinLogo },
@@ -48,10 +30,23 @@ const SOCIAL_LINKS = [
   { name: "YouTube", href: "https://youtube.com", icon: YoutubeLogo },
 ];
 
-export function Footer() {
+interface SiteFooterProps {
+  hideCta?: boolean;
+}
+
+/** Global footer: final CTA panel, sitemap, contact details, legal bar. */
+export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+
+  // Pages with their own bespoke CTA sections or action forms suppress the global footer CTA
+  const shouldHideCta =
+    hideCta ||
+    pathname?.startsWith("/services") ||
+    pathname === "/contact" ||
+    pathname === "/request-a-demo";
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,11 +63,12 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#061421] text-slate-300">
+    <footer className="relative bg-[#061421] text-slate-300 scroll-mt-20">
       {/* ========================================================= */}
       {/* 1. FINAL CTA PANEL (Overhanging Card on Light-to-Dark bg) */}
       {/* ========================================================= */}
-      <div className="relative z-20 bg-gradient-to-b from-white via-sky-50/30 to-[#061421]/90 dark:from-[#080e11] dark:via-[#091419] dark:to-[#061421] pt-12 pb-16 lg:pt-16 lg:pb-20 transition-colors duration-300">
+      {!shouldHideCta && (
+        <div className="relative z-20 bg-gradient-to-b from-white via-sky-50/30 to-[#061421]/90 dark:from-[#080e11] dark:via-[#091419] dark:to-[#061421] pt-12 pb-16 lg:pt-16 lg:pb-20 transition-colors duration-300">
         <Container>
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
@@ -84,7 +80,7 @@ export function Footer() {
             {/* Integrated Right-Side Medical Monitor Visual */}
             <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-full sm:w-[50%] lg:w-[42%] overflow-hidden select-none opacity-40 dark:opacity-20 hidden md:block">
               <Image
-                src="/images/accuray-6pQPFuD7nJY-unsplash.jpg"
+                src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
                 alt="Radiologist interpreting diagnostic studies on medical workstation"
                 fill
                 sizes="(max-width: 1024px) 50vw, 42vw"
@@ -121,15 +117,15 @@ export function Footer() {
               {/* CTA Action Buttons */}
               <div className="mt-7 flex flex-wrap items-center gap-3.5 sm:gap-4">
                 <Link
-                  href="/contact"
+                  href={primaryCta.href}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1c4d74] hover:bg-[#153a57] dark:bg-sky-600 dark:hover:bg-sky-500 text-white font-semibold text-sm px-7 py-3.5 shadow-md shadow-sky-900/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  <span>Request a Demo</span>
+                  <span>{primaryCta.label}</span>
                   <ArrowRight size={16} weight="bold" />
                 </Link>
 
                 <Link
-                  href="/contact"
+                  href={routes.contact}
                   className="inline-flex items-center justify-center rounded-full border border-sky-300 dark:border-sky-700/80 bg-white/60 dark:bg-slate-900/40 hover:bg-sky-50 dark:hover:bg-sky-950/60 text-sky-800 dark:text-sky-200 font-semibold text-sm px-6 py-3.5 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <span>Contact Us</span>
@@ -161,24 +157,79 @@ export function Footer() {
           </motion.div>
         </Container>
       </div>
+      )}
 
       {/* ========================================================= */}
       {/* 2. DEEP NAVY FOOTER NAVIGATION & BRAND AREA              */}
       {/* ========================================================= */}
-      <div className="relative pt-12 pb-10 overflow-hidden">
+      <div
+        className={cn(
+          "relative pb-10 overflow-hidden",
+          shouldHideCta
+            ? "pt-16 lg:pt-20 border-t border-slate-800/80"
+            : "pt-12"
+        )}
+      >
         {/* Subtle Decorative Geometric Circles in Bottom-Right */}
         <div className="pointer-events-none absolute -right-20 -bottom-20 size-[420px] rounded-full border border-sky-500/10" />
         <div className="pointer-events-none absolute -right-40 -bottom-40 size-[620px] rounded-full border border-sky-500/10" />
 
         <Container className="relative z-10">
-          {/* Balanced 5-Column Grid adhering to original cohesive typography */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
-            {/* Column 1: Brand & Identity (Span 3) */}
-            <div className="lg:col-span-3 flex flex-col justify-between">
+          {/* 1. All 7 Menu Categories & Submenus Sitemap Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 lg:gap-5 pb-12 border-b border-slate-800/80">
+            {mainNav.map((section) => (
+              <div key={section.id} className="flex flex-col">
+                <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white">
+                  {section.label}
+                </h3>
+                {section.groups ? (
+                  <div className="mt-3.5 space-y-3">
+                    {section.groups.map((group) => (
+                      <div key={group.label}>
+                        <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-sky-400/80 mb-1">
+                          {group.label}
+                        </span>
+                        <ul className="space-y-1.5">
+                          {group.items.map((link) => (
+                            <li key={link.label}>
+                              <Link
+                                href={link.href}
+                                className="text-xs text-slate-400 hover:text-sky-300 transition-colors duration-150 block leading-snug"
+                              >
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <ul className="mt-3.5 space-y-2">
+                    {section.items?.map((link) => (
+                      <li key={link.label}>
+                        <Link
+                          href={link.href}
+                          className="text-xs text-slate-400 hover:text-sky-300 transition-colors duration-150 block leading-snug"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 2. Brand Identity, Contact Info & Newsletter Row */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-10">
+            {/* Column 1: Brand & Identity (Span 4) */}
+            <div className="md:col-span-4 flex flex-col justify-between">
               <div>
                 <Link href="/" className="inline-block transition-transform duration-200 hover:scale-[1.02]">
                   <Image
-                    src="/images/WE_Logo.png"
+                    src="/images/branding/WE_Logo.png"
                     alt="WE Healthcare Logo"
                     width={160}
                     height={44}
@@ -211,50 +262,8 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Column 2: Solutions (Span 2) */}
-            <div className="lg:col-span-2">
-              <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                Solutions
-              </h3>
-              <ul className="mt-4 space-y-2.5">
-                {FOOTER_NAV.solutions.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-xs sm:text-sm text-slate-400 hover:text-sky-300 transition-colors duration-150"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 3: Quick Links (Span 2) */}
-            <div className="lg:col-span-2">
-              <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                Quick Links
-              </h3>
-              <ul className="mt-4 space-y-2.5">
-                {[
-                  ...FOOTER_NAV.about.slice(0, 4),
-                  { label: "Case Studies", href: "#case-studies" },
-                  { label: "FAQs", href: "#faqs" },
-                ].map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-xs sm:text-sm text-slate-400 hover:text-sky-300 transition-colors duration-150"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 4: Contact Us (Span 3) - Styled in matching cohesive typography */}
-            <div id="contact" className="lg:col-span-3 scroll-mt-28">
+            {/* Column 2: Contact Us (Span 5) */}
+            <div id="contact" className="md:col-span-5 scroll-mt-28">
               <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
                 Contact Us
               </h3>
@@ -302,8 +311,8 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Column 5: Stay Informed / Newsletter (Span 2) */}
-            <div className="lg:col-span-2">
+            {/* Column 3: Stay Informed / Newsletter (Span 3) */}
+            <div className="md:col-span-3">
               <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
                 Stay Informed
               </h3>
@@ -355,17 +364,14 @@ export function Footer() {
             <p>© 2026 WE Healthcare. All rights reserved.</p>
 
             <div className="flex items-center gap-4 sm:gap-6">
-              <Link href="/privacy" className="hover:text-slate-300 transition-colors">
-                Privacy Policy
-              </Link>
-              <span>|</span>
-              <Link href="/terms" className="hover:text-slate-300 transition-colors">
-                Terms of Service
-              </Link>
-              <span>|</span>
-              <Link href="/cookies" className="hover:text-slate-300 transition-colors">
-                Cookie Policy
-              </Link>
+              {legalNav.map((link, i) => (
+                <Fragment key={link.href}>
+                  {i > 0 && <span>|</span>}
+                  <Link href={link.href} className="hover:text-slate-300 transition-colors">
+                    {link.label}
+                  </Link>
+                </Fragment>
+              ))}
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
