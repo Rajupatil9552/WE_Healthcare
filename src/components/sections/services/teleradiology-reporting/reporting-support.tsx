@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { Figure } from "@/components/sections/services/shared/figure";
 import { MOTION } from "@/lib/motion";
@@ -17,8 +18,9 @@ const INDICATORS = [
 
 export function ReportingSupportSection() {
   return (
-    <section id="reporting-support" className="py-section lg:py-section-lg bg-background">
-      <Container>
+    <section id="reporting-support" className="relative overflow-clip py-section lg:py-section-lg bg-background">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <p className="eyebrow">Reporting Support</p>

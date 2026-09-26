@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { ArrowDown, CheckCircle, PhoneCall, ShieldCheck } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { HIGH_PRESSURE_ENVIRONMENTS_CONTENT as CONTENT } from "@/content/trauma-critical-care";
@@ -61,8 +62,9 @@ export function HighPressureEnvironmentsSection() {
   );
 
   return (
-    <section ref={root} id="high-pressure-environments" className="py-section lg:py-section-lg bg-surface">
-      <Container>
+    <section ref={root} id="high-pressure-environments" className="relative overflow-clip py-section lg:py-section-lg bg-surface">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="max-w-4xl">
           {/* Kicker line (visually secondary, so not the section heading) */}
           <p className="eyebrow">{CONTENT.heading}</p>

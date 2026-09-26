@@ -13,6 +13,9 @@ import {
   ArrowRight,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
+import { RevealHeading } from "@/components/ui/reveal-heading";
+import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { routes } from "@/config/routes";
 
@@ -128,175 +131,90 @@ export function WhoWeServe() {
   };
 
   return (
-    <section id="who-we-serve" className="relative overflow-hidden bg-[#f7fafc] dark:bg-[#080e11] py-20 lg:py-28 transition-colors duration-300 scroll-mt-24">
-      {/* Subtle decorative wave pattern in top right */}
-      <div className="pointer-events-none absolute right-0 top-0 h-[450px] w-[500px] overflow-hidden opacity-30 dark:opacity-15">
-        <svg
-          viewBox="0 0 500 450"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-full w-full text-sky-400"
-        >
-          <path
-            d="M50 0 C200 120, 350 80, 500 240 M100 0 C250 160, 400 120, 500 300 M150 0 C300 200, 450 160, 500 360"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeDasharray="4 4"
-          />
-          <path
-            d="M0 50 C180 180, 320 140, 500 280 M0 100 C150 220, 300 180, 500 340"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-        </svg>
-      </div>
-
-      <Container className="relative z-10">
-        {/* Section Header with Eyebrow, Title and Carousel Controls */}
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <section id="who-we-serve" className="relative overflow-hidden bg-background py-section lg:py-section-lg scroll-mt-24">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            {/* Eyebrow Label */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center rounded-full border border-sky-200/80 dark:border-sky-800/60 bg-sky-50 dark:bg-sky-950/60 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-sky-700 dark:text-sky-300 shadow-sm"
-            >
-              Who We Serve
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl leading-[1.12]"
-            >
+            <p className="eyebrow">Who We Serve</p>
+            <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
               Supporting the Entire <br />
               Care Continuum
-            </motion.h2>
-
-            {/* Supporting Text */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-4 text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal"
-            >
+            </RevealHeading>
+            <p className="mt-5 max-w-[60ch] text-base text-foreground-muted leading-relaxed">
               We partner with healthcare organizations across the continuum to provide reliable, high-quality radiology services tailored to their unique needs.
-            </motion.p>
+            </p>
           </div>
 
-          {/* Right-side navigation arrow controls */}
-          <div className="flex items-center lg:items-end justify-start lg:justify-end">
-            {/* Circular Carousel Controls */}
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={handlePrev}
-                disabled={!canScrollLeft}
-                aria-label="Previous audience card"
-                className={cn(
-                  "flex size-11 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 active:scale-95",
-                  !canScrollLeft
-                    ? "opacity-40 cursor-not-allowed"
-                    : "hover:bg-slate-100 dark:hover:bg-slate-700"
-                )}
-              >
-                <ArrowLeft size={18} weight="bold" />
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={!canScrollRight}
-                aria-label="Next audience card"
-                className={cn(
-                  "flex size-11 items-center justify-center rounded-full bg-[#1e3a5f] text-white shadow-md shadow-slate-900/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 active:scale-95",
-                  !canScrollRight
-                    ? "opacity-40 cursor-not-allowed"
-                    : "hover:bg-[#152a45]"
-                )}
-              >
-                <ArrowRight size={18} weight="bold" />
-              </button>
-            </div>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={!canScrollLeft}
+              aria-label="Previous audience card"
+              className="flex size-11 items-center justify-center rounded-full border border-border-strong text-foreground transition-[background-color,opacity,transform] duration-200 hover:bg-surface-muted active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <ArrowLeft size={18} weight="bold" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!canScrollRight}
+              aria-label="Next audience card"
+              className="flex size-11 items-center justify-center rounded-full bg-foreground text-background transition-[opacity,transform] duration-200 hover:opacity-90 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            </button>
           </div>
         </div>
 
-        {/* Audience Cards Carousel */}
-        <div className="relative mt-12 lg:mt-16">
+        <div className="relative mt-12 lg:mt-14">
           <div
             ref={carouselRef}
             tabIndex={0}
             aria-label="Audience categories carousel"
-            className="flex gap-6 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scrollbar-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded-3xl"
+            className="flex gap-6 overflow-x-auto pb-2 snap-x snap-mandatory rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {AUDIENCE_CARDS.map((card, idx) => {
               const IconComponent = card.icon;
               return (
-                <motion.div
+                <motion.article
                   key={card.id}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="group relative flex h-[480px] w-[82vw] sm:w-[340px] lg:w-[calc(25%-18px)] shrink-0 flex-col justify-end overflow-hidden rounded-3xl p-6 md:p-7 shadow-lg shadow-slate-900/10 snap-start transition-all duration-300 hover:shadow-2xl hover:shadow-sky-950/20"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.06, ease: MOTION.easeOut }}
+                  className="group relative flex h-[460px] w-[82vw] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-lg bg-slate-950 p-6 sm:w-[340px] md:p-7 lg:w-[calc(25%-18px)]"
                 >
-                  {/* Background Photography with Ken-Burns zoom on hover */}
                   <Image
                     src={card.image}
                     alt={card.alt}
                     fill
                     sizes="(max-width: 640px) 85vw, (max-width: 1024px) 340px, 25vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/55 to-transparent" />
 
-                  {/* Dark Vignette and Gradient Overlay for Pristine Legibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#09131a] via-[#09131a]/65 to-transparent transition-opacity duration-300 group-hover:from-[#060c11]" />
-
-                  {/* Subtle top subtle border sheen */}
-                  <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/10 transition-colors group-hover:border-white/20" />
-
-                  {/* Card Content */}
-                  <div className="relative z-10 flex flex-col">
-                    {/* Frosted Glass Icon Badge */}
-                    <div className="mb-4 flex size-12 items-center justify-center rounded-xl border border-white/20 bg-white/15 text-white shadow-sm backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
-                      <IconComponent size={24} weight="bold" />
-                    </div>
-
-                    {/* Audience Title */}
-                    <h3 className="text-xl font-bold tracking-tight text-white leading-snug">
-                      {card.title}
-                    </h3>
-
-                    {/* Short Description */}
-                    <p className="mt-2.5 text-xs md:text-sm leading-relaxed text-slate-200/90 font-normal line-clamp-3">
-                      {card.description}
-                    </p>
-
-                    {/* Learn More Action Link */}
+                  <div className="relative">
+                    <IconComponent size={26} weight="light" aria-hidden="true" className="text-white/80" />
+                    <h3 className="mt-4 text-xl font-semibold tracking-tight text-white">{card.title}</h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-white/75 line-clamp-3">{card.description}</p>
                     <Link
                       href={card.href}
-                      className="mt-5 inline-flex items-center gap-2 text-xs md:text-sm font-semibold text-white transition-colors duration-200 hover:text-sky-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded-sm"
+                      className="mt-5 inline-flex items-center gap-2 rounded-sm text-sm font-semibold text-white after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     >
-                      <span>Learn more</span>
-                      <ArrowRight
-                        size={15}
-                        weight="bold"
-                        className="transition-transform duration-200 group-hover:translate-x-1"
-                      />
+                      <span className="underline decoration-white/30 underline-offset-4 transition-colors group-hover:decoration-white">
+                        Learn more
+                      </span>
+                      <ArrowRight size={15} weight="bold" aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
                     </Link>
                   </div>
-                </motion.div>
+                </motion.article>
               );
             })}
           </div>
 
-          {/* Bottom Pagination Dots */}
           <div className="mt-8 flex items-center justify-center gap-2.5">
             {AUDIENCE_CARDS.map((card, idx) => (
               <button
@@ -304,11 +222,10 @@ export function WhoWeServe() {
                 type="button"
                 onClick={() => scrollToSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}: ${card.title}`}
+                aria-current={currentIndex === idx ? "true" : undefined}
                 className={cn(
-                  "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
-                  currentIndex === idx
-                    ? "w-7 bg-[#1e3a5f] dark:bg-sky-400"
-                    : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
+                  "h-1.5 rounded-full transition-[width,background-color] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  currentIndex === idx ? "w-8 bg-foreground" : "w-3 bg-border-strong hover:bg-foreground-subtle"
                 )}
               />
             ))}
@@ -318,3 +235,5 @@ export function WhoWeServe() {
     </section>
   );
 }
+
+export default WhoWeServe;

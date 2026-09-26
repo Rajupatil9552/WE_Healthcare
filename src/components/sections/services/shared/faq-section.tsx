@@ -4,6 +4,7 @@ import { useId, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -40,8 +41,9 @@ export function FaqSection({
   const accent = tone === "urgent" ? "text-urgent" : "text-primary";
 
   return (
-    <section id={id} className="py-section lg:py-section-lg bg-surface border-t border-border">
-      <Container>
+    <section id={id} className="relative overflow-clip py-section lg:py-section-lg bg-surface border-t border-border">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div className="lg:col-span-4 lg:sticky lg:top-28">
             {eyebrow && (

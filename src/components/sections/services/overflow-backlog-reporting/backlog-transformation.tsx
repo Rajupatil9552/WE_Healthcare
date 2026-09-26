@@ -3,6 +3,7 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { MOTION } from "@/lib/motion";
@@ -111,8 +112,9 @@ export function BacklogTransformationSection() {
   };
 
   return (
-    <section id="how-it-works" className="py-section lg:py-section-lg bg-surface scroll-mt-20">
-      <Container>
+    <section id="how-it-works" className="relative overflow-clip py-section lg:py-section-lg bg-surface scroll-mt-20">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <p className="eyebrow">How It Works</p>

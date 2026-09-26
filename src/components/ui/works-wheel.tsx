@@ -54,7 +54,7 @@ const CARD_RATIO = 1.45; // card width / height
 const STEP = 40; // degrees between cards on the drum
 const DRUM = 2.22; // drum radius, in card heights - and everything below likewise
 const LENS = 2.7; // perspective distance
-const RING_R = 1.14; // ring radius
+const RING_R = 1.0; // ring radius (flat ring only; keeps the whole ring inside the stage)
 /* The drum alone hangs the work on a plumb line. It isn't one: the strip curves
    away round an arc whose centre sits off to the LEFT, so the piece at the front
    is at the arc's near point - dead centre - and its neighbours have already
@@ -209,7 +209,7 @@ export function WorksWheel({
   React.useEffect(() => {
     if (!stage.h) return;
     let frame = 0;
-    const { ringR, ringScale, drumR, bow } = metrics;
+    const { ringR, ringScale, drumR, bow, cardH } = metrics;
 
     const draw = () => {
       frame = requestAnimationFrame(draw);
@@ -231,14 +231,13 @@ export function WorksWheel({
         const drumDeg = d * STEP;
         const card = cardRefs.current[i];
         if (card) {
-          card.style.transform = place(
-            d * (360 / count),
-            drumDeg,
-            ringR,
-            drumR,
-            bow,
-            m,
-          );
+          // Cards are only centred horizontally (marginLeft), so in the flat ring
+          // they sat cardH/2 below the stage centre and the ring drifted under the
+          // centre label. Lift them by half a card while in ring state; the drum
+          // (m = 1) keeps its original placement.
+          card.style.transform =
+            `translateY(${-(1 - m) * (cardH / 2)}px) ` +
+            place(d * (360 / count), drumDeg, ringR, drumR, bow, m);
           // Culled by distance, not by angle
           card.style.opacity = m > 0.5 && Math.abs(d) > CULL ? "0" : "1";
           card.style.zIndex = String(Math.round(100 - Math.abs(d) * 2));
@@ -397,7 +396,7 @@ export function WorksWheel({
         tabIndex={0}
         role="region"
         aria-label="Interactive radiology specialties drum. Scroll or swipe horizontally to navigate."
-        className="focus-visible:ring-2 focus-visible:ring-sky-500 absolute inset-0 cursor-grab outline-none active:cursor-grabbing"
+        className="focus-visible:ring-2 focus-visible:ring-ring absolute inset-0 cursor-grab outline-none active:cursor-grabbing"
         style={{ perspective: `${metrics.depth}px`, touchAction: "pan-y" }}
         onPointerDown={(event) => {
           if (event.pointerType === "touch") return; // Touch is handled by touch listeners above
@@ -464,7 +463,7 @@ export function WorksWheel({
                     marginLeft: -metrics.cardW / 2,
                   }}
                 >
-                  <span className="relative block size-full overflow-hidden rounded-xl border border-slate-200/80 dark:border-sky-500/25 bg-slate-900 shadow-xl shadow-slate-400/20 dark:shadow-black/50 transition-shadow group-hover:shadow-2xl">
+                  <span className="relative block size-full overflow-hidden rounded-lg border border-border bg-slate-900 shadow-lg transition-shadow group-hover:shadow-xl">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -477,14 +476,14 @@ export function WorksWheel({
 
                     {/* Small category tag on card face */}
                     {item.category && (
-                      <span className="absolute top-2.5 left-2.5 rounded-full bg-slate-950/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-sky-300 backdrop-blur-md border border-white/10">
+                      <span className="absolute top-2.5 left-2.5 rounded-sm bg-slate-950/75 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/90">
                         {item.category}
                       </span>
                     )}
 
                     {/* Action pill on hover */}
                     {action && item.href ? (
-                      <span className="bg-sky-500/90 text-slate-950 font-semibold pointer-events-none absolute right-2.5 bottom-2.5 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition-all group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
+                      <span className="bg-white text-slate-950 font-semibold pointer-events-none absolute right-2.5 bottom-2.5 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition-all group-hover:translate-y-0 group-hover:opacity-100 shadow-md">
                         <svg
                           viewBox="0 0 12 12"
                           className="size-2.5"
@@ -517,15 +516,15 @@ export function WorksWheel({
         style={{ fontSize: `clamp(1.15rem, ${metrics.title * 0.95}px, 2.25rem)` }}
       >
         <div className="flex flex-col items-center justify-center p-3">
-          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400 mb-1">
+          <span className="text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1">
             Clinical Care
           </span>
-          <span className="font-extrabold text-slate-900 dark:text-white leading-[1.15] whitespace-pre-line">
+          <span className="font-semibold tracking-tight text-foreground leading-[1.1] whitespace-pre-line">
             {label}
           </span>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2.5 flex items-center gap-1.5 opacity-80">
+          <span className="text-xs font-medium text-foreground-subtle mt-2.5 flex items-center gap-1.5">
             <svg
-              className="size-3.5 animate-bounce text-sky-500"
+              className="size-3.5 text-primary"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -543,25 +542,25 @@ export function WorksWheel({
         ref={titleRef}
         className="hidden md:block pointer-events-auto absolute top-1/2 left-[4%] lg:left-[6%] -translate-y-1/2 max-w-[280px] lg:max-w-sm tracking-tight opacity-0 z-20 select-text"
       >
-        <div className="p-4 sm:p-5 rounded-2xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200/80 dark:border-sky-500/20 shadow-xl shadow-slate-300/30 dark:shadow-sky-950/20">
-          <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
+        <div className="p-4 sm:p-5 rounded-lg bg-card border border-border shadow-lg">
+          <span className="inline-block text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-1">
             {items[active]?.category || "Specialty"}
           </span>
           <h3
-            className="font-extrabold text-slate-900 dark:text-white leading-tight mb-2"
+            className="font-semibold tracking-tight text-foreground leading-tight mb-2"
             style={{ fontSize: `clamp(1.2rem, ${metrics.title * 0.9}px, 2rem)` }}
           >
             {items[active]?.title}
           </h3>
           {items[active]?.description && (
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+            <p className="text-sm text-foreground-muted leading-relaxed mb-3">
               {items[active]?.description}
             </p>
           )}
           {items[active]?.href && (
             <a
               href={items[active].href}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-strong transition-colors group"
             >
               <span>Explore specialty</span>
               <svg className="size-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="currentColor">
@@ -574,7 +573,7 @@ export function WorksWheel({
 
       {/* Right-Side Specialty Index (Desktop) */}
       <ol
-        className="hidden md:block text-slate-500 dark:text-slate-400 absolute top-1/2 -translate-y-1/2 right-[3%] text-right leading-[1.8] z-20"
+        className="hidden md:block text-foreground-subtle absolute top-1/2 -translate-y-1/2 right-[3%] text-right leading-[1.8] z-20"
         style={{ fontSize: `clamp(0.75rem, ${metrics.index}px, 0.95rem)` }}
       >
         {items.map((item, i) => (
@@ -583,10 +582,10 @@ export function WorksWheel({
               type="button"
               onClick={() => to(i + 1)}
               className={cn(
-                "cursor-pointer transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-sky-500 rounded px-2 py-0.5 block ml-auto",
+                "cursor-pointer transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-2 py-0.5 block ml-auto",
                 i === active
-                  ? "text-sky-600 dark:text-sky-400 font-bold scale-105"
-                  : "hover:text-slate-900 dark:hover:text-white hover:-translate-x-1"
+                  ? "text-primary font-semibold"
+                  : "hover:text-foreground"
               )}
             >
               {item.shortTitle || item.title}

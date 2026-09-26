@@ -109,15 +109,16 @@
 }
 
 /*
- * Services pages theme (scoped via .services-theme on <main>).
+ * Marketing pages theme (scoped via .services-theme / .site-theme on <main>).
  * Matches the site's sky/cyan brand (header CTA, logo) instead of the
  * teal/emerald defaults above, and restores the services pages' original
  * navy dark palette. Other pages are unaffected.
  */
-.services-theme {
+.services-theme,
+.site-theme {
   --color-background: #ffffff;
-  --color-surface: #f8fafc; /* slate-50 */
-  --color-surface-muted: #f1f5f9; /* slate-100 */
+  --color-surface: #f1f6fa; /* cool tint: separates alternating sections and white cards */
+  --color-surface-muted: #e6eef5;
   --color-card: #ffffff;
   --color-border: #e2e8f0; /* slate-200 */
   --color-border-strong: #cbd5e1; /* slate-300 */
@@ -134,7 +135,9 @@
 }
 
 .dark .services-theme,
-[data-theme="dark"] .services-theme {
+.dark .site-theme,
+[data-theme="dark"] .services-theme,
+[data-theme="dark"] .site-theme {
   --color-background: #040c16;
   --color-surface: #07101a;
   --color-surface-muted: #0c1825;

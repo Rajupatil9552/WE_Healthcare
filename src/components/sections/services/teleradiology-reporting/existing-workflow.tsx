@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { HardDrives, ShareNetwork, UserCheck, FileText, Cpu, LockKey } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { useScrubSequence } from "@/lib/use-scrub-sequence";
 
@@ -47,8 +48,9 @@ export function ExistingWorkflowSection() {
   useScrubSequence(schematic);
 
   return (
-    <section id="workflow" className="py-section lg:py-section-lg bg-background scroll-mt-20">
-      <Container>
+    <section id="workflow" className="relative overflow-clip py-section lg:py-section-lg bg-background scroll-mt-20">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <p className="eyebrow">Built For Your Environment</p>

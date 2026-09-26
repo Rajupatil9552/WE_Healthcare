@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { MOTION } from "@/lib/motion";
@@ -52,8 +53,9 @@ export function StrokeProtocolWorkflowSection() {
   const focus = FOCUS[activeStageIndex] ?? FOCUS[0];
 
   return (
-    <section id="stroke-protocol" className="py-section lg:py-section-lg bg-background">
-      <Container>
+    <section id="stroke-protocol" className="relative overflow-clip py-section lg:py-section-lg bg-background">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="max-w-3xl">
           <p className="eyebrow">{CONTENT.eyebrow}</p>
           <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">{CONTENT.heading}</RevealHeading>

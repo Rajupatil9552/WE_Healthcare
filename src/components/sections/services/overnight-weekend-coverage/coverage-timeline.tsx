@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { ArrowsClockwise, UserCheck, PhoneCall, FileText } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { useScrubSequence } from "@/lib/use-scrub-sequence";
@@ -80,7 +81,8 @@ export function CoverageTimelineSection() {
   );
 
   return (
-    <section ref={section} id="coverage-timeline" className="relative py-section lg:py-section-lg bg-surface scroll-mt-20">
+    <section ref={section} id="coverage-timeline" className="overflow-clip relative py-section lg:py-section-lg bg-surface scroll-mt-20">
+      <DecorativeLines variant="top-right" />
       <div aria-hidden="true" className="js-night pointer-events-none absolute inset-0 bg-primary-strong/[0.07] opacity-0" />
 
       <Container className="relative">

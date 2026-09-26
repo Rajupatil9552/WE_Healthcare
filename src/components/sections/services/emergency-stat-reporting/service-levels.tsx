@@ -10,6 +10,7 @@ import {
   Sliders,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { cn } from "@/lib/utils";
 import { SERVICE_LEVELS_CONTENT } from "@/content/emergency-stat-reporting";
@@ -23,8 +24,9 @@ export function ServiceLevelsSection() {
   return (
     <section
       id="service-levels"
-      className="py-section lg:py-section-lg bg-surface"
+      className="relative overflow-clip py-section lg:py-section-lg bg-surface"
     >
+      <DecorativeLines variant="top-right" />
       <Container className="relative z-10">
         
         {/* ============================================================== */}

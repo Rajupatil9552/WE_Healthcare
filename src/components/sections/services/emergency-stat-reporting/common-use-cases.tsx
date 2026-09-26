@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -15,8 +16,9 @@ export function CommonUseCasesSection() {
   const activeCase = CONTENT.useCases.find((item) => item.id === activeId) ?? CONTENT.useCases[0];
 
   return (
-    <section id="common-use-cases" className="py-section lg:py-section-lg bg-surface">
-      <Container>
+    <section id="common-use-cases" className="relative overflow-clip py-section lg:py-section-lg bg-surface">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left: narrative + sticky preview that follows the open use case */}
           <div className="lg:col-span-5 lg:sticky lg:top-28">

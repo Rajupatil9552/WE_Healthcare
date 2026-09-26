@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "motion/react";
 import { Lightning, Pause, Play } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -58,9 +59,10 @@ export function HowItWorksSection() {
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setIsInteracting(false);
       }}
-      className="py-section lg:py-section-lg bg-background scroll-mt-20"
+      className="relative overflow-clip py-section lg:py-section-lg bg-background scroll-mt-20"
     >
-      <Container>
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
           <div className="lg:col-span-7">
             <p className="eyebrow [--eyebrow-color:var(--color-urgent)]">{CONTENT.eyebrow}</p>

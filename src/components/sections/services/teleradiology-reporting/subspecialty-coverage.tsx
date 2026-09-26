@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -66,8 +67,9 @@ export function SubspecialtyCoverageSection() {
   );
 
   return (
-    <section ref={root} id="subspecialty-coverage" className="py-section lg:py-section-lg bg-surface">
-      <Container>
+    <section ref={root} id="subspecialty-coverage" className="relative overflow-clip py-section lg:py-section-lg bg-surface">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
         <div className="max-w-3xl">
           <p className="eyebrow">Built Around Your Radiology Operation</p>
           <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
