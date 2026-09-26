@@ -61,10 +61,10 @@
   /* ---- Spacing rhythm (section-level, VISUAL_DENSITY: 3/10 - spacious) ---- */
   --space-section-y: 6rem; /* py-24 default section padding */
   --space-section-y-lg: 8rem; /* py-32 for hero / feature moments */
-  --space-container-x: 1.5rem; /* px-6 default gutter */
+  --space-container-x: 1.5rem; /* 24px gutter on phones; widens at md/xl below */
 
   /* ---- Layout ---- */
-  --container-max: 80rem; /* 1280px content max-width */
+  --container-max: 100rem; /* 1600px frame (≈1472px content after xl gutters): fills wide screens without over-long lines */
 
   /* ---- Z-index scale (documented, never arbitrary) ---- */
   --z-base: 0;
@@ -73,6 +73,15 @@
   --z-overlay: 60;
   --z-modal: 70;
   --z-toast: 80;
+}
+
+/* Gutter scales with the viewport so wide screens don't leave dead margins
+   while text never touches the edge on small ones. */
+@media (min-width: 48rem) {
+  :root { --space-container-x: 2.5rem; } /* 40px from md */
+}
+@media (min-width: 80rem) {
+  :root { --space-container-x: 4rem; } /* 64px from xl */
 }
 
 .dark,

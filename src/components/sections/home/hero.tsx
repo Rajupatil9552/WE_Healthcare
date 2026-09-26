@@ -35,7 +35,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 sm:h-40 lg:h-48 bg-gradient-to-b from-transparent via-surface/80 via-60% to-surface"
       />
 
-      <div className="relative w-full px-6 pb-24 pt-28 sm:px-10 sm:pb-28 md:px-14 lg:px-16 lg:pb-32 xl:px-20">
+      <div className="relative mx-auto w-full max-w-[var(--container-max)] px-container pb-24 pt-28 sm:pb-28 lg:pb-32">
         <motion.h1
           {...HERO_HEADING_MOTION}
           className="max-w-[20ch] text-display font-semibold text-white text-balance [text-shadow:0_2px_24px_rgb(2_6_23/0.55)]"

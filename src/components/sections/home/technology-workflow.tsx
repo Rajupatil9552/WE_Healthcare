@@ -86,7 +86,7 @@ export function TechnologyWorkflow() {
 
   return (
     <section id="technology" className="relative overflow-hidden bg-surface py-section lg:py-section-lg scroll-mt-24">
-      <DecorativeLines variant="wide" />
+      <DecorativeLines variant="wide" className="hidden sm:block" />
       <Container className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
           <div className="lg:col-span-8">
@@ -103,7 +103,7 @@ export function TechnologyWorkflow() {
       </Container>
 
       {/* Workflow animation, masked into the section surface at the edges */}
-      <div className="relative my-8 w-full select-none overflow-hidden sm:my-12">
+      <div className="relative my-8 w-full select-none overflow-hidden sm:my-12 lg:my-16">
         <video
           ref={videoRef}
           autoPlay
@@ -114,14 +114,15 @@ export function TechnologyWorkflow() {
           onTimeUpdate={handleTimeUpdate}
           onClick={togglePlay}
           aria-label={isPlaying ? "Workflow animation (click to pause)" : "Workflow animation (click to play)"}
-          className="mx-auto block h-auto max-h-[80vh] min-h-[320px] w-full cursor-pointer object-cover mix-blend-multiply sm:object-contain dark:mix-blend-screen dark:[filter:invert(1)_hue-rotate(180deg)_contrast(1.15)]"
+          className="mx-auto block h-auto max-h-[95vh] sm:min-h-[480px] w-full cursor-pointer object-contain [--fade-x:3%] sm:[--fade-x:9%] lg:scale-[1.12] mix-blend-multiply dark:mix-blend-screen dark:[filter:invert(1)_hue-rotate(180deg)_contrast(1.15)]"
           style={{
             // Dissolve all four edges into the section surface in either theme
+            // (a thinner side fade on phones, where the video spans edge to edge)
             maskImage:
-              "linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent)",
+              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent)",
             maskComposite: "intersect",
             WebkitMaskImage:
-              "linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent)",
+              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent)",
             WebkitMaskComposite: "source-in",
           }}
         >

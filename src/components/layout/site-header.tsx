@@ -83,7 +83,7 @@ export function SiteHeader() {
       >
         <div
           className={cn(
-            "mx-auto mt-2 sm:mt-2.5 transition-all duration-300 w-full max-w-7xl",
+            "mx-auto mt-2 sm:mt-2.5 transition-all duration-300 w-full max-w-[var(--container-max)]",
             isScrolled &&
               "bg-white/90 dark:bg-slate-950/85 rounded-2xl border border-slate-200/80 dark:border-sky-500/20 backdrop-blur-xl px-3 sm:px-4 xl:px-5 py-1 sm:py-1.5 shadow-lg shadow-slate-300/30 dark:shadow-sky-950/30"
           )}
