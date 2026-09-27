@@ -40,7 +40,7 @@ export function CoverageNeedsSection() {
 
           <Figure
             className="lg:col-span-6"
-            src="/images/overnight-weekend-coverage/night-radiology-reading-room.jpg"
+            src="/images/overnight-weekend-coverage/night-radiology-reading-room.webp"
             alt="Modern hospital radiology department and diagnostic reading room with dual-screen PACS workstations glowing softly at night"
             aspect="aspect-[16/11]"
             caption="Nocturnal Diagnostic Reading Suite — Board-certified radiologists interpreting high-acuity CT, MRI, and X-ray studies through the night."

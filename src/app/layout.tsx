@@ -21,6 +21,9 @@ const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
   subsets: ["latin"],
   display: "swap",
+  // Fallback only (Figtree covers all Latin copy), so don't preload it on every
+  // page; the browser fetches it only if a glyph ever needs it.
+  preload: false,
 });
 
 // Numeric/data emphasis (stats, turnaround times, tabular figures).

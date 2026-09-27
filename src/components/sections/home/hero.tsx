@@ -1,8 +1,25 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "motion/react";
 import { ArrowDown } from "@phosphor-icons/react";
+import { VideoSources } from "@/components/ui/video-sources";
 import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+
+/**
+ * Hero background video. The desktop file is wide (4096x2160), so on a portrait
+ * phone `object-cover` keeps only the middle quarter of the frame.
+ *
+ * `mobile`: a portrait render (9:16, 1080x1920, H.264, ideally under 5 MB) served
+ * to screens up to 767px wide. Drop the file in /public/videos and set the path.
+ * `mobileFocus`: until then, which part of the wide frame to keep on phones
+ * (CSS object-position, e.g. "30% 50%" to favour the left side).
+ */
+const HERO_VIDEO = {
+  desktop: "/videos/Hero%20Video.mp4",
+  mobile: null as string | null,
+  mobileFocus: "50% 50%",
+};
 
 export function Hero() {
   const scrollToExplore = () => {
@@ -20,12 +37,21 @@ export function Hero() {
     <section className="relative flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden bg-slate-950 text-white">
       {/* Background video (always dark, in both themes) */}
       <div className="absolute inset-0 overflow-hidden">
-        <video autoPlay muted loop playsInline className="h-full w-full object-cover object-center">
-          <source src="/videos/Hero Video.mp4" type="video/mp4" />
-          <source src="/videos/Hero%20Video.mp4" type="video/mp4" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover object-[var(--hero-focus)] md:object-center"
+          style={{ "--hero-focus": HERO_VIDEO.mobileFocus } as CSSProperties}
+        >
+          {/* Browsers pick the first playable, matching source: portrait file on phones when provided. */}
+          {HERO_VIDEO.mobile && <VideoSources src={HERO_VIDEO.mobile} media="(max-width: 767px)" />}
+          <VideoSources src={HERO_VIDEO.desktop} />
         </video>
-        {/* Directional scrim keeps the left-aligned headline legible */}
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 via-45% to-transparent" />
+        {/* Scrim keeps the headline legible: bottom-up on phones (text sits low), left-to-right from md */}
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 via-50% to-transparent md:hidden" />
+        <div aria-hidden="true" className="absolute inset-0 hidden bg-gradient-to-r from-slate-950/85 via-slate-950/45 via-45% to-transparent md:block" />
         <div aria-hidden="true" className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-950/60 to-transparent" />
       </div>
 

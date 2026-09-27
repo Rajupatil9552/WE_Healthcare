@@ -20,3 +20,17 @@ export const HERO_HEADING_MOTION = {
   animate: { y: 0 },
   transition: { duration: 0.6, ease: MOTION.easeOut },
 } as const;
+
+/**
+ * Hero copy entrance (paragraphs, CTAs, side panels). CSS-driven via
+ * `[data-hero-in]` in globals.css so it runs on first paint: the hero lead is
+ * often the LCP element, and a JS `initial: { opacity: 0 }` kept it invisible
+ * until hydration (~1s LCP render delay). Spread onto a motion element:
+ * `<motion.p {...heroFadeIn(0.1)}>`. `initial: false` renders it in place.
+ */
+export const heroFadeIn = (delay = 0) =>
+  ({
+    initial: false,
+    "data-hero-in": "",
+    style: { animationDelay: `${delay}s` },
+  }) as const;

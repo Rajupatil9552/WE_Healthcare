@@ -24,7 +24,7 @@ export const STROKE_HERO_CONTENT = {
     label: "Request a Consultation",
     href: "/contact",
   },
-  image: "/images/stroke-imaging-protocol/hero-stroke-ct-imaging.jpg",
+  image: "/images/stroke-imaging-protocol/hero-stroke-ct-imaging.webp",
   alt: "Diagnostic radiologist reviewing axial brain CT slices and CTA head and neck vascular imaging on multi-monitor workstation",
   // Conceptual protocol stages for subtle overlay
   protocolStages: [
@@ -64,7 +64,7 @@ export const BUILT_AROUND_WORKFLOW_CONTENT = {
   heading: "Built Around Your Stroke Workflow",
   body: "Stroke imaging can require priority handling across imaging, radiology, and clinical teams. The workflow should reflect the facility’s existing stroke pathway and communication requirements.",
   tagline: "ONE WORKFLOW. MULTIPLE CLINICAL TEAMS.",
-  image: "/images/stroke-imaging-protocol/stroke-workflow-brain-imaging.jpg",
+  image: "/images/stroke-imaging-protocol/stroke-workflow-brain-imaging.webp",
   alt: "Radiology professional analyzing acute axial brain CT scans and neurovascular CTA imaging on diagnostic displays in a clinical suite",
   caption: "Designed around existing clinical workflows.",
   coordinationSteps: [
@@ -97,7 +97,7 @@ export const COMMON_OPERATIONAL_NEEDS_CONTENT = {
   heading: "Supporting the Demands of Time-Sensitive Stroke Imaging",
   intro:
     "Stroke imaging workflows can involve different operational requirements depending on the facility, coverage model, clinical pathway, and communication process.",
-  image: "/images/stroke-imaging-protocol/stroke-operational-needs.jpg",
+  image: "/images/stroke-imaging-protocol/stroke-operational-needs.webp",
   alt: "Diagnostic medical display showing axial brain CT cross-sections and cerebral CTA neurovascular angiography in clinical reading room",
   caption: "Operational frameworks aligned with clinical urgency.",
   needs: [
@@ -151,7 +151,7 @@ export const STROKE_PROTOCOL_WORKFLOW_CONTENT = {
   heading: "From Stroke Imaging to Clinical Communication",
   supportingText:
     "A defined workflow can help coordinate study routing, radiologist review, escalation, and communication around time-sensitive stroke imaging.",
-  image: "/images/stroke-imaging-protocol/stroke-protocol-workflow.jpg",
+  image: "/images/stroke-imaging-protocol/stroke-protocol-workflow.webp",
   alt: "Diagnostic multi-planar stroke imaging study showing axial brain CT perfusion maps and CTA cerebral angiography on medical display",
   stages: [
     {
@@ -198,7 +198,7 @@ export const WHATS_INCLUDED_CONTENT = {
   heading: "A Stroke Imaging Workflow Built Around Defined Requirements",
   supportingCopy:
     "The workflow can incorporate defined routing, radiologist assignment, communication, and documentation requirements established during implementation.",
-  image: "/images/stroke-imaging-protocol/stroke-capabilities-imaging.jpg",
+  image: "/images/stroke-imaging-protocol/stroke-capabilities-imaging.webp",
   alt: "Clinical diagnostic display showing axial brain CT perfusion scans and neurovascular vascular mapping in reading suite",
   caption: "Facility-specific capability specifications.",
   capabilities: [

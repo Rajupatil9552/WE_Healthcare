@@ -9,7 +9,7 @@ import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { TRAUMA_HERO_CONTENT } from "@/content/trauma-critical-care";
 
 const PILLARS = [
@@ -19,11 +19,8 @@ const PILLARS = [
 ];
 const STACK_ROTATION = [-4, 2.5, -1.5, 3.5];
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 export function TraumaHero() {
   const deckRef = useRef<HTMLDivElement>(null);

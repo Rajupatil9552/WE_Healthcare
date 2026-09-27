@@ -7,7 +7,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { OVERFLOW_HERO_CONTENT } from "@/content/overflow-backlog-support";
 
 // Mock study queue items for the readable worklist simulation
@@ -103,11 +103,8 @@ const HIGHLIGHTS = [
   "Direct escalation for critical and unexpected acute findings",
 ];
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 export function OverflowHero() {
   const [modality, setModality] = useState<(typeof MODALITIES)[number]>("All");

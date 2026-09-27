@@ -11,6 +11,8 @@ import {
   ChartLineUp,
   ArrowRight,
   LinkedinLogo,
+  InstagramLogo,
+  FacebookLogo,
   XLogo,
   YoutubeLogo,
   Check,
@@ -19,16 +21,30 @@ import {
   MapPin,
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
-import { mainNav, legalNav } from "@/config/navigation";
+import { mainNav, legalNav, getNavSection } from "@/config/navigation";
 import { routes } from "@/config/routes";
+import { contactEmail, contactPhones, offices, socialLinks, type SocialId } from "@/config/contact";
 import { primaryCta } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-const SOCIAL_LINKS = [
-  { name: "LinkedIn", href: "https://linkedin.com", icon: LinkedinLogo },
-  { name: "X (Twitter)", href: "https://x.com", icon: XLogo },
-  { name: "YouTube", href: "https://youtube.com", icon: YoutubeLogo },
-];
+const SOCIAL_ICONS: Record<SocialId, typeof LinkedinLogo> = {
+  linkedin: LinkedinLogo,
+  instagram: InstagramLogo,
+  facebook: FacebookLogo,
+  youtube: YoutubeLogo,
+  x: XLogo,
+};
+
+const SERVICES_NAV = getNavSection("services");
+const MODALITIES_NAV = getNavSection("modalities");
+
+/** Every other section, flattened: single pages link directly, dropdown sections list their items. */
+const COMPANY_LINKS = mainNav
+  .filter((s) => s.id !== "services" && s.id !== "modalities")
+  .flatMap((s) => s.items ?? [{ label: s.label, href: s.href }]);
+
+const HEADING_CLASS = "font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white";
+const LINK_CLASS = "text-xs text-slate-400 hover:text-sky-300 transition-colors duration-150 block leading-snug";
 
 interface SiteFooterProps {
   hideCta?: boolean;
@@ -45,8 +61,7 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
   const shouldHideCta =
     hideCta ||
     pathname?.startsWith("/services") ||
-    pathname === "/contact" ||
-    pathname === "/request-a-demo";
+    pathname === routes.contact;
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +95,7 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
             {/* Integrated Right-Side Medical Monitor Visual */}
             <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-full sm:w-[50%] lg:w-[42%] overflow-hidden select-none opacity-40 dark:opacity-20 hidden md:block">
               <Image
-                src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
+                src="/images/general/accuray-6pQPFuD7nJY-unsplash.webp"
                 alt="Radiologist interpreting diagnostic studies on medical workstation"
                 fill
                 sizes="(max-width: 1024px) 50vw, 42vw"
@@ -175,77 +190,91 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
         <div className="pointer-events-none absolute -right-40 -bottom-40 size-[620px] rounded-full border border-sky-500/10" />
 
         <Container className="relative z-10">
-          {/* 1. All 7 Menu Categories & Submenus Sitemap Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 lg:gap-5 pb-12 border-b border-slate-800/80">
-            {mainNav.map((section) => (
-              <div key={section.id} className="flex flex-col">
-                <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white">
-                  {section.label}
+          {/* 1. Sitemap. Mobile order: Services | Company, then Modalities. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 border-b border-slate-800/80 pb-12 md:grid-cols-12 md:gap-8">
+            {SERVICES_NAV?.items && (
+              <nav aria-label="Services" className="order-1 md:order-none md:col-span-4 lg:col-span-3">
+                <h3 className={HEADING_CLASS}>
+                  <Link href={SERVICES_NAV.href} className="hover:text-sky-300 transition-colors">
+                    {SERVICES_NAV.label}
+                  </Link>
                 </h3>
-                {section.groups ? (
-                  <div className="mt-3.5 space-y-3">
-                    {section.groups.map((group) => (
-                      <div key={group.label}>
-                        <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-sky-400/80 mb-1">
-                          {group.label}
-                        </span>
-                        <ul className="space-y-1.5">
-                          {group.items.map((link) => (
-                            <li key={link.label}>
-                              <Link
-                                href={link.href}
-                                className="text-xs text-slate-400 hover:text-sky-300 transition-colors duration-150 block leading-snug"
-                              >
-                                {link.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <ul className="mt-3.5 space-y-2">
-                    {section.items?.map((link) => (
-                      <li key={link.label}>
-                        <Link
-                          href={link.href}
-                          className="text-xs text-slate-400 hover:text-sky-300 transition-colors duration-150 block leading-snug"
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+                <ul className="mt-4 space-y-2.5">
+                  {SERVICES_NAV.items.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className={LINK_CLASS}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
+            {MODALITIES_NAV?.groups && (
+              <nav aria-label="Modalities" className="order-3 col-span-2 md:order-none md:col-span-8 lg:col-span-6">
+                <h3 className={HEADING_CLASS}>
+                  <Link href={MODALITIES_NAV.href} className="hover:text-sky-300 transition-colors">
+                    {MODALITIES_NAV.label}
+                  </Link>
+                </h3>
+                <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
+                  {MODALITIES_NAV.groups.map((group) => (
+                    <div key={group.label}>
+                      <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-sky-400/80 mb-1.5">
+                        {group.label}
+                      </span>
+                      <ul className="space-y-1.5">
+                        {group.items.map((link) => (
+                          <li key={link.href}>
+                            <Link href={link.href} className={LINK_CLASS}>
+                              {link.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </nav>
+            )}
+
+            <nav aria-label="Company" className="order-2 md:order-none md:col-span-4 lg:col-span-3">
+              <h3 className={HEADING_CLASS}>Company</h3>
+              <ul className="mt-4 space-y-2.5">
+                {COMPANY_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className={LINK_CLASS}>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
           </div>
 
-          {/* 2. Brand Identity, Contact Info & Newsletter Row */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-10">
-            {/* Column 1: Brand & Identity (Span 4) */}
-            <div className="md:col-span-4 flex flex-col justify-between">
-              <div>
-                <Link href="/" className="inline-block transition-transform duration-200 hover:scale-[1.02]">
-                  <Image
-                    src="/images/branding/WE_Logo.png"
-                    alt="WE Healthcare Logo"
-                    width={160}
-                    height={44}
-                    className="h-9 w-auto object-contain filter brightness-110 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)]"
-                  />
-                </Link>
+          {/* 2. Brand | contact | newsletter */}
+          <div className="grid grid-cols-1 gap-10 border-b border-slate-800/80 py-12 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-6 lg:col-span-4">
+              <Link href="/" className="inline-block transition-transform duration-200 hover:scale-[1.02]">
+                <Image
+                  src="/images/branding/WE_Logo.png"
+                  alt="WE Healthcare Logo"
+                  width={160}
+                  height={44}
+                  className="h-9 w-auto object-contain filter brightness-110 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)]"
+                />
+              </Link>
 
-                <p className="mt-4 text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-sm">
-                  Delivering high-quality, reliable teleradiology solutions to support patients and healthcare providers across the care continuum.
-                </p>
-              </div>
+              <p className="mt-4 text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-sm">
+                Delivering high-quality, reliable teleradiology solutions to support patients and healthcare providers across the care continuum.
+              </p>
 
               {/* Social Profile Links */}
-              <div className="mt-6 flex items-center gap-2.5">
-                {SOCIAL_LINKS.map((s) => {
-                  const Icon = s.icon;
+              <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                {socialLinks.map((s) => {
+                  const Icon = SOCIAL_ICONS[s.id];
                   return (
                     <a
                       key={s.name}
@@ -262,65 +291,43 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
               </div>
             </div>
 
-            {/* Column 2: Contact Us (Span 5) */}
-            <div id="contact" className="md:col-span-5 scroll-mt-28">
-              <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                Contact Us
-              </h3>
+            {/* Contact Us */}
+            <div id="contact" className="scroll-mt-28 md:col-span-6 lg:col-span-4">
+              <h3 className={HEADING_CLASS}>Contact Us</h3>
               <ul className="mt-4 space-y-3 text-xs sm:text-sm text-slate-400">
-                {/* Phone Numbers */}
                 <li className="flex items-start gap-2.5">
                   <Phone size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
-                  <div className="leading-snug">
-                    <a href="tel:+919511917233" className="hover:text-sky-300 transition-colors">
-                      +919511917233
-                    </a>
-                    <span className="mx-1 text-slate-600">|</span>
-                    <a href="tel:+12028106050" className="hover:text-sky-300 transition-colors">
-                      +12028106050
-                    </a>
+                  <div className="flex flex-col gap-1 leading-snug">
+                    {contactPhones.map((p) => (
+                      <a key={p.tel} href={`tel:${p.tel}`} className="hover:text-sky-300 transition-colors">
+                        {p.display}
+                      </a>
+                    ))}
                   </div>
                 </li>
 
-                {/* Email Address */}
                 <li className="flex items-center gap-2.5">
                   <EnvelopeSimple size={15} weight="bold" className="text-sky-400 shrink-0" />
-                  <a
-                    href="mailto:sales@wehealthcare.us"
-                    className="hover:text-sky-300 transition-colors leading-snug"
-                  >
-                    sales@wehealthcare.us
+                  <a href={`mailto:${contactEmail}`} className="hover:text-sky-300 transition-colors leading-snug break-all">
+                    {contactEmail}
                   </a>
                 </li>
 
-                {/* Pune Location */}
-                <li className="flex items-start gap-2.5">
-                  <MapPin size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
-                  <span className="leading-relaxed">
-                    Amanora chambers, 4th floor, Office no. 421, Pune - 411028, Maharashtra, India.
-                  </span>
-                </li>
-
-                {/* USA Location */}
-                <li className="flex items-start gap-2.5">
-                  <MapPin size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
-                  <span className="leading-relaxed">
-                    10080 Reflections Blvd West, Sunrise, Florida, 33351, USA
-                  </span>
-                </li>
+                {offices.map((o) => (
+                  <li key={o.id} className="flex items-start gap-2.5">
+                    <MapPin size={15} weight="bold" className="text-sky-400 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{o.short}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-
-            {/* Column 3: Stay Informed / Newsletter (Span 3) */}
-            <div className="md:col-span-3">
-              <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">
-                Stay Informed
-              </h3>
+            {/* Stay Informed / Newsletter */}
+            <div className="md:col-span-12 lg:col-span-4">
+              <h3 className={HEADING_CLASS}>Stay Informed</h3>
               <p className="mt-4 text-xs text-slate-400 leading-relaxed font-normal">
                 Get the latest insights on teleradiology and clinical trends.
               </p>
 
-              {/* Newsletter Form */}
               <form onSubmit={handleSubscribe} className="mt-3.5">
                 <div className="relative flex items-center">
                   <input
@@ -353,7 +360,7 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
           </div>
 
           {/* Understated Trust Note */}
-          <div className="mt-12 text-center">
+          <div className="mt-10 text-center">
             <p className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
               Healthcare-focused • Security-conscious • Built for dependable collaboration
             </p>

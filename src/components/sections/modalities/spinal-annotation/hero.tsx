@@ -7,17 +7,14 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { buttonVariants } from "@/components/ui/button";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 import { SPINAL_HERO_CONTENT as CONTENT, SPINE_IMAGES } from "@/content/spinal-annotation";
 import { AnnotatedSpine } from "./annotated-spine";
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 const IMAGE = SPINE_IMAGES.lumbarMri;
 const STEP_MS = 420;

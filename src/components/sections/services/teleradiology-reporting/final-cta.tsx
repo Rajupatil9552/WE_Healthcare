@@ -14,7 +14,7 @@ export function FinalCTASection() {
       primary={{ label: "Request a Consultation", href: "/contact" }}
       secondary={{ label: "Contact Our Team", href: "/contact" }}
       image={{
-        src: "/images/teleradiology-reporting/final-cta-radiology.jpg",
+        src: "/images/teleradiology-reporting/final-cta-radiology.webp",
         alt: "Clinical radiology reading room and hospital leadership consultation at dusk",
       }}
     />

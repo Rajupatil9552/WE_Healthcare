@@ -9,16 +9,13 @@ import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { buttonVariants } from "@/components/ui/button";
 import { Radiograph } from "@/components/sections/modalities/x-ray/radiograph";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 import { MRI_HERO_CONTENT as CONTENT, MRI_IMAGES } from "@/content/mri";
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 const FILM = {
   src: MRI_IMAGES.sagittalHead.src,

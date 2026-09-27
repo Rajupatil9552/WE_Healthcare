@@ -36,7 +36,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Subspecialty Care",
     description:
       "Comprehensive expertise across a broad range of body imaging studies.",
-    image: "/images/general/accuray-6pQPFuD7nJY-unsplash.jpg",
+    image: "/images/general/accuray-6pQPFuD7nJY-unsplash.webp",
     href: "#modalities",
   },
   {
@@ -57,7 +57,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Subspecialty Care",
     description:
       "Expertise across bones, joints, muscles, and related structures.",
-    image: "/images/general/accuray-nhZWIUJBVVc-unsplash.jpg",
+    image: "/images/general/accuray-nhZWIUJBVVc-unsplash.webp",
     href: "#modalities",
   },
   {
@@ -78,7 +78,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Subspecialty Care",
     description:
       "Specialized diagnostic evaluation for abdominal and pelvic conditions.",
-    image: "/images/general/accuray-eRJCXdb3Q48-unsplash.jpg",
+    image: "/images/general/accuray-eRJCXdb3Q48-unsplash.webp",
     href: "#modalities",
   },
   {
@@ -88,7 +88,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Advanced Modality",
     description:
       "Detailed interpretation across a wide range of magnetic resonance imaging studies.",
-    image: "/images/general/mri-poster.jpg",
+    image: "/images/general/mri-poster.webp",
     href: "#modalities",
   },
   {
@@ -98,7 +98,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Diagnostic Modality",
     description:
       "Diagnostic interpretation across diverse computed tomography studies.",
-    image: "/images/general/accuray-36i9vuZrVjc-unsplash.jpg",
+    image: "/images/general/accuray-36i9vuZrVjc-unsplash.webp",
     href: "#modalities",
   },
   {
@@ -108,7 +108,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     category: "Core Diagnostics",
     description:
       "Comprehensive routine diagnostic imaging support across everyday clinical needs.",
-    image: "/images/general/national-cancer-institute-rUfUd-7WW78-unsplash.jpg",
+    image: "/images/general/national-cancer-institute-rUfUd-7WW78-unsplash.webp",
     href: "#modalities",
   },
 ];

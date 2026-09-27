@@ -153,12 +153,53 @@
  * Tailwind's `motion-safe:` variant so it never runs under
  * prefers-reduced-motion (see components/sections/hero.tsx).
  */
+/*
+ * Hero copy entrance (see heroFadeIn in lib/motion.ts). Pure CSS so it starts
+ * at first paint instead of waiting for JS; skipped under reduced motion.
+ */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-in] {
+    animation: hero-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
 @keyframes hero-kenburns {
   from {
     transform: scale(1);
   }
   to {
     transform: scale(1.06);
+  }
+}
+
+/* Who We Serve: modality marquee (list is duplicated, so -50% loops seamlessly)
+   and the hover scanline on each scan card. */
+@keyframes wws-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 0.625rem)); /* half the gap-5 between copies */
+  }
+}
+
+@keyframes wws-scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(700%);
   }
 }
 

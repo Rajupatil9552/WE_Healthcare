@@ -8,7 +8,7 @@ import {
   Buildings,
   CirclesThreePlus,
   Ambulance,
-  UsersThree,
+  ShareNetwork,
   ArrowLeft,
   ArrowRight,
 } from "@phosphor-icons/react";
@@ -38,7 +38,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     image:
       "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=1200&q=80",
     alt: "Modern hospital building exterior and medical health system entrance",
-    href: routes.audience("hospitals-health-systems"),
+    href: `${routes.whoWeServe}#hospitals`,
     icon: Buildings,
   },
   {
@@ -46,10 +46,20 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     title: "Imaging Centers",
     description:
       "Flexible and scalable radiology support to help imaging centers maintain high turnaround times and deliver exceptional patient care.",
-    image: "/images/general/accuray-36i9vuZrVjc-unsplash.jpg",
+    image: "/images/general/accuray-36i9vuZrVjc-unsplash.webp",
     alt: "Modern MRI and CT scanner suite inside an outpatient imaging center",
-    href: routes.audience("imaging-centers"),
+    href: `${routes.whoWeServe}#imaging-centers`,
     icon: CirclesThreePlus,
+  },
+  {
+    id: "healthcare-networks",
+    title: "Healthcare Networks",
+    description:
+      "Connected reporting support for organizations managing imaging across multiple hospitals, outpatient centers, and locations.",
+    image: "/images/who-we-serve/healthcare-network-city-lights.webp",
+    alt: "Aerial night view of a metropolitan area with lit roads connecting neighborhoods",
+    href: `${routes.whoWeServe}#healthcare-networks`,
+    icon: ShareNetwork,
   },
   {
     id: "emergency-departments",
@@ -59,18 +69,8 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     image:
       "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=1200&q=80",
     alt: "Hospital emergency department clinical care and trauma triage",
-    href: routes.audience("emergency-departments"),
+    href: `${routes.whoWeServe}#emergency-departments`,
     icon: Ambulance,
-  },
-  {
-    id: "radiology-groups",
-    title: "Radiology Groups",
-    description:
-      "Trusted partnership for overflow coverage, subspecialty reads, and workforce optimization to help radiology groups focus on what they do best.",
-    image: "/images/general/accuray-6pQPFuD7nJY-unsplash.jpg",
-    alt: "Board-certified radiologist analyzing diagnostic scans on multi-monitor workstation",
-    href: routes.whoWeServe, // no "Radiology Groups" page in the nav yet
-    icon: UsersThree,
   },
 ];
 

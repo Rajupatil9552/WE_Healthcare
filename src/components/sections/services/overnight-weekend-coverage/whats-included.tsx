@@ -71,7 +71,7 @@ export function WhatsIncludedSection() {
             </p>
             <Figure
               className="mt-10"
-              src="/images/overnight-weekend-coverage/weekend-hospital-imaging.jpg"
+              src="/images/overnight-weekend-coverage/weekend-hospital-imaging.webp"
               alt="Modern hospital diagnostic imaging department with MRI and CT scanners operating on weekend shift"
               aspect="aspect-[4/3]"
               sizes="(max-width: 1024px) 100vw, 40vw"

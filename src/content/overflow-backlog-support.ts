@@ -26,7 +26,7 @@ export const OVERFLOW_HERO_CONTENT = {
     label: "See How It Works",
     href: "#how-it-works",
   },
-  image: "/images/overflow-backlog-reporting/hero-radiology-worklist.jpg",
+  image: "/images/overflow-backlog-reporting/hero-radiology-worklist.webp",
   alt: "Radiologist reviewing CT and MRI studies on multi-monitor PACS workstation in reading room",
 } as const;
 
@@ -38,7 +38,7 @@ export const WHEN_WORKLIST_GROWS_CONTENT = {
   objective: "Add reporting capacity where it is needed.",
   detail:
     "Unaddressed backlog places disproportionate strain on on-site radiologists, risks diagnostic delays for outpatients, and complicates clinical scheduling across departments. Our operational model integrates directly with your existing imaging queue to restore steady-state turnaround.",
-  image: "/images/overflow-backlog-reporting/radiologist-workstation.jpg",
+  image: "/images/overflow-backlog-reporting/radiologist-workstation.webp",
   alt: "Diagnostic radiologist analyzing high-volume case worklist on medical display",
 } as const;
 
@@ -306,7 +306,7 @@ export const OVERFLOW_FINAL_CTA_CONTENT = {
     label: "Explore Coverage Options",
     href: "/services",
   },
-  image: "/images/overflow-backlog-reporting/reporting-workflow.jpg",
+  image: "/images/overflow-backlog-reporting/reporting-workflow.webp",
   alt: "Teleradiology team collaborating on diagnostic imaging case triage and reporting",
   bulletPoints: [
     "Board-certified subspecialty radiologists",

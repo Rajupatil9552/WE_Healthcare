@@ -30,7 +30,7 @@ const CARDS: CoverageCardData[] = [
     title: "Subspecialty Reporting",
     description:
       "Studies can be routed according to modality, priority, and the subspecialty requirements of your workflow.",
-    image: "/images/teleradiology-reporting/subspecialty-mri.jpg",
+    image: "/images/teleradiology-reporting/subspecialty-mri.webp",
     alt: "High-resolution diagnostic MRI and CT medical imaging scan",
     href: "/contact",
     verificationNote: "[VERIFY: subspecialty coverage and assignment model]",
@@ -40,7 +40,7 @@ const CARDS: CoverageCardData[] = [
     title: "Flexible Coverage",
     description:
       "Use reporting support for defined coverage windows, overflow periods, overnight needs, weekends, or other operational requirements.",
-    image: "/images/teleradiology-reporting/flexible-coverage-radiology.jpg",
+    image: "/images/teleradiology-reporting/flexible-coverage-radiology.webp",
     alt: "Clinical radiologist interpreting imaging studies at a diagnostic hospital workstation",
     href: "/contact",
     verificationNote: "[VERIFY: available coverage models]",

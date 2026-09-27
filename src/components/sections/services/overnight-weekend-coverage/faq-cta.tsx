@@ -22,7 +22,7 @@ export function FAQCTASection() {
         ]}
         primary={{ label: "Request a Consultation", href: "/contact" }}
         image={{
-          src: "/images/overnight-weekend-coverage/final-cta-radiology.jpg",
+          src: "/images/overnight-weekend-coverage/final-cta-radiology.webp",
           alt: "Clinical radiology reading room and hospital leadership consultation at dusk",
         }}
       />

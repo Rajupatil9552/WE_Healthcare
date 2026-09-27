@@ -27,7 +27,7 @@ export const EMERGENCY_HERO_CONTENT = {
     label: "Explore STAT Workflow",
     href: "#how-it-works",
   },
-  image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
+  image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.webp",
   alt: "Board-certified radiologist reviewing acute emergent CT head neuro scans at diagnostic workstation",
   commitments: [
     "Priority queue routing for high-acuity studies",
@@ -95,7 +95,7 @@ export const WHEN_EVERY_STUDY_MATTERS_CONTENT = {
       isElevated: false,
     },
   ],
-  image: "/images/emergency-stat-reporting/priority-radiology-worklist.jpg",
+  image: "/images/emergency-stat-reporting/priority-radiology-worklist.webp",
   alt: "Teleradiology reading room workstation with high-resolution monitors displaying multi-modality diagnostic imaging",
 } as const;
 
@@ -116,7 +116,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "Rapid diagnostic interpretation for acute presentations requiring expedited admission, discharge, or procedural decisions in the emergency suite.",
       clinicalFocus: "Acute triage, head trauma, chest pain, and abdominal pain",
-      image: "/images/emergency-stat-reporting/emergency-department-imaging.jpg",
+      image: "/images/emergency-stat-reporting/emergency-department-imaging.webp",
       alt: "Emergency department modern CT scanner suite with clinical care team",
     },
     {
@@ -126,7 +126,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "High-velocity injuries, multi-system blunt trauma, and acute orthopedic injuries requiring immediate multi-slice cross-sectional assessment.",
       clinicalFocus: "Whole-body trauma CT, spinal stability, and hemorrhage detection",
-      image: "/images/emergency-stat-reporting/trauma-radiology.jpg",
+      image: "/images/emergency-stat-reporting/trauma-radiology.webp",
       alt: "Diagnostic trauma radiology workstation reviewing multi-slice CT spine and pelvic fracture scans",
     },
     {
@@ -136,7 +136,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "Sudden clinical deterioration on medical or surgical floors, postoperative concerns, and acute changes in inpatient vital parameters.",
       clinicalFocus: "Post-op bleeding, acute pulmonary changes, and neuro checks",
-      image: "/images/emergency-stat-reporting/priority-radiology-worklist.jpg",
+      image: "/images/emergency-stat-reporting/priority-radiology-worklist.webp",
       alt: "Teleradiology reading room multi-monitor diagnostic workstation",
     },
     {
@@ -146,7 +146,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "Unplanned emergent imaging arriving during overnight, weekend, and holiday periods when in-house subspecialty coverage is constrained.",
       clinicalFocus: "Nocturnal coverage, emergency call relief, and subspecialty backup",
-      image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
+      image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.webp",
       alt: "Board-certified diagnostic radiologist reviewing acute scans at workstation",
     },
     {
@@ -156,7 +156,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "Studies with high likelihood of critical pathology—such as acute stroke, pulmonary embolism, or intracranial hemorrhage—requiring urgent direct communication.",
       clinicalFocus: "Stroke protocols, aortic dissection, and tension pneumothorax",
-      image: "/images/emergency-stat-reporting/trauma-radiology.jpg",
+      image: "/images/emergency-stat-reporting/trauma-radiology.webp",
       alt: "Diagnostic monitor displaying urgent time-sensitive radiology scans",
     },
     {
@@ -166,7 +166,7 @@ export const COMMON_USE_CASES_CONTENT = {
       description:
         "Seasonal volume surges, local mass-casualty events, or sudden ED surges that exceed standard departmental reading bandwidth.",
       clinicalFocus: "Surge absorption, queue stabilization, and backlog prevention",
-      image: "/images/emergency-stat-reporting/emergency-department-imaging.jpg",
+      image: "/images/emergency-stat-reporting/emergency-department-imaging.webp",
       alt: "Hospital acute imaging suite prepared for emergency imaging volume surge",
     },
   ],
@@ -206,7 +206,7 @@ export const HOW_IT_WORKS_CONTENT = {
       stageNarrative:
         "The ordering clinician or technologist identifies an emergent clinical presentation. An acute protocol flag is appended upon study transmission, initiating priority handling.",
       badgeColor: "rose",
-      image: "/images/emergency-stat-reporting/priority-radiology-worklist.jpg",
+      image: "/images/emergency-stat-reporting/priority-radiology-worklist.webp",
       alt: "Emergency study flagged for acute triage",
     },
     {
@@ -226,7 +226,7 @@ export const HOW_IT_WORKS_CONTENT = {
       stageNarrative:
         "The study automatically routes ahead of routine outpatient queues and matches to an appropriately credentialed, subspecialty-trained diagnostic radiologist.",
       badgeColor: "rose",
-      image: "/images/emergency-stat-reporting/emergency-department-imaging.jpg",
+      image: "/images/emergency-stat-reporting/emergency-department-imaging.webp",
       alt: "Prioritized emergency imaging study routed ahead of routine worklist",
     },
     {
@@ -246,7 +246,7 @@ export const HOW_IT_WORKS_CONTENT = {
       stageNarrative:
         "The assigned radiologist opens cross-sectional series on multi-monitor diagnostic displays, evaluating critical emergent pathology according to facility protocol.",
       badgeColor: "rose",
-      image: "/images/emergency-stat-reporting/trauma-radiology.jpg",
+      image: "/images/emergency-stat-reporting/trauma-radiology.webp",
       alt: "Radiologist reviewing acute neuro CT imaging at diagnostic PACS workstation",
     },
     {
@@ -266,7 +266,7 @@ export const HOW_IT_WORKS_CONTENT = {
       stageNarrative:
         "Unexpected or time-sensitive critical findings trigger immediate verbal telephone communication with the emergency physician, backed by timestamped documentation.",
       badgeColor: "rose",
-      image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
+      image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.webp",
       alt: "Emergency physician receiving direct verbal radiologist communication",
     },
   ],
@@ -289,7 +289,7 @@ export const CRITICAL_FINDINGS_PROTOCOL_CONTENT = {
     findingFlag: "Critical Finding Identified",
     actionStatus: "Direct Escalation Required",
     accession: "DEMO-CRIT-904",
-    image: "/images/emergency-stat-reporting/trauma-radiology.jpg",
+    image: "/images/emergency-stat-reporting/trauma-radiology.webp",
     alt: "Radiology diagnostic report review with highlighted critical finding",
   },
   nodes: [
@@ -464,7 +464,7 @@ export const EMERGENCY_FINAL_CTA_CONTENT = {
     label: "Contact Our Team",
     href: "/contact",
   },
-  image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.jpg",
+  image: "/images/emergency-stat-reporting/hero-emergency-stat-radiology.webp",
   alt: "Diagnostic radiologist reviewing urgent emergent cross-sectional imaging",
 } as const;
 

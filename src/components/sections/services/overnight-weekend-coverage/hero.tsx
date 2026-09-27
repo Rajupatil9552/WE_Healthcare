@@ -7,7 +7,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 
 // Temporary radiology placeholder imagery.
 // Replace with approved production photography later.
@@ -18,11 +18,8 @@ const HIGHLIGHTS = [
   "Clean morning worklist handover with zero unread patient backlog",
 ];
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 export function OvernightHero() {
   return (
@@ -71,7 +68,7 @@ export function OvernightHero() {
                 className="absolute inset-0"
               >
                 <Image
-                  src="/images/overnight-weekend-coverage/overnight-radiology-workstation.jpg"
+                  src="/images/overnight-weekend-coverage/overnight-radiology-workstation.webp"
                   alt="Board-certified diagnostic radiologist reviewing diagnostic medical scans at night in hospital reading room"
                   fill
                   priority

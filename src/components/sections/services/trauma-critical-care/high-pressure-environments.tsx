@@ -6,8 +6,13 @@ import { ArrowDown, CheckCircle, PhoneCall, ShieldCheck } from "@phosphor-icons/
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/gsap";
 import { HIGH_PRESSURE_ENVIRONMENTS_CONTENT as CONTENT } from "@/content/trauma-critical-care";
+
+// Only this section draws/animates along SVG paths, so register those plugins here.
+gsap.registerPlugin(DrawSVGPlugin, MotionPathPlugin);
 
 // Study rows are a fixed 80px rhythm so the SVG branches (viewBox 0 0 120 320)
 // start exactly at each row's centre: y = 40, 120, 200, 280.

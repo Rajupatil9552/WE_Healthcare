@@ -1,4 +1,4 @@
-const SITE_URL = "https://www.wehealthcare.com";
+export const SITE_URL = "https://www.wehealthcare.com";
 
 type FaqEntry = { question: string; answer: string };
 
@@ -16,14 +16,15 @@ export function buildServiceJsonLd({
   faqs,
 }: {
   /** Top-level route segment the page lives under. */
-  section?: "services" | "modalities";
-  slug: string;
+  section?: "services" | "modalities" | "who-we-serve" | "technology-security" | "quality";
+  /** Omit for a top-level page such as /who-we-serve. */
+  slug?: string;
   name: string;
   description: string;
   specialties: string[];
   faqs: readonly FaqEntry[];
 }) {
-  const url = `${SITE_URL}/${section}/${slug}`;
+  const url = slug ? `${SITE_URL}/${section}/${slug}` : `${SITE_URL}/${section}`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -45,5 +46,35 @@ export function buildServiceJsonLd({
         })),
       },
     ],
+  };
+}
+
+/** BlogPosting for a single post page. */
+export function buildBlogPostingJsonLd(post: {
+  slug: string;
+  title: string;
+  excerpt: string;
+  cover: { src: string };
+  author: { name: string };
+  publishedAt: string;
+  updatedAt?: string;
+  category: { name: string };
+  tags: string[];
+}) {
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    mainEntityOfPage: url,
+    headline: post.title,
+    description: post.excerpt,
+    image: post.cover.src.startsWith("http") ? post.cover.src : `${SITE_URL}${post.cover.src}`,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    articleSection: post.category.name,
+    keywords: post.tags.join(", "),
+    author: { "@type": "Organization", name: post.author.name },
+    publisher: { "@type": "Organization", name: "WE Healthcare", url: SITE_URL },
   };
 }

@@ -29,7 +29,7 @@ export const OVERNIGHT_HERO_CONTENT = {
     label: "View Coverage Schedule",
     href: "#coverage-timeline",
   },
-  image: "/images/overnight-weekend-coverage/overnight-radiology-workstation.jpg",
+  image: "/images/overnight-weekend-coverage/overnight-radiology-workstation.webp",
   alt: "Board-certified diagnostic radiologist reviewing cross-sectional medical scans at night in hospital reading room",
   shiftHighlights: [
     { label: "Night Shift Coverage", window: "20:00 – 08:00 EST", tag: "Active Nocturnal Queue" },
@@ -44,7 +44,7 @@ export const COVERAGE_CHALLENGE_CONTENT = {
   quote: "Night shifts and weekends represent the highest operational vulnerability for hospital radiology—where emergency volume peaks while on-site staffing is lowest.",
   narrative:
     "Patient care does not pause at the end of the business day. Emergency departments, inpatient units, and urgent care centers continue ordering diagnostic imaging around the clock. When healthcare organizations rely solely on daytime radiologists to cover overnight call, physician fatigue escalates, staff retention suffers, and morning backlogs create operational friction.",
-  image: "/images/overnight-weekend-coverage/night-radiology-reading-room.jpg",
+  image: "/images/overnight-weekend-coverage/night-radiology-reading-room.webp",
   alt: "Hospital radiology reading room equipped with high-resolution diagnostic workstations operating on night shift",
   pressurePoints: [
     {
@@ -295,7 +295,7 @@ export const FAQ_CTA_CONTENT = {
       label: "Speak with Our Clinical Team",
       href: "/contact",
     },
-    image: "/images/overnight-weekend-coverage/morning-radiology-handoff.jpg",
+    image: "/images/overnight-weekend-coverage/morning-radiology-handoff.webp",
     alt: "Hospital radiology team collaborating during morning shift handover",
     trustItems: [
       "U.S. board-certified diagnostic radiologists",

@@ -11,6 +11,7 @@
 // The whole thing is one number - `turn` - read by a single rAF pass that writes
 // transforms straight to the DOM. 0 is the ring, 1 is the drum with item 0 at
 // the front, and every whole number after that is one more item turned past.
+import Image from "next/image";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -464,12 +465,14 @@ export function WorksWheel({
                   }}
                 >
                   <span className="relative block size-full overflow-hidden rounded-lg border border-border bg-slate-900 shadow-lg transition-shadow group-hover:shadow-xl">
-                    <img
+                    {/* next/image: resized WebP/AVIF, lazy-loaded (the wheel sits below the hero). */}
+                    <Image
                       src={item.image}
                       alt={item.title}
+                      fill
                       draggable={false}
-                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
+                      sizes={`${Math.ceil(metrics.cardW) || 320}px`}
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     {/* Subtle image vignette for contrast */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20 pointer-events-none" />

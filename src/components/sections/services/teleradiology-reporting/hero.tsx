@@ -7,7 +7,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 
 // Temporary radiology placeholder imagery.
 // Replace with approved production photography later.
@@ -19,11 +19,8 @@ const WORKFLOW_STEPS = [
   { step: "04", label: "Report Returned" },
 ];
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 export function TeleradiologyHero() {
   return (
@@ -70,7 +67,7 @@ export function TeleradiologyHero() {
               className="relative aspect-[4/3] sm:aspect-[21/9]"
             >
               <Image
-                src="/images/teleradiology-reporting/hero-radiologist-workstation.jpg"
+                src="/images/teleradiology-reporting/hero-radiologist-workstation.webp"
                 alt="Board-certified diagnostic radiologist reviewing cross-sectional medical scans at a high-resolution PACS workstation"
                 fill
                 priority

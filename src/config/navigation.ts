@@ -2,7 +2,6 @@ import type { NavLink, NavSection } from "@/types";
 import { routes } from "@/config/routes";
 import { services } from "@/content/services";
 import { modalities, modalityCategories } from "@/content/modalities";
-import { audiences } from "@/content/audiences";
 
 /**
  * Single source of truth for site navigation. The header, the footer
@@ -33,45 +32,20 @@ export const mainNav: NavSection[] = [
   {
     id: "who-we-serve",
     label: "Who We Serve",
+    // Single page: no dropdown. Audiences are sections on /who-we-serve.
     href: routes.whoWeServe,
-    items: audiences.map((a) => ({ label: a.title, href: routes.audience(a.slug) })),
   },
   {
     id: "technology",
     label: "Technology & Security",
+    // Single page: no dropdown. Topics are sections on /technology-security.
     href: routes.technology.index,
-    items: [
-      { label: "PACS & RIS Integration", href: routes.technology.pacsRisIntegration },
-      { label: "DICOM Workflow", href: routes.technology.dicomWorkflow },
-      { label: "Secure Image Transfer", href: routes.technology.secureImageTransfer },
-      { label: "Security & Compliance", href: routes.technology.securityCompliance },
-      { label: "Credentialing & Licensing", href: routes.technology.credentialingLicensing },
-    ],
   },
   {
     id: "quality",
     label: "Quality",
+    // Single page: no dropdown. Topics are sections on /quality.
     href: routes.quality.index,
-    items: [
-      { label: "Our Radiologists", href: routes.quality.radiologists },
-      { label: "Quality Control", href: routes.quality.qualityControl },
-      { label: "Reporting Workflow", href: routes.quality.reportingWorkflow },
-      { label: "Critical Findings", href: routes.quality.criticalFindings },
-      { label: "Client Reporting & Analytics", href: routes.quality.clientReportingAnalytics },
-      { label: "Operations Support", href: routes.quality.operationsSupport },
-    ],
-  },
-  {
-    id: "resources",
-    label: "Resources",
-    href: routes.resources.index,
-    items: [
-      { label: "Insights", href: routes.resources.insights },
-      { label: "Case Studies", href: routes.resources.caseStudies },
-      { label: "FAQs", href: routes.resources.faqs },
-      { label: "Teleradiology Resources", href: routes.resources.teleradiologyResources },
-      { label: "Sample Report / Performance Report", href: routes.resources.sampleReports },
-    ],
   },
   {
     id: "about",
@@ -79,9 +53,8 @@ export const mainNav: NavSection[] = [
     href: routes.about.index,
     items: [
       { label: "About WE Healthcare", href: routes.about.index },
-      { label: "Our Approach", href: routes.about.ourApproach },
       { label: "Leadership", href: routes.about.leadership },
-      { label: "Contact", href: routes.contact },
+      { label: "Blog", href: routes.about.blog },
     ],
   },
 ];
@@ -94,6 +67,11 @@ export const legalNav: NavLink[] = [
 
 export function getNavSection(id: string) {
   return mainNav.find((s) => s.id === id);
+}
+
+/** True when a section has a dropdown; single-page sections render as a plain link. */
+export function hasSubmenu(section: NavSection) {
+  return Boolean(section.groups?.length || section.items?.length);
 }
 
 /** All links in a section, flattening groups. Used by hub pages. */

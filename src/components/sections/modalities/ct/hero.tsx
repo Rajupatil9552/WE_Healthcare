@@ -8,16 +8,13 @@ import { ArrowRight, Pause, Play } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { buttonVariants } from "@/components/ui/button";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 import { CT_HERO_CONTENT as CONTENT, CT_IMAGES, CT_SLICE_STACK as STACK } from "@/content/ct";
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 const REST_SLICE = 8; // lateral ventricles: the slice the cine settles on
 const FRAME_MS = 140;

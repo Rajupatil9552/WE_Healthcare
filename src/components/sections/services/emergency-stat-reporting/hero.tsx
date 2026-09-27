@@ -7,7 +7,7 @@ import { Lightning, ArrowRight, PhoneCall, CheckCircle } from "@phosphor-icons/r
 import { Container } from "@/components/ui/container";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { HERO_HEADING_MOTION, MOTION, heroFadeIn } from "@/lib/motion";
 import { EMERGENCY_HERO_CONTENT } from "@/content/emergency-stat-reporting";
 
 interface ConceptualStudy {
@@ -61,11 +61,8 @@ const OPERATIONS_POINTS = [
 ];
 const ESCALATION_STEPS = ["STAT Flagged", "Priority Routing", "Clinician Call"];
 
-const fadeIn = (delay: number) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.5, delay, ease: MOTION.easeOut },
-});
+/** CSS-driven entrance (no JS wait); see heroFadeIn. */
+const fadeIn = heroFadeIn;
 
 export function EmergencyHero() {
   const shouldReduceMotion = useReducedMotion();

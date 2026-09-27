@@ -60,7 +60,7 @@ export function WhatsIncludedChallengeSection() {
             <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground-subtle">Operational Framework</p>
             <Figure
               className="mt-4"
-              src="/images/overflow-backlog-reporting/reporting-workflow.jpg"
+              src="/images/overflow-backlog-reporting/reporting-workflow.webp"
               alt="Diagnostic radiologist interpreting overflow cases on hospital PACS workstation"
               aspect="aspect-[4/3]"
               sizes="(max-width: 1024px) 100vw, 40vw"

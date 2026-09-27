@@ -1,10 +1,13 @@
 "use client";
 
-import { Equal, X, Moon, Sun } from "@aliimam/icons";
+// Phosphor (tree-shakeable). @aliimam/icons shipped as one ~8 MB file and put every icon in the shared bundle.
+import { Equals, X, Moon, Sun } from "@phosphor-icons/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
@@ -15,9 +18,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { mainNav } from "@/config/navigation";
+import { mainNav, hasSubmenu } from "@/config/navigation";
 import { primaryCta } from "@/config/site";
+import { routes } from "@/config/routes";
+
+/** Pages whose hero is a full-bleed dark image/video: the unscrolled header uses white text. */
+const DARK_HERO_ROUTES = new Set<string>([routes.home]);
 
 type DropdownAlign = "left" | "center" | "right";
 
@@ -28,7 +36,6 @@ const DROPDOWN_LAYOUT: Record<string, { align: DropdownAlign; width: string }> =
   "who-we-serve": { align: "center", width: "w-[290px] min-w-[290px]" },
   technology: { align: "center", width: "w-[300px] min-w-[300px]" },
   quality: { align: "center", width: "w-[290px] min-w-[290px]" },
-  resources: { align: "right", width: "w-[320px] min-w-[320px]" },
   about: { align: "right", width: "w-[250px] min-w-[250px]" },
 };
 
@@ -50,6 +57,10 @@ export function SiteHeader() {
   const [menuState, setMenuState] = React.useState(false);
   const [openMobileSections, setOpenMobileSections] = React.useState<Record<string, boolean>>({});
   const [isScrolled, setIsScrolled] = React.useState(false);
+  // White nav text is only for the top of the homepage, over its dark video
+  // hero. Every other page has a light (theme) hero, so it uses the regular
+  // theme-aware colors from the start.
+  const overDarkHero = DARK_HERO_ROUTES.has(usePathname()) && !isScrolled;
 
   const toggleMobileSection = (id: string) => {
     setOpenMobileSections((prev) => ({
@@ -92,9 +103,14 @@ export function SiteHeader() {
             {/* Logo Section */}
             <div className="flex w-full justify-between lg:w-auto items-center shrink-0">
               <Link href="/" aria-label="home" className="flex items-center gap-2">
-                <img
+                {/* Optimized + preloaded: the logo is above the fold on every page. */}
+                <Image
                   src="/images/branding/WE_Logo.png"
                   alt="WE Healthcare Logo"
+                  width={999}
+                  height={200}
+                  priority
+                  sizes="200px"
                   className="h-8 sm:h-8.5 xl:h-9.5 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(56,189,248,0.35)] transition-transform hover:scale-105"
                 />
               </Link>
@@ -105,20 +121,20 @@ export function SiteHeader() {
                   aria-label={menuState ? "Close Menu" : "Open Menu"}
                   className={cn(
                     "relative z-20 block cursor-pointer p-2 transition-colors",
-                    isScrolled
-                      ? "text-slate-700 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-200"
-                      : "text-white hover:text-sky-300"
+                    overDarkHero
+                      ? "text-white hover:text-sky-300"
+                      : "text-slate-700 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-200"
                   )}
                 >
-                  <Equal className={cn("m-auto duration-200", menuState ? "scale-0 opacity-0 rotate-180" : "scale-100 opacity-100 rotate-0")} />
-                  <X className={cn("absolute inset-0 m-auto size-6 duration-200", menuState ? "scale-100 opacity-100 rotate-0" : "scale-0 opacity-0 -rotate-180")} />
+                  <Equals size={24} className={cn("m-auto duration-200", menuState ? "scale-0 opacity-0 rotate-180" : "scale-100 opacity-100 rotate-0")} />
+                  <X size={24} className={cn("absolute inset-0 m-auto size-6 duration-200", menuState ? "scale-100 opacity-100 rotate-0" : "scale-0 opacity-0 -rotate-180")} />
                 </button>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center justify-center flex-1 min-w-0 mx-1">
-              <Menus isScrolled={isScrolled} />
+              <Menus onDarkHero={overDarkHero} />
             </div>
 
             {/* Actions & CTA (Desktop) */}
@@ -152,6 +168,7 @@ export function SiteHeader() {
                         >
                           {section.label}
                         </Link>
+                        {hasSubmenu(section) && (
                         <button
                           type="button"
                           onClick={() => toggleMobileSection(section.id)}
@@ -168,9 +185,10 @@ export function SiteHeader() {
                             <path d="m6 9 6 6 6-6" />
                           </svg>
                         </button>
+                        )}
                       </div>
 
-                      {isOpen && (
+                      {isOpen && hasSubmenu(section) && (
                         <div className="mt-2 space-y-2 pl-2 pt-1 animate-in fade-in-0 duration-150">
                           {section.groups ? (
                             section.groups.map((group) => (
@@ -234,20 +252,34 @@ export function SiteHeader() {
   );
 }
 
-export function Menus({ isScrolled }: { isScrolled?: boolean }) {
+export function Menus({ onDarkHero = false }: { onDarkHero?: boolean }) {
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-0 xl:gap-0.5">
-        {mainNav.map((section) => (
+        {mainNav.map((section) => {
+          const itemClass = cn(
+            "bg-transparent h-auto text-xs xl:text-[13px] 2xl:text-sm px-1.5 lg:px-2 xl:px-2.5 py-1.5 xl:py-2 font-medium whitespace-nowrap transition-colors rounded-lg flex items-center gap-0.5 xl:gap-1",
+            onDarkHero
+              ? "text-white/95 hover:text-white dark:text-white/95 hover:bg-white/15 dark:hover:bg-white/15 data-[state=open]:text-white data-[state=open]:bg-white/20 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
+              : "text-slate-800 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-300 hover:bg-sky-50/80 dark:hover:bg-sky-500/10 data-[state=open]:text-sky-600 dark:data-[state=open]:text-sky-400 data-[state=open]:bg-sky-50/80 dark:data-[state=open]:bg-sky-500/10"
+          );
+
+          // Single-page sections (e.g. Who We Serve) are a plain link, no dropdown.
+          if (!hasSubmenu(section)) {
+            return (
+              <NavigationMenuItem key={section.id} className="relative">
+                <NavigationMenuLink asChild>
+                  <Link href={section.href} className={cn(navigationMenuTriggerStyle(), itemClass)}>
+                    {section.label}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            );
+          }
+
+          return (
           <NavigationMenuItem key={section.id} className="relative">
-            <NavigationMenuTrigger
-              className={cn(
-                "bg-transparent h-auto text-xs xl:text-[13px] 2xl:text-sm px-1.5 lg:px-2 xl:px-2.5 py-1.5 xl:py-2 font-medium whitespace-nowrap transition-colors rounded-lg flex items-center gap-0.5 xl:gap-1",
-                isScrolled
-                  ? "text-slate-800 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-300 hover:bg-sky-50/80 dark:hover:bg-sky-500/10 data-[state=open]:text-sky-600 dark:data-[state=open]:text-sky-400 data-[state=open]:bg-sky-50/80 dark:data-[state=open]:bg-sky-500/10"
-                  : "text-white/95 hover:text-white dark:text-white/95 hover:bg-white/15 dark:hover:bg-white/15 data-[state=open]:text-white data-[state=open]:bg-white/20 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]"
-              )}
-            >
+            <NavigationMenuTrigger className={itemClass}>
               {section.label}
             </NavigationMenuTrigger>
             <NavigationMenuContent
@@ -341,7 +373,8 @@ export function Menus({ isScrolled }: { isScrolled?: boolean }) {
               )}
             </NavigationMenuContent>
           </NavigationMenuItem>
-        ))}
+          );
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );

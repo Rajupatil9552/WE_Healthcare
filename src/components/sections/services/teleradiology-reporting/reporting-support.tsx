@@ -54,7 +54,7 @@ export function ReportingSupportSection() {
 
           <Figure
             className="lg:col-span-5"
-            src="/images/teleradiology-reporting/reporting-support-radiology-room.jpg"
+            src="/images/teleradiology-reporting/reporting-support-radiology-room.webp"
             alt="Modern radiology department reading room equipped with diagnostic medical imaging workstations"
             aspect="aspect-[4/3]"
             sizes="(max-width: 1024px) 100vw, 40vw"

@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useTheme } from "next-themes";
 import {
   FileText,
   HardDrives,
@@ -10,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
+import { VideoSources } from "@/components/ui/video-sources";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -24,6 +26,17 @@ const PIPELINE_STEPS = [
   { num: "07", title: "Final Report", desc: "Structured documentation" },
   { num: "08", title: "PACS Delivery", desc: "Delivered to EHR" },
 ];
+
+/** Theme-specific renders of the workflow animation. */
+const WORKFLOW_VIDEO = {
+  light: "/videos/Workflow_White.mp4",
+  dark: "/videos/Workflow_Black.mp4",
+} as const;
+
+const noopSubscribe = () => () => {};
+
+/** False during SSR and hydration, true after: keeps the server-rendered video src stable. */
+const useMounted = () => React.useSyncExternalStore(noopSubscribe, () => true, () => false);
 
 const CAPABILITIES = [
   {
@@ -50,12 +63,29 @@ const CAPABILITIES = [
 
 export function TechnologyWorkflow() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
+  // Lazy-load: attach the video source only once the section is ~400px from the
+  // viewport, so ~800 KB of video doesn't compete with the hero at page load.
+  const videoWrapRef = React.useRef<HTMLDivElement>(null);
+  const nearView = useInView(videoWrapRef, { once: true, margin: "400px 0px" });
   const [isPlaying, setIsPlaying] = React.useState(true);
   const [activeStep, setActiveStep] = React.useState(0);
+  const { resolvedTheme } = useTheme();
+  const mounted = useMounted();
+  const videoSrc = mounted && resolvedTheme === "dark" ? WORKFLOW_VIDEO.dark : WORKFLOW_VIDEO.light;
+  // Playback position carried across a theme switch (the video remounts with the new file).
+  const resumeAt = React.useRef(0);
+
+  const handleLoadedMetadata = () => {
+    const video = videoRef.current;
+    if (!video || !resumeAt.current) return;
+    video.currentTime = resumeAt.current;
+    if (!isPlaying) video.pause();
+  };
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
     const current = videoRef.current.currentTime;
+    resumeAt.current = current;
     const total = videoRef.current.duration || 12;
     const stepIdx = Math.min(7, Math.floor((current / total) * 8));
     setActiveStep(stepIdx);
@@ -103,30 +133,34 @@ export function TechnologyWorkflow() {
       </Container>
 
       {/* Workflow animation, masked into the section surface at the edges */}
-      <div className="relative my-8 w-full select-none overflow-hidden sm:my-12 lg:my-16">
+      <div ref={videoWrapRef} className="relative my-8 w-full select-none overflow-hidden sm:my-12 lg:my-16">
         <video
+          key={nearView ? videoSrc : "idle"}
           ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload={nearView ? "auto" : "none"}
           onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
           onClick={togglePlay}
           aria-label={isPlaying ? "Workflow animation (click to pause)" : "Workflow animation (click to play)"}
-          className="mx-auto block h-auto max-h-[95vh] sm:min-h-[480px] w-full cursor-pointer object-contain [--fade-x:3%] sm:[--fade-x:9%] lg:scale-[1.12] mix-blend-multiply dark:mix-blend-screen dark:[filter:invert(1)_hue-rotate(180deg)_contrast(1.15)]"
+          // Box is exactly 16:9 (the videos are 1920x1080) so the edge mask lands on the
+          // picture itself, never on letterbox bars. Width is capped so height stays ~106vh max.
+          className="mx-auto block aspect-video h-auto w-full max-w-[calc(106vh*16/9)] cursor-pointer object-cover [--fade-x:3%] [--fade-y:8%] sm:[--fade-x:9%] mix-blend-multiply dark:mix-blend-screen dark:[--fade-x:14%] dark:[--fade-y:14%]"
           style={{
-            // Dissolve all four edges into the section surface in either theme
-            // (a thinner side fade on phones, where the video spans edge to edge)
+            // Dissolve all four edges into the section surface in either theme. The dark
+            // render has a navy backdrop (not pure black), so it gets a wider fade.
             maskImage:
-              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent)",
+              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent)",
             maskComposite: "intersect",
             WebkitMaskImage:
-              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent)",
+              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent)",
             WebkitMaskComposite: "source-in",
           }}
         >
-          <source src="/videos/Workfow.mp4" type="video/mp4" />
+          {nearView && <VideoSources src={videoSrc} />}
         </video>
       </div>
 

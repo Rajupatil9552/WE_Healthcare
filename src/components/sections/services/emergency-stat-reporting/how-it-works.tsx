@@ -202,7 +202,7 @@ export function HowItWorksSection() {
                     className="absolute inset-0"
                   >
                     <Image
-                      src={currentStep.image ?? "/images/emergency-stat-reporting/priority-radiology-worklist.jpg"}
+                      src={currentStep.image ?? "/images/emergency-stat-reporting/priority-radiology-worklist.webp"}
                       alt={currentStep.alt ?? "Radiology workflow diagnostic review"}
                       fill
                       sizes="(max-width: 1024px) 100vw, 40vw"

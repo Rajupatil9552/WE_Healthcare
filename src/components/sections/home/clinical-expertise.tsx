@@ -140,7 +140,7 @@ export function ClinicalExpertise() {
 
             <div className="relative mt-8">
               <Figure
-                src="/images/general/accuray-6pQPFuD7nJY-unsplash.jpg"
+                src="/images/general/accuray-6pQPFuD7nJY-unsplash.webp"
                 alt="Radiologist interpreting diagnostic studies across high-resolution monitors"
                 aspect="aspect-[4/3] lg:aspect-[5/6]"
                 sizes="(max-width: 1024px) 100vw, 45vw"

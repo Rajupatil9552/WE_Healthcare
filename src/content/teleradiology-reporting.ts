@@ -34,7 +34,7 @@ export const HERO_CONTENT = {
     label: "Explore Coverage Models",
     href: "#coverage-models",
   },
-  image: "/images/teleradiology-reporting/hero-radiologist-workstation.jpg",
+  image: "/images/teleradiology-reporting/hero-radiologist-workstation.webp",
   alt: "Board-certified radiologist analyzing diagnostic medical imaging at a multi-monitor diagnostic workstation",
   trustHighlights: [
     { title: "U.S. Board-Certified", desc: "ABR / AOBR certified diagnostic radiologists" },
@@ -51,7 +51,7 @@ export const REPORTING_SUPPORT_CONTENT = {
     description:
       "Whether addressing routine overflow, seasonal backlog, or emergency night shifts, our clinical team extends your diagnostic capacity without operational friction.",
   },
-  image: "/images/teleradiology-reporting/reporting-support-radiology-room.jpg",
+  image: "/images/teleradiology-reporting/reporting-support-radiology-room.webp",
   alt: "Clinical radiology reading suite equipped with diagnostic imaging workstations",
   supportModels: [
     {
@@ -113,42 +113,42 @@ export const SUBSPECIALTY_COVERAGE_CONTENT = {
       title: "Neuroradiology",
       modalities: "CT / MRI",
       description: "Interpretation of acute stroke, head trauma, spinal cord pathology, and complex intracranial disease.",
-      image: "/images/teleradiology-reporting/subspecialty-mri.jpg",
+      image: "/images/teleradiology-reporting/subspecialty-mri.webp",
       alt: "Diagnostic high-resolution MRI scan evaluation in neuroradiology",
     },
     {
       title: "Musculoskeletal (MSK)",
       modalities: "X-Ray / CT / MRI",
       description: "Specialized reads for sports medicine, joint arthrography, orthopedic trauma, and degenerative joint disease.",
-      image: "/images/teleradiology-reporting/flexible-coverage-radiology.jpg",
+      image: "/images/teleradiology-reporting/flexible-coverage-radiology.webp",
       alt: "Radiologist reviewing musculoskeletal diagnostic images",
     },
     {
       title: "Body & Abdominal Imaging",
       modalities: "CT / MRI / Ultrasound",
       description: "Comprehensive evaluation of abdominal, pelvic, gastrointestinal, and oncologic cross-sectional studies.",
-      image: "/images/teleradiology-reporting/workflow-radiology.jpg",
+      image: "/images/teleradiology-reporting/workflow-radiology.webp",
       alt: "Abdominal cross-sectional medical imaging displayed on diagnostic monitors",
     },
     {
       title: "Cardiothoracic Imaging",
       modalities: "CT / Chest X-Ray",
       description: "Evaluation of pulmonary parenchyma, mediastinal abnormalities, acute chest trauma, and cardiac CT studies.",
-      image: "/images/teleradiology-reporting/final-cta-radiology.jpg",
+      image: "/images/teleradiology-reporting/final-cta-radiology.webp",
       alt: "Cardiothoracic imaging evaluation on workstation",
     },
     {
       title: "Pediatric Radiology",
       modalities: "X-Ray / Ultrasound / MRI",
       description: "Pediatric-adapted diagnostic protocols respecting pediatric anatomy, development, and radiation sensitivity.",
-      image: "/images/audiences/hospital.jpg",
+      image: "/images/audiences/hospital.webp",
       alt: "Pediatric and general healthcare hospital facility",
     },
     {
       title: "Emergency & Trauma",
       modalities: "Multimodal Emergency",
       description: "Time-critical assessment for acute polytrauma, acute abdomen, vascular emergencies, and critical patient care.",
-      image: "/images/audiences/emergency-department.jpg",
+      image: "/images/audiences/emergency-department.webp",
       alt: "Emergency department clinical acute care imaging environment",
     },
   ],
@@ -190,7 +190,7 @@ export const EXISTING_WORKFLOW_CONTENT = {
     description:
       "We integrate with your existing PACS, RIS, and EHR systems. Your technologists send studies exactly as they do today, with no disruptive proprietary software required.",
   },
-  image: "/images/teleradiology-reporting/workflow-radiology.jpg",
+  image: "/images/teleradiology-reporting/workflow-radiology.webp",
   alt: "Connected diagnostic radiology workflow across hospital PACS and RIS systems",
   workflowSteps: [
     {
@@ -394,7 +394,7 @@ export const WHO_WE_SUPPORT_CONTENT = {
       tagline: "Scalable 24/7/365 inpatient and emergency diagnostic support",
       description:
         "Provide your medical staff with reliable subspecialty coverage, reduce on-call burden for hospital-employed radiologists, and guarantee rapid emergency reads.",
-      image: "/images/audiences/hospital.jpg",
+      image: "/images/audiences/hospital.webp",
       alt: "Modern hospital and health system clinical facility exterior",
       highlights: [
         "Inpatient, outpatient, and emergency room coverage",
@@ -408,7 +408,7 @@ export const WHO_WE_SUPPORT_CONTENT = {
       tagline: "Consistent routine turnaround and specialized clinical reads",
       description:
         "Attract referring physicians with high-quality subspecialty reports across MRI, CT, and ultrasound, delivered with dependable, predictable turnaround.",
-      image: "/images/audiences/imaging-center.jpg",
+      image: "/images/audiences/imaging-center.webp",
       alt: "Outpatient medical imaging center diagnostic suite",
       highlights: [
         "Specialized MSK, Neuro, and Body imaging reads",
@@ -422,7 +422,7 @@ export const WHO_WE_SUPPORT_CONTENT = {
       tagline: "High-acuity STAT reporting for urgent clinical decisions",
       description:
         "Support emergency physicians with rapid diagnostic preliminary and final interpretations for trauma, acute stroke, and critical cardiopulmonary emergencies.",
-      image: "/images/audiences/emergency-department.jpg",
+      image: "/images/audiences/emergency-department.webp",
       alt: "Hospital emergency department clinical triage and trauma setting",
       highlights: [
         "Immediate prioritization for emergency studies",
@@ -436,7 +436,7 @@ export const WHO_WE_SUPPORT_CONTENT = {
       tagline: "Centralized teleradiology bridging multi-site clinical operations",
       description:
         "Standardize diagnostic interpretation quality and reporting templates across regional clinics, critical access hospitals, and ambulatory care centers.",
-      image: "/images/audiences/healthcare-network.jpg",
+      image: "/images/audiences/healthcare-network.webp",
       alt: "Regional healthcare network facilities and collaborative clinical team",
       highlights: [
         "Unified worklist and cross-facility routing",
@@ -498,9 +498,9 @@ export const FINAL_CTA_CONTENT = {
   },
   secondaryCta: {
     label: "Request a Demo",
-    href: "/request-a-demo",
+    href: "/contact?inquiry=demo",
   },
-  image: "/images/teleradiology-reporting/final-cta-radiology.jpg",
+  image: "/images/teleradiology-reporting/final-cta-radiology.webp",
   alt: "Healthcare leadership and radiology team discussing clinical teleradiology partnership",
 } as const;
 
