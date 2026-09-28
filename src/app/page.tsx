@@ -8,7 +8,8 @@ const WhoWeServe = dynamic(() => import("@/components/sections/home/who-we-serve
 const TechnologyWorkflow = dynamic(() => import("@/components/sections/home/technology-workflow").then((m) => m.TechnologyWorkflow));
 const ClinicalExpertise = dynamic(() => import("@/components/sections/home/clinical-expertise").then((m) => m.ClinicalExpertise));
 const HowPartnershipWorks = dynamic(() => import("@/components/sections/home/how-partnership-works").then((m) => m.HowPartnershipWorks));
-const ClientTestimonials = dynamic(() => import("@/components/sections/home/client-testimonials").then((m) => m.ClientTestimonials));
+// const ClientTestimonials = dynamic(() => import("@/components/sections/home/client-testimonials").then((m) => m.ClientTestimonials));
+const WhyWeHealthcare = dynamic(() => import("@/components/sections/home/why-we-healthcare").then((m) => m.WhyWeHealthcare));
 const LatestInsights = dynamic(() => import("@/components/sections/home/latest-insights").then((m) => m.LatestInsights));
 
 // The blog teaser reads posts; refresh at most every 5 minutes (matches /blog).
@@ -23,7 +24,8 @@ export default function Home() {
       <TechnologyWorkflow />
       <ClinicalExpertise />
       <HowPartnershipWorks />
-      <ClientTestimonials />
+      {/* <ClientTestimonials /> */}
+      <WhyWeHealthcare />
       <LatestInsights />
     </main>
   );

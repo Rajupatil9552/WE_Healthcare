@@ -20,6 +20,12 @@ export const primaryCta = {
   href: routes.requestDemo,
 };
 
+/** Navbar CTA (desktop and mobile menu). */
+export const headerCta = {
+  label: "Contact Us",
+  href: routes.contact,
+};
+
 export const secondaryHeroCta = {
   label: "Explore Our Services",
   href: routes.services,

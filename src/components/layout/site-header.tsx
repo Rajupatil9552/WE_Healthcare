@@ -21,7 +21,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { mainNav, hasSubmenu } from "@/config/navigation";
-import { primaryCta } from "@/config/site";
+import { headerCta } from "@/config/site";
 import { routes } from "@/config/routes";
 
 /** Pages whose hero is a full-bleed dark image/video: the unscrolled header uses white text. */
@@ -141,13 +141,13 @@ export function SiteHeader() {
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0 pl-1">
               <ModeToggle />
               <Link
-                href={primaryCta.href}
+                href={headerCta.href}
                 className={cn(
                   buttonVariants({ variant: "accent", size: "sm" }),
                   "bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-semibold hover:from-sky-400 hover:to-cyan-300 border-0 shadow-lg shadow-sky-500/25 transition-all hover:scale-105 whitespace-nowrap text-xs xl:text-sm px-3 xl:px-4 py-1.5 xl:py-2 shrink-0"
                 )}
               >
-                {primaryCta.label}
+                {headerCta.label}
               </Link>
             </div>
           </div>
@@ -234,14 +234,14 @@ export function SiteHeader() {
               <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
                 <ModeToggle />
                 <Link
-                  href={primaryCta.href}
+                  href={headerCta.href}
                   onClick={() => setMenuState(false)}
                   className={cn(
                     buttonVariants({ variant: "accent", size: "sm" }),
                     "flex-1 text-center bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-semibold hover:from-sky-400 hover:to-cyan-300 border-0 shadow-lg shadow-sky-500/25 transition-all py-2"
                   )}
                 >
-                  {primaryCta.label}
+                  {headerCta.label}
                 </Link>
               </div>
             </div>
