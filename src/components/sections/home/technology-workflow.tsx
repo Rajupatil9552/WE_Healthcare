@@ -19,13 +19,20 @@ import { cn } from "@/lib/utils";
 const PIPELINE_STEPS = [
   { num: "01", title: "Study Scan", desc: "Imaging at facility" },
   { num: "02", title: "Image Upload", desc: "Encrypted transfer" },
-  { num: "03", title: "Statim PACS", desc: "Automated routing" },
+  { num: "03", title: "PACS", desc: "Automated routing" },
   { num: "04", title: "Assigned Radiologist", desc: "Subspecialty match" },
   { num: "05", title: "Radiologist Review", desc: "Diagnostic read" },
   { num: "06", title: "QC Checking", desc: "Clinical QA review" },
   { num: "07", title: "Final Report", desc: "Structured documentation" },
-  { num: "08", title: "PACS Delivery", desc: "Delivered to EHR" },
 ];
+
+/**
+ * The workflow video is cut into 8 equal phases. The rail shows 7 steps (the
+ * former "PACS Delivery" step was removed), so the video's last phase keeps
+ * "Final Report" highlighted. Update this if the video is re-rendered.
+ */
+const VIDEO_PHASES = 8;
+const LAST_STEP = PIPELINE_STEPS.length - 1;
 
 /** Theme-specific renders of the workflow animation. */
 const WORKFLOW_VIDEO = {
@@ -87,7 +94,7 @@ export function TechnologyWorkflow() {
     const current = videoRef.current.currentTime;
     resumeAt.current = current;
     const total = videoRef.current.duration || 12;
-    const stepIdx = Math.min(7, Math.floor((current / total) * 8));
+    const stepIdx = Math.min(LAST_STEP, Math.floor((current / total) * VIDEO_PHASES));
     setActiveStep(stepIdx);
   };
 
@@ -105,7 +112,7 @@ export function TechnologyWorkflow() {
   const seekToStep = (index: number) => {
     if (!videoRef.current) return;
     const total = videoRef.current.duration || 12;
-    const targetTime = (index / 8) * total + 0.1;
+    const targetTime = (index / VIDEO_PHASES) * total + 0.1;
     videoRef.current.currentTime = targetTime;
     setActiveStep(index);
     if (videoRef.current.paused) {
@@ -165,8 +172,8 @@ export function TechnologyWorkflow() {
       </div>
 
       <Container className="relative">
-        {/* 8-phase rail, synced with the video; click a phase to seek */}
-        <ol className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 border-t border-border-strong">
+        {/* Step rail, synced with the video; click a step to seek */}
+        <ol className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 border-t border-border-strong">
           {PIPELINE_STEPS.map((step, idx) => {
             const isActive = activeStep === idx;
             return (
