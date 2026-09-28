@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import brandLogo from "../../../public/images/branding/WE_Logo.png";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -105,13 +106,11 @@ export function SiteHeader() {
               <Link href="/" aria-label="home" className="flex items-center gap-2">
                 {/* Optimized + preloaded: the logo is above the fold on every page. */}
                 <Image
-                  src="/images/branding/WE_Logo.png"
+                  src={brandLogo}
                   alt="WE Healthcare Logo"
-                  width={999}
-                  height={200}
                   priority
-                  sizes="200px"
-                  className="h-8 sm:h-8.5 xl:h-9.5 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(56,189,248,0.35)] transition-transform hover:scale-105"
+                  sizes="(max-width: 640px) 150px, (max-width: 1280px) 180px, 200px"
+                  className="h-8 sm:h-9 xl:h-10 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(56,189,248,0.35)] dark:brightness-110 transition-transform hover:scale-105"
                 />
               </Link>
               <div className="flex gap-2 lg:hidden items-center">

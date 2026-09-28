@@ -318,7 +318,7 @@ export function ServiceLevelsSection() {
 
             {/* Bottom Clarification Note */}
             <p className="mt-4 text-xs text-foreground-subtle px-2">
-              Parameters are agreed on a per-facility basis. WE Healthcare does not publish generic universal turnaround guarantees; all commitments reflect verified operational capacity.
+              Routine studies are reported within 12 to 24 hours. STAT studies are moved to the front of the queue 24x7, with turnaround targets agreed for each facility and written into your service agreement. Critical findings are phoned directly to the referring physician with read-back documented.
             </p>
 
           </div>

@@ -510,42 +510,42 @@ export const TELERADIOLOGY_FAQ_ITEMS: { id: string; question: string; answer: st
     id: "who-can-use",
     question: "Who can use teleradiology reporting support?",
     answer:
-      "WE Healthcare provides teleradiology reporting support for hospitals, health systems, outpatient imaging centers, emergency departments, urgent care centers, and independent radiology groups across the United States seeking reliable diagnostic capacity.",
+      "Hospitals and health systems, imaging centers, multi-site healthcare networks, emergency departments and physician groups that need extra reporting capacity. Engagements range from a few hours of overflow each week to full 24x7 coverage.",
   },
   {
     id: "pacs-connectivity",
     question: "How does WE Healthcare connect with an existing PACS or RIS?",
     answer:
-      "We establish secure, bidirectional connections with your facility's existing PACS, RIS, and EHR systems using standard DICOM and HL7 protocols over encrypted TLS 1.3 VPN tunnels or lightweight virtual appliances. Your technologists maintain their normal scanning workflow with no disruptive proprietary software required.",
+      "We work inside your existing PACS and RIS through secure access agreed with your IT team, so your radiologists and referrers keep the workflow they already know. Where direct access is not practical, studies can be routed through our secure platform using an eRAD integration. Reports are returned to your PACS, RIS or EHR in your preferred format. No change to your current system is required.",
   },
   {
     id: "overflow-coverage",
     question: "Can reporting support be used for overflow or after-hours coverage?",
     answer:
-      "Yes. Our reporting models are fully customizable around your operational needs—including dedicated overnight shifts, weekend call coverage, holiday relief, scheduled daytime overflow surges, or secondary subspecialty consultations with no punitive minimum volume mandates.",
+      "Yes. Reporting support can cover daytime overflow, overnight and weekend shifts, holidays or radiologist leave. You can start with one coverage window and add more as your needs grow.",
   },
   {
     id: "routing-logic",
     question: "How are studies routed to radiologists?",
     answer:
-      "Studies are ingested into our intelligent clinical worklist and automatically routed according to modality, clinical acuity (STAT vs. routine), facility bylaws, and state medical licensing, ensuring each case is interpreted by an appropriately credentialed, board-certified radiologist.",
+      "Studies are routed by priority, modality and subspecialty using rules agreed with you during onboarding. STAT and critical studies move to the front of the queue. Final reads are assigned only to radiologists licensed in the patient's state.",
   },
   {
     id: "critical-findings",
     question: "How are critical findings communicated?",
     answer:
-      "When unexpected or acute critical findings are identified, our radiologist or 24/7 clinical coordination desk immediately initiates direct telephone contact with the referring physician or clinical care team. A closed-loop timestamped read-back confirmation is documented directly in the diagnostic report.",
+      "Critical findings are phoned directly to the ordering physician or your designated contact as soon as they are identified. Each call is documented in the report with read-back. Escalation contacts are agreed during onboarding.",
   },
   {
     id: "supported-modalities",
     question: "Which modalities are supported?",
     answer:
-      "We support all major diagnostic imaging modalities, including Magnetic Resonance Imaging (MRI), Computed Tomography (CT), Diagnostic Ultrasound, Digital Radiography (X-Ray), and Mammography across neuroradiology, musculoskeletal, body/abdominal, pediatric, and emergency subspecialties.",
+      "X-ray, CT, MRI, ultrasound, PET-CT, nuclear medicine and CBCT, plus spinal annotation services. Subspecialty reads are available for neuro, musculoskeletal, body and chest imaging.",
   },
   {
     id: "start-engagement",
     question: "What information is needed to start an engagement?",
     answer:
-      "To initiate discovery, our team reviews your facility's estimated study volumes, modality breakdown, desired coverage windows, medical staff credentialing bylaws, and local PACS/RIS integration endpoints to design a seamless operational workflow.",
+      "Your expected monthly volume by modality, the coverage hours you need, the states where patients are imaged, your PACS/RIS details, report templates and critical findings contacts. We use this to prepare your proposal and onboarding plan.",
   },
 ];

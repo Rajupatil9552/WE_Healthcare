@@ -361,42 +361,42 @@ export const TRAUMA_FAQ_CONTENT = {
       number: "01",
       question: "Can teleradiology support trauma imaging?",
       answer:
-        "Trauma and critical-care imaging workflows can be supported through defined priority workflows, communication requirements, and capacity needs, subject to the facility's requirements and verified capabilities.",
+        "Yes. Trauma CT and X-ray studies are read as STAT, with critical findings phoned directly to the trauma team.",
     },
     {
       id: "faq-02",
       number: "02",
       question: "Can multiple trauma studies be handled together?",
       answer:
-        "The workflow can support multi-study trauma workups through defined batch routing and priority review processes, subject to the configured workflow.",
+        "Yes. Studies from the same trauma patient are read together by one radiologist where possible so findings stay consistent across body regions.",
     },
     {
       id: "faq-03",
       number: "03",
       question: "Can overnight trauma volume be supported?",
       answer:
-        "Overnight trauma volume can be incorporated into the workflow based on the facility's coverage and operational requirements.",
+        "Yes. Trauma reads are covered 24x7, including overnight and weekend peaks.",
     },
     {
       id: "faq-04",
       number: "04",
       question: "How are priority studies routed?",
       answer:
-        "Priority studies can be routed according to the facility's defined priority and workflow requirements.",
+        "Trauma studies are flagged at transmission and moved to the front of the queue. They are assigned to the next available radiologist licensed in the patient's state.",
     },
     {
       id: "faq-05",
       number: "05",
       question: "How are critical findings communicated?",
       answer:
-        "Critical findings are communicated through the agreed escalation process and documented according to the client's requirements.",
+        "Critical findings are phoned directly to the ordering physician or your designated contact as soon as they are identified. Each call is documented in the report with read-back. Escalation contacts are agreed during onboarding.",
     },
     {
       id: "faq-06",
       number: "06",
       question: "Can the workflow align with facility requirements?",
       answer:
-        "The workflow should align with the facility's existing trauma and critical-care processes rather than impose a standard workflow.",
+        "Yes. We follow your trauma protocols, report templates and escalation steps, all agreed during onboarding.",
     },
   ],
 } as const;

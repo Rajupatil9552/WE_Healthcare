@@ -259,37 +259,37 @@ export const OVERFLOW_FAQ_CONTENT = [
     id: "faq-what-is-overflow",
     question: "What is overflow and backlog reporting support?",
     answer:
-      "Overflow and backlog reporting support provides supplemental teleradiology reading capacity when your imaging volume exceeds your in-house radiologist team's bandwidth. Whether caused by volume spikes, staffing gaps, or seasonal surges, our board-certified radiologists interpret studies to restore normal turnaround.",
+      "Extra reporting capacity for when study volume exceeds what your radiologists can read on time. That includes daily peaks, seasonal surges or a backlog that has already built up.",
   },
   {
     id: "faq-how-quickly-activated",
     question: "How quickly can overflow support be activated?",
     answer:
-      "For existing partners with pre-configured PACS/RIS connectivity and credentialed radiologists, overflow capacity can be mobilized on short notice. For new engagements, our onboarding team coordinates connectivity, credentialing, and workflow alignment to initiate reading as rapidly as institutional governance allows.",
+      "Once credentialing, licensing and system access are in place, overflow support can be switched on whenever volume requires it. Initial setup time depends on your facility's credentialing process. We share a timeline at the start of every engagement.",
   },
   {
     id: "faq-prioritization-routing",
     question: "How are studies prioritized and routed during volume spikes?",
     answer:
-      "Studies are ingested into an organized triage queue and stratified by clinical priority (STAT, urgent, routine) and modality (CT, MRI, X-ray, Ultrasound). Emergent cases receive immediate priority attention, while routine outpatient studies are batched for focused subspecialty review.",
+      "STAT and emergency studies are read first. Remaining studies follow the priority rules you set, for example inpatient before outpatient or oldest first. Final reads are assigned only to radiologists licensed in the patient's state.",
   },
   {
     id: "faq-pacs-workflow",
     question: "Does our facility need to change its current PACS or RIS workflow?",
     answer:
-      "No. We connect directly to your existing PACS and RIS infrastructure via standard DICOM and HL7 protocols over secure encrypted connections. Your technologists acquire and send scans normally, and completed reports return directly into your diagnostic system.",
+      "No. We work inside your existing PACS and RIS through secure access. Reports are returned in your templates through your usual process.",
   },
   {
     id: "faq-critical-findings",
     question: "How are critical and urgent findings communicated during backlog reads?",
     answer:
-      "All critical or unexpected acute findings trigger an immediate closed-loop notification protocol. Our radiologist or clinical coordination team contacts the referring clinician directly by telephone and documents a verified read-back in the official diagnostic report.",
+      "Critical findings are handled the same way during backlog reads as during routine work. Critical findings are phoned directly to the ordering physician or your designated contact as soon as they are identified. Each call is documented in the report with read-back. Escalation contacts are agreed during onboarding.",
   },
   {
     id: "faq-temporary-adhoc",
     question: "Can backlog reporting support be scheduled on a temporary or ad-hoc basis?",
     answer:
-      "Yes. Engagements can be structured for short-term backlog clearing (such as post-holiday queue reductions or locum tenens coverage) as well as ongoing flexible surge support that activates whenever your internal thresholds are reached.",
+      "Yes. Support can be booked for a one-time backlog clearance, a set number of weeks or on demand when volume peaks.",
   },
 ];
 

@@ -33,7 +33,38 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const googleSearchSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      alternateName: ["WEHealthcare", "WE Healthcare Teleradiology"],
+      description: siteConfig.description,
+      inLanguage: "en-US",
+    },
+    {
+      "@type": "MedicalOrganization",
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/icon-512.png`,
+        width: 512,
+        height: 512,
+        caption: "WE Healthcare",
+      },
+      image: `${siteConfig.url}/icon-512.png`,
+      description: siteConfig.description,
+    },
+  ],
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -41,10 +72,31 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: {
     icon: [
-      { url: "/images/branding/WE_Logo-removebg-preview.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    shortcut: "/images/branding/WE_Logo-removebg-preview.png",
-    apple: "/images/branding/WE_Logo-removebg-preview.png",
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/site.webmanifest",
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: siteConfig.name,
+      },
+    ],
+    type: "website",
   },
 };
 
@@ -58,6 +110,10 @@ export default function RootLayout({
       className={`${figtree.variable} ${notoSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(googleSearchSchema) }}
+        />
         {/*
           Light-first by brand decision (matches most trust-first healthcare
           sites). enableSystem is off until a visible theme toggle ships -
