@@ -17,7 +17,7 @@ import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
  */
 const HERO_VIDEO = {
   desktop: "/videos/Hero%20Video.mp4",
-  mobile: null as string | null,
+  mobile: "/videos/hero-mobile.mp4",
   mobileFocus: "50% 50%",
 };
 
