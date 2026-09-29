@@ -48,7 +48,7 @@ const useMounted = () => React.useSyncExternalStore(noopSubscribe, () => true, (
 const CAPABILITIES = [
   {
     title: "12–24h Turnaround",
-    description: "Guaranteed turnaround for routine cases, with 24/7 emergency STAT coverage.",
+    description: "Routine reads within 12 to 24 hours. STAT studies prioritized 24x7, with targets set in your service agreement.",
     icon: Clock,
   },
   {

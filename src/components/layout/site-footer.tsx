@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import brandLogo from "../../../public/images/branding/WE_Logo.png";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import {
@@ -259,10 +260,8 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
             <div className="md:col-span-6 lg:col-span-4">
               <Link href="/" className="inline-block transition-transform duration-200 hover:scale-[1.02]">
                 <Image
-                  src="/images/branding/WE_Logo.png"
+                  src={brandLogo}
                   alt="WE Healthcare Logo"
-                  width={160}
-                  height={44}
                   className="h-9 w-auto object-contain filter brightness-110 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)]"
                 />
               </Link>

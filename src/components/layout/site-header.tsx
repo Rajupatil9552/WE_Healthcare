@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import brandLogo from "../../../public/images/branding/WE_Logo.png";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,7 +22,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { mainNav, hasSubmenu } from "@/config/navigation";
-import { primaryCta } from "@/config/site";
+import { headerCta } from "@/config/site";
 import { routes } from "@/config/routes";
 
 /** Pages whose hero is a full-bleed dark image/video: the unscrolled header uses white text. */
@@ -105,13 +106,11 @@ export function SiteHeader() {
               <Link href="/" aria-label="home" className="flex items-center gap-2">
                 {/* Optimized + preloaded: the logo is above the fold on every page. */}
                 <Image
-                  src="/images/branding/WE_Logo.png"
+                  src={brandLogo}
                   alt="WE Healthcare Logo"
-                  width={999}
-                  height={200}
                   priority
-                  sizes="200px"
-                  className="h-8 sm:h-8.5 xl:h-9.5 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(56,189,248,0.35)] transition-transform hover:scale-105"
+                  sizes="(max-width: 640px) 150px, (max-width: 1280px) 180px, 200px"
+                  className="h-8 sm:h-9 xl:h-10 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(56,189,248,0.35)] dark:brightness-110 transition-transform hover:scale-105"
                 />
               </Link>
               <div className="flex gap-2 lg:hidden items-center">
@@ -141,13 +140,13 @@ export function SiteHeader() {
             <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0 pl-1">
               <ModeToggle />
               <Link
-                href={primaryCta.href}
+                href={headerCta.href}
                 className={cn(
                   buttonVariants({ variant: "accent", size: "sm" }),
                   "bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-semibold hover:from-sky-400 hover:to-cyan-300 border-0 shadow-lg shadow-sky-500/25 transition-all hover:scale-105 whitespace-nowrap text-xs xl:text-sm px-3 xl:px-4 py-1.5 xl:py-2 shrink-0"
                 )}
               >
-                {primaryCta.label}
+                {headerCta.label}
               </Link>
             </div>
           </div>
@@ -234,14 +233,14 @@ export function SiteHeader() {
               <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
                 <ModeToggle />
                 <Link
-                  href={primaryCta.href}
+                  href={headerCta.href}
                   onClick={() => setMenuState(false)}
                   className={cn(
                     buttonVariants({ variant: "accent", size: "sm" }),
                     "flex-1 text-center bg-gradient-to-r from-sky-500 to-cyan-400 text-slate-950 font-semibold hover:from-sky-400 hover:to-cyan-300 border-0 shadow-lg shadow-sky-500/25 transition-all py-2"
                   )}
                 >
-                  {primaryCta.label}
+                  {headerCta.label}
                 </Link>
               </div>
             </div>

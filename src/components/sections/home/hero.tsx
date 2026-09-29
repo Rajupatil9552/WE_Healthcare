@@ -2,9 +2,20 @@
 
 import type { CSSProperties } from "react";
 import { motion } from "motion/react";
-import { ArrowDown } from "@phosphor-icons/react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Clock,
+  LockKey,
+  Phone,
+  PlugsConnected,
+  ShieldCheck,
+} from "@phosphor-icons/react";
+import { buttonVariants } from "@/components/ui/button";
 import { VideoSources } from "@/components/ui/video-sources";
-import { HERO_HEADING_MOTION, MOTION } from "@/lib/motion";
+import { routes } from "@/config/routes";
+import { HERO_HEADING_MOTION, heroFadeIn } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 /**
  * Hero background video. The desktop file is wide (4096x2160), so on a portrait
@@ -21,18 +32,14 @@ const HERO_VIDEO = {
   mobileFocus: "50% 50%",
 };
 
-export function Hero() {
-  const scrollToExplore = () => {
-    const nextSection =
-      document.getElementById("radiology-expertise") ||
-      document.getElementById("trust-credibility");
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-    }
-  };
+const TRUST_POINTS = [
+  { label: "ABR-Certified Final Reads", icon: ShieldCheck },
+  { label: "24x7 STAT Coverage", icon: Clock },
+  { label: "PACS/RIS Integration", icon: PlugsConnected },
+  { label: "HIPAA BAA Available", icon: LockKey },
+];
 
+export function Hero() {
   return (
     <section className="relative flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden bg-slate-950 text-white">
       {/* Background video (always dark, in both themes) */}
@@ -58,36 +65,60 @@ export function Hero() {
       {/* Blend the video into the first section's surface */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 sm:h-40 lg:h-48 bg-gradient-to-b from-transparent via-surface/80 via-60% to-surface"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 sm:h-24 lg:h-28 bg-gradient-to-b from-transparent via-surface/80 via-60% to-surface"
       />
 
-      <div className="relative mx-auto w-full max-w-[var(--container-max)] px-container pb-24 pt-28 sm:pb-28 lg:pb-32">
+      <div className="relative mx-auto w-full max-w-[var(--container-max)] px-container pb-16 pt-24 sm:pb-28 sm:pt-28 lg:pb-32">
         <motion.h1
           {...HERO_HEADING_MOTION}
-          className="max-w-[20ch] text-display font-semibold text-white text-balance [text-shadow:0_2px_24px_rgb(2_6_23/0.55)]"
+          className="max-w-[24ch] text-[clamp(2.25rem,1.3rem+3vw,3.75rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-white text-balance [text-shadow:0_2px_24px_rgb(2_6_23/0.55)]"
         >
-          Delivering Advanced <br />
-          Radiology Care Nationwide. <br />
+          ABR-Certified Final Reads. <br />
+          24x7 Coverage. <br />
           <span className="text-sky-300">Anytime. Anywhere.</span>
         </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.35, ease: MOTION.easeOut }}
-          className="mt-8"
-        >
-          <button
-            type="button"
-            onClick={scrollToExplore}
-            aria-label="Scroll to explore"
-            className="group inline-flex items-center gap-3 rounded-full bg-card/90 py-1.5 pl-1.5 pr-5 text-foreground shadow-md backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            <span className="flex size-9 items-center justify-center rounded-full bg-primary text-on-primary transition-transform group-hover:translate-y-0.5">
-              <ArrowDown size={16} weight="bold" aria-hidden="true" />
-            </span>
-            <span className="text-sm font-semibold">Scroll to Explore</span>
-          </button>
+        <motion.div {...heroFadeIn(0.2)}>
+          <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-relaxed sm:mt-5 text-white/85 sm:text-lg [text-shadow:0_1px_12px_rgb(2_6_23/0.6)]">
+            U.S.-based ABR-certified radiologists sign your final reports,
+            supported by Indian Board-Certified radiologists for preliminary
+            reads. Overnight, weekend, STAT and overflow studies get read on
+            time without adding to your headcount.
+          </p>
+
+          <div className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-7 sm:flex sm:items-center sm:gap-3">
+            <Link
+              href={routes.requestDemo}
+              className={cn(buttonVariants({ variant: "brand", size: "md" }), "group")}
+            >
+              <span>Request a Demo</span>
+              <ArrowRight
+                size={16}
+                weight="bold"
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </Link>
+            <Link
+              href={routes.contact}
+              className={cn(
+                buttonVariants({ size: "md" }),
+                "border border-white/35 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20",
+              )}
+            >
+              <Phone size={16} weight="bold" aria-hidden="true" />
+              <span>Book a 15-Minute Call</span>
+            </Link>
+          </div>
+
+          <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs text-white/85 sm:mt-8 sm:flex sm:flex-wrap sm:gap-x-7 sm:gap-y-3 sm:text-sm">
+            {TRUST_POINTS.map(({ label, icon: Icon }) => (
+              <li key={label} className="inline-flex items-center gap-2">
+                <Icon size={16} weight="regular" aria-hidden="true" className="shrink-0 text-sky-300 sm:size-[18px]" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </div>
     </section>

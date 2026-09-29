@@ -16,7 +16,7 @@ export const EMERGENCY_PAGE_METADATA = {
 export const EMERGENCY_HERO_CONTENT = {
   heading: "Emergency and STAT Radiology Reporting",
   subheading: "Priority reporting support for time-sensitive imaging.",
-  body: "Emergency departments and acute-care environments may need radiology reporting support when imaging volume, clinical urgency, or after-hours demand increases. WE Healthcare can support defined priority workflows.",
+  body: "Routine studies are reported within 12 to 24 hours. STAT studies are moved to the front of the queue 24x7, with turnaround targets agreed for each facility and written into your service agreement. Critical findings are phoned directly to the referring physician with read-back documented.",
   verificationNote: "[VERIFY: exact STAT capability and turnaround commitments]",
   primaryCta: {
     label: "Request a Consultation",
@@ -416,37 +416,37 @@ export const EMERGENCY_FAQ_CONTENT = {
       id: "faq-what-is-stat",
       question: "What is STAT radiology reporting?",
       answer:
-        "STAT radiology reporting refers to a priority workflow designed specifically for time-sensitive imaging studies. When high clinical urgency or acute trauma presentation is identified, the study is flagged upon transmission and immediately routed ahead of routine reporting queues for expedited diagnostic interpretation.",
+        "STAT reporting is urgent interpretation of time-sensitive studies such as suspected stroke, trauma or acute chest pain. STAT studies are flagged when they are sent to us and read before routine work.",
     },
     {
       id: "faq-ed-teleradiology",
       question: "Can emergency departments use teleradiology support?",
       answer:
-        "Yes. Emergency departments and acute-care environments frequently utilize teleradiology support when imaging volume, patient acuity, after-hours nocturnal demand, or local staffing constraints increase. Workflows are configured to align seamlessly with existing hospital RIS, PACS, and departmental bylaws.",
+        "Yes. Emergency departments use our STAT reporting to keep reads moving 24x7, especially overnight and at weekends when on-site radiologists are not available.",
     },
     {
       id: "faq-how-prioritized",
       question: "How are STAT studies prioritized?",
       answer:
-        "Priority categories and routing rules are configured around the facility's specific operational and clinical requirements. Studies tagged with acute HL7/DICOM priority parameters bypass routine worklists and automatically match to credentialed, subspecialty-trained diagnostic radiologists on active duty.",
+        "STAT studies are flagged at transmission, moved to the front of the queue and assigned to the next available radiologist licensed in the patient's state.",
     },
     {
       id: "faq-critical-findings",
       question: "How are critical findings communicated?",
       answer:
-        "Critical or unexpected findings follow the facility's agreed clinical escalation pathway. The interpreting radiologist or 24/7 coordination team initiates direct telephone outreach to the treating emergency physician or designated clinical team, and a closed-loop verbal read-back confirmation is documented directly in the EHR.",
+        "Critical findings are phoned directly to the ordering physician or your designated contact as soon as they are identified. Each call is documented in the report with read-back. Escalation contacts are agreed during onboarding.",
     },
     {
       id: "faq-after-hours",
       question: "Can the service support after-hours emergency imaging?",
       answer:
-        "Emergency and after-hours coverage can be configured based on your organization's specific operational needs. Support models can be established for dedicated overnight shifts, weekend call coverage, holiday relief, daytime volume surge absorption, or continuous coverage windows.",
+        "Yes. STAT reporting is available 24x7, including nights, weekends and holidays.",
     },
     {
       id: "faq-turnaround-commitments",
       question: "What turnaround commitments are available?",
       answer:
-        "Turnaround commitments are formally agreed upon and codified as part of the service-level configuration prior to operational launch. Commitments are established collaboratively based on clinical urgency, modality complexity, historical volume patterns, and departmental benchmarks.",
+        "Routine studies are reported within 12 to 24 hours. STAT studies are moved to the front of the queue 24x7, with turnaround targets agreed for each facility and written into your service agreement. Critical findings are phoned directly to the ordering physician or your designated contact as soon as they are identified. Each call is documented in the report with read-back. Escalation contacts are agreed during onboarding.",
     },
   ],
 } as const;

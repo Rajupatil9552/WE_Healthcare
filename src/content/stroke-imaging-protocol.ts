@@ -283,42 +283,42 @@ export const STROKE_FAQ_CONTENT = {
       number: "01",
       question: "Can teleradiology support stroke imaging workflows?",
       answer:
-        "Stroke imaging workflows can be supported through defined study routing, radiologist assignment, communication, and documentation processes aligned with the facility’s requirements.",
+        "Yes. Stroke CT, CT angiography and perfusion studies are read as STAT, following your facility's stroke protocol.",
     },
     {
       id: "faq-02",
       number: "02",
       question: "How are stroke studies prioritized?",
       answer:
-        "Stroke-related studies can be handled through defined priority rules established as part of the facility’s workflow.",
+        "Studies flagged as a stroke alert go to the top of the STAT queue ahead of all other work.",
     },
     {
       id: "faq-03",
       number: "03",
       question: "How is the radiologist assigned?",
       answer:
-        "Radiologist assignment can follow defined workflow and subspecialty requirements established for the facility.",
+        "The study is assigned to the next available radiologist with neuroimaging experience who is licensed in the patient's state.",
     },
     {
       id: "faq-04",
       number: "04",
       question: "How are urgent findings communicated?",
       answer:
-        "Time-sensitive or critical findings follow the facility-established communication and documentation pathway.",
+        "Urgent findings are phoned directly to the stroke team or ED physician as soon as they are identified. Each call is documented in the report with read-back.",
     },
     {
       id: "faq-05",
       number: "05",
       question: "Can the workflow align with existing facility protocols?",
       answer:
-        "The workflow can be designed around the facility’s existing clinical pathway and operational requirements, subject to capability and implementation verification.",
+        "Yes. We follow your stroke protocol, report templates and escalation steps, all agreed during onboarding.",
     },
     {
       id: "faq-06",
       number: "06",
       question: "What information is required during onboarding?",
       answer:
-        "The implementation process may require information about the facility’s existing workflow, imaging routing, priority requirements, communication process, documentation requirements, and operational expectations.",
+        "Your stroke protocol, imaging sequences, preferred report template, stroke team contacts and PACS/RIS details.",
     },
   ],
 } as const;
