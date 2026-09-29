@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { PagePlaceholder } from "@/components/shared/page-placeholder";
+import { LegalPage } from "@/components/sections/legal/legal-page";
+import { termsOfService } from "@/content/legal";
+import { routes } from "@/config/routes";
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
+  title: termsOfService.title,
+  description: termsOfService.description,
 };
 
 export default function Page() {
-  return <PagePlaceholder eyebrow="Legal" title="Terms of Service" />;
+  return <LegalPage doc={termsOfService} href={routes.legal.terms} />;
 }

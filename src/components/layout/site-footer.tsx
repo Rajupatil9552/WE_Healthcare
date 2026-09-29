@@ -26,6 +26,7 @@ import { mainNav, legalNav, getNavSection } from "@/config/navigation";
 import { routes } from "@/config/routes";
 import { contactEmail, contactPhones, offices, socialLinks, type SocialId } from "@/config/contact";
 import { primaryCta } from "@/config/site";
+import { openCookieSettings } from "@/lib/cookie-consent";
 import { cn } from "@/lib/utils";
 
 const SOCIAL_ICONS: Record<SocialId, typeof LinkedinLogo> = {
@@ -221,11 +222,12 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
                 </h3>
                 <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
                   {MODALITIES_NAV.groups.map((group) => (
-                    <div key={group.label}>
+                    // A long group (e.g. Diagnostic Imaging) spans two columns and splits its list.
+                    <div key={group.label} className={cn(group.items.length > 4 && "col-span-2")}>
                       <span className="block text-[9.5px] font-mono font-bold uppercase tracking-wider text-sky-400/80 mb-1.5">
                         {group.label}
                       </span>
-                      <ul className="space-y-1.5">
+                      <ul className={cn(group.items.length > 4 ? "grid grid-cols-2 gap-x-6 gap-y-1.5" : "space-y-1.5")}>
                         {group.items.map((link) => (
                           <li key={link.href}>
                             <Link href={link.href} className={LINK_CLASS}>
@@ -352,7 +354,11 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
                   </span>
                 )}
                 <span className="mt-2 block text-[10px] text-slate-500">
-                  We respect your privacy. No spam, ever.
+                  We respect your privacy. No spam, ever. See our{" "}
+                  <Link href={routes.legal.privacy} className="underline underline-offset-2 hover:text-slate-300 transition-colors">
+                    Privacy Policy
+                  </Link>
+                  .
                 </span>
               </form>
             </div>
@@ -369,15 +375,18 @@ export function SiteFooter({ hideCta }: SiteFooterProps = {}) {
           <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>© 2026 WE Healthcare. All rights reserved.</p>
 
-            <div className="flex items-center gap-4 sm:gap-6">
-              {legalNav.map((link, i) => (
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:gap-x-6">
+              {legalNav.map((link) => (
                 <Fragment key={link.href}>
-                  {i > 0 && <span>|</span>}
                   <Link href={link.href} className="hover:text-slate-300 transition-colors">
                     {link.label}
                   </Link>
+                  <span aria-hidden="true">|</span>
                 </Fragment>
               ))}
+              <button type="button" onClick={openCookieSettings} className="hover:text-slate-300 transition-colors">
+                Cookie Settings
+              </button>
             </div>
 
             <div className="hidden lg:flex items-center gap-2">

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { PagePlaceholder } from "@/components/shared/page-placeholder";
+import { LegalPage } from "@/components/sections/legal/legal-page";
+import { privacyPolicy } from "@/content/legal";
+import { routes } from "@/config/routes";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: privacyPolicy.title,
+  description: privacyPolicy.description,
 };
 
 export default function Page() {
-  return <PagePlaceholder eyebrow="Legal" title="Privacy Policy" />;
+  return <LegalPage doc={privacyPolicy} href={routes.legal.privacy} />;
 }

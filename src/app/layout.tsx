@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
+import { CookieConsent } from "@/components/layout/cookie-consent";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -129,6 +130,7 @@ export default function RootLayout({
             <SiteHeader />
             {children}
             <SiteFooter />
+            <CookieConsent />
           </MotionProvider>
         </ThemeProvider>
       </body>

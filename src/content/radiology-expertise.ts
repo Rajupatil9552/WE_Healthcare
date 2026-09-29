@@ -1,12 +1,17 @@
-import type { WorksWheelItem } from "@/components/ui/works-wheel";
+import { routes } from "@/config/routes";
 
 // Temporary radiology placeholder imagery.
 // Replace with approved production photography later.
-export interface RadiologySpecialtyItem extends WorksWheelItem {
+export interface RadiologySpecialtyItem {
   id: string;
-  category: string;
+  title: string;
+  /** Label on the collapsed panel. */
   shortTitle: string;
+  category: string;
   description: string;
+  image: string;
+  /** Where "Learn more" goes: the matching page, else the subspecialty section on Quality. */
+  href: string;
 }
 
 export const RADIOLOGY_EXPERTISE_HEADER = {
@@ -27,7 +32,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
       "Specialized interpretation for neurological and head & neck imaging studies.",
     image:
       "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1000&q=80",
-    href: "#modalities",
+    href: routes.quality.radiologists,
   },
   {
     id: "body-imaging",
@@ -37,7 +42,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Comprehensive expertise across a broad range of body imaging studies.",
     image: "/images/general/accuray-6pQPFuD7nJY-unsplash.webp",
-    href: "#modalities",
+    href: routes.quality.radiologists,
   },
   {
     id: "cardiothoracic",
@@ -48,7 +53,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
       "Focused interpretation of chest and cardiovascular imaging.",
     image:
       "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1000&q=80",
-    href: "#modalities",
+    href: routes.quality.radiologists,
   },
   {
     id: "musculoskeletal",
@@ -58,7 +63,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Expertise across bones, joints, muscles, and related structures.",
     image: "/images/general/accuray-nhZWIUJBVVc-unsplash.webp",
-    href: "#modalities",
+    href: routes.quality.radiologists,
   },
   {
     id: "emergency-radiology",
@@ -69,7 +74,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
       "Radiology support for time-sensitive clinical imaging.",
     image:
       "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1000&q=80",
-    href: "#modalities",
+    href: routes.service("emergency-stat-reporting"),
   },
   {
     id: "abdominal-imaging",
@@ -79,7 +84,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Specialized diagnostic evaluation for abdominal and pelvic conditions.",
     image: "/images/general/accuray-eRJCXdb3Q48-unsplash.webp",
-    href: "#modalities",
+    href: routes.quality.radiologists,
   },
   {
     id: "mri",
@@ -89,7 +94,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Detailed interpretation across a wide range of magnetic resonance imaging studies.",
     image: "/images/general/mri-poster.webp",
-    href: "#modalities",
+    href: routes.modality("mri"),
   },
   {
     id: "ct-imaging",
@@ -99,7 +104,7 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Diagnostic interpretation across diverse computed tomography studies.",
     image: "/images/general/accuray-36i9vuZrVjc-unsplash.webp",
-    href: "#modalities",
+    href: routes.modality("ct"),
   },
   {
     id: "general-radiology",
@@ -109,6 +114,6 @@ export const RADIOLOGY_SPECIALTIES: RadiologySpecialtyItem[] = [
     description:
       "Comprehensive routine diagnostic imaging support across everyday clinical needs.",
     image: "/images/general/national-cancer-institute-rUfUd-7WW78-unsplash.webp",
-    href: "#modalities",
+    href: routes.modality("x-ray"),
   },
 ];
