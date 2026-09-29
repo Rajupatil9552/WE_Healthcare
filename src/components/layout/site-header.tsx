@@ -285,40 +285,19 @@ export function Menus({ onDarkHero = false }: { onDarkHero?: boolean }) {
               className={cn(
                 getAlignmentClass((DROPDOWN_LAYOUT[section.id] ?? DEFAULT_LAYOUT).align),
                 (DROPDOWN_LAYOUT[section.id] ?? DEFAULT_LAYOUT).width,
-                "p-3 bg-white/95 dark:bg-slate-950/95 border border-slate-200/80 dark:border-sky-500/20 shadow-2xl rounded-2xl backdrop-blur-xl"
+                "p-3 bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-sky-500/20 shadow-2xl rounded-2xl"
               )}
             >
               {section.groups ? (
-                <div className="grid grid-cols-2 gap-3 p-1">
-                  {/* Column 1: Diagnostic Imaging */}
-                  <div>
-                    <span className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-2.5 mb-1.5">
-                      {section.groups[0].label}
-                    </span>
-                    <ul className="space-y-0.5">
-                      {section.groups[0].items.map((item) => (
-                        <li key={item.label}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              href={item.href}
-                              className="block px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50/80 dark:hover:bg-sky-950/40 transition-colors whitespace-nowrap"
-                            >
-                              {item.label}
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Column 2: Advanced Imaging with Specialized Services directly below */}
-                  <div className="flex flex-col pl-3 border-l border-slate-100 dark:border-slate-800/80 space-y-3">
-                    <div>
-                      <span className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-2.5 mb-1.5">
-                        {section.groups[1].label}
+                // Any number of groups, stacked; a long group splits into two columns.
+                <div className="space-y-3 p-1">
+                  {section.groups.map((group, gi) => (
+                    <div key={group.label} className={cn(gi > 0 && "border-t border-slate-100 pt-3 dark:border-slate-800/80")}>
+                      <span className="mb-1.5 block px-2.5 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        {group.label}
                       </span>
-                      <ul className="space-y-0.5">
-                        {section.groups[1].items.map((item) => (
+                      <ul className={cn("gap-x-3 gap-y-0.5", group.items.length > 4 ? "grid grid-cols-2" : "space-y-0.5")}>
+                        {group.items.map((item) => (
                           <li key={item.label}>
                             <NavigationMenuLink asChild>
                               <Link
@@ -332,27 +311,7 @@ export function Menus({ onDarkHero = false }: { onDarkHero?: boolean }) {
                         ))}
                       </ul>
                     </div>
-
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                      <span className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider px-2.5 mb-1.5">
-                        {section.groups[2].label}
-                      </span>
-                      <ul className="space-y-0.5">
-                        {section.groups[2].items.map((item) => (
-                          <li key={item.label}>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href={item.href}
-                                className="block px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50/80 dark:hover:bg-sky-950/40 transition-colors whitespace-nowrap"
-                              >
-                                {item.label}
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               ) : (
                 <ul className="space-y-1">

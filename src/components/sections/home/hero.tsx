@@ -18,13 +18,14 @@ import { HERO_HEADING_MOTION, heroFadeIn } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Hero background video. The desktop file is wide (4096x2160), so on a portrait
- * phone `object-cover` keeps only the middle quarter of the frame.
+ * Hero background video. `desktop` is wide (1920x1012).
  *
- * `mobile`: a portrait render (9:16, 1080x1920, H.264, ideally under 5 MB) served
- * to screens up to 767px wide. Drop the file in /public/videos and set the path.
- * `mobileFocus`: until then, which part of the wide frame to keep on phones
- * (CSS object-position, e.g. "30% 50%" to favour the left side).
+ * `mobile`: a true 9:16 portrait file (720x1280) served to screens up to 767px
+ * wide. It is cropped from the desktop video (crop=568:1012:1000:0) to keep the
+ * radiologist's face and the scans on the monitor. It must fill the whole frame:
+ * a landscape clip padded onto a portrait canvas shows as a black-barred box.
+ * `mobileFocus`: which part of the frame `object-cover` keeps on phones
+ * (CSS object-position), only relevant if no mobile file is set.
  */
 const HERO_VIDEO = {
   desktop: "/videos/Hero%20Video.mp4",
