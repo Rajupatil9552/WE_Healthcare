@@ -34,7 +34,7 @@ export function AboutHero() {
               {CONTENT.eyebrow}
             </motion.p>
             <motion.h1 {...HERO_HEADING_MOTION} className="mt-6 max-w-[20ch] text-display-sm font-semibold text-balance sm:text-display">
-              A Dependable Extension of Your Healthcare Team.{" "}
+              A Dependable Extension of Your Radiology Team.{" "}
               <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent dark:from-sky-300 dark:to-cyan-200">
                 Built Around You.
               </span>
@@ -101,9 +101,9 @@ export function AboutHero() {
             transition={{ duration: 0.7, delay: 0.55, ease: MOTION.easeOut }}
             className="absolute inset-x-4 bottom-4 rounded-xl bg-slate-950/55 p-2 text-white ring-1 ring-white/15 backdrop-blur-md sm:inset-x-6 sm:bottom-6 lg:inset-x-auto lg:left-8 lg:bottom-8 lg:w-[26rem]"
           >
-            <p className="px-3 pb-1 pt-2 font-mono text-[11px] uppercase tracking-[0.16em] text-sky-300">{WHAT_WE_DO.eyebrow}</p>
+            <p className="px-3 pb-1 pt-2 font-mono text-[11px] uppercase tracking-[0.16em] text-sky-300">Teleradiology Services</p>
             <ul className="divide-y divide-white/10">
-              {WHAT_WE_DO.services.map((s, i) => {
+              {WHAT_WE_DO.services.slice(0, 4).map((s, i) => {
                 const inner = (
                   <>
                     <span className="font-mono text-xs tabular-nums text-slate-400">0{i + 1}</span>

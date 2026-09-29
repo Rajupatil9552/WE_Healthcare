@@ -5,6 +5,7 @@ import { OurCommitment } from "@/components/sections/about/our-commitment";
 import { WhoWeAre } from "@/components/sections/about/who-we-are";
 import { WhatWeDo } from "@/components/sections/about/what-we-do";
 import { HowWeWork } from "@/components/sections/about/how-we-work";
+import { AdditionalSupport } from "@/components/sections/about/additional-support";
 import { CoverageModel } from "@/components/sections/about/coverage-model";
 
 export const metadata: Metadata = {
@@ -28,6 +29,8 @@ export default function Page() {
       <WhoWeAre />
       <WhatWeDo />
       <HowWeWork />
+      {/* RCM and staffing: kept below the teleradiology story, with less weight. */}
+      <AdditionalSupport />
       {/* Full-bleed closing band; doubles as the page's final CTA. */}
       <CoverageModel />
     </main>

@@ -58,7 +58,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   if (slug === "teleradiology-reporting") {
     return {
-      title: "Teleradiology Services & Radiology Reporting | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Teleradiology Services & Radiology Reporting | WE Healthcare" },
       description:
         "Subspecialty teleradiology reporting support for U.S. hospitals, imaging centers, emergency departments, and healthcare networks.",
       alternates: {
@@ -75,7 +76,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === "overnight-weekend-coverage") {
     return {
-      title: "Overnight & Weekend Teleradiology Coverage | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Overnight & Weekend Teleradiology Coverage | WE Healthcare" },
       description:
         "Extend radiology reporting coverage beyond regular business hours with flexible overnight and weekend support for U.S. healthcare organizations.",
       alternates: {
@@ -92,7 +94,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === "overflow-backlog-support") {
     return {
-      title: "Radiology Overflow & Backlog Support | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Radiology Overflow & Backlog Support | WE Healthcare" },
       description:
         "Flexible teleradiology support for imaging volume spikes, reporting backlogs, staffing gaps, and temporary radiology capacity constraints.",
       alternates: {
@@ -109,7 +112,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === "emergency-stat-reporting") {
     return {
-      title: "Emergency & STAT Teleradiology Reporting | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Emergency & STAT Teleradiology Reporting | WE Healthcare" },
       description:
         "Priority teleradiology reporting support for emergency departments, trauma studies, inpatient escalations, and time-sensitive imaging.",
       alternates: {
@@ -126,7 +130,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === "stroke-imaging-protocol") {
     return {
-      title: "Stroke Imaging Teleradiology Support | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Stroke Imaging Teleradiology Support | WE Healthcare" },
       description:
         "Teleradiology support for stroke imaging workflows, including priority routing, radiologist assignment, and defined communication processes.",
       alternates: {
@@ -143,7 +148,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (slug === "trauma-critical-care") {
     return {
-      title: "Trauma & Critical Care Teleradiology | WE Healthcare",
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: "Trauma & Critical Care Teleradiology | WE Healthcare" },
       description:
         "Priority radiology reporting support for trauma and critical care imaging, including multi-study workflows and direct clinical communication.",
       alternates: {

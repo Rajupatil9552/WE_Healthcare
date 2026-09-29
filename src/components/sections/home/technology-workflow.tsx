@@ -40,14 +40,70 @@ const WORKFLOW_VIDEO = {
   dark: "/videos/Workflow_Black.mp4",
 } as const;
 
+/**
+ * Still of the finished pipeline (frame at ~10.6s, every step drawn). Used as the
+ * video poster so the area is never blank while the video loads, and as the whole
+ * visual in static mode. Re-capture if the video is re-rendered.
+ */
+const WORKFLOW_POSTER = {
+  light: "/images/technology-workflow/workflow-light.webp",
+  dark: "/images/technology-workflow/workflow-dark.webp",
+} as const;
+
+const WORKFLOW_ALT =
+  "Teleradiology workflow: study scan, image upload, PACS, assigned radiologist, radiologist review, QC checking and final report";
+
+// Box is exactly 16:9 (the videos are 1920x1080) so the edge mask lands on the
+// picture itself, never on letterbox bars. Width is capped so height stays ~106vh max.
+const MEDIA_CLASS =
+  "mx-auto block aspect-video h-auto w-full max-w-[calc(106vh*16/9)] object-cover [--fade-x:3%] [--fade-y:8%] sm:[--fade-x:9%] mix-blend-multiply dark:mix-blend-screen dark:[--fade-x:14%] dark:[--fade-y:14%]";
+
+const EDGE_MASK =
+  "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent)";
+
+// Dissolve all four edges into the section surface in either theme. The dark
+// render has a navy backdrop (not pure black), so it gets a wider fade.
+const MEDIA_STYLE: React.CSSProperties = {
+  maskImage: EDGE_MASK,
+  maskComposite: "intersect",
+  WebkitMaskImage: EDGE_MASK,
+  WebkitMaskComposite: "source-in",
+};
+
 const noopSubscribe = () => () => {};
 
 /** False during SSR and hydration, true after: keeps the server-rendered video src stable. */
 const useMounted = () => React.useSyncExternalStore(noopSubscribe, () => true, () => false);
 
+type NetworkInformation = { saveData?: boolean; effectiveType?: string };
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+/**
+ * True when the video should be skipped for the static image: reduced motion,
+ * Data Saver, a slow connection (2G/3G) or a low-memory device.
+ */
+function prefersStaticWorkflow() {
+  if (window.matchMedia(REDUCED_MOTION).matches) return true;
+  const nav = navigator as Navigator & { connection?: NetworkInformation; deviceMemory?: number };
+  if (nav.connection?.saveData) return true;
+  if (nav.connection?.effectiveType && /(^|-)(2g|3g)$/.test(nav.connection.effectiveType)) return true;
+  return nav.deviceMemory !== undefined && nav.deviceMemory <= 2;
+}
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mql = window.matchMedia(REDUCED_MOTION);
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
+
+/** False on the server: the video (with its poster) is the server-rendered default. */
+const useStaticWorkflow = () =>
+  React.useSyncExternalStore(subscribeReducedMotion, prefersStaticWorkflow, () => false);
+
 const CAPABILITIES = [
   {
-    title: "12–24h Turnaround",
+    title: "Agreed Turnaround",
     description: "Routine reads within 12 to 24 hours. STAT studies prioritized 24x7, with targets set in your service agreement.",
     icon: Clock,
   },
@@ -78,7 +134,12 @@ export function TechnologyWorkflow() {
   const [activeStep, setActiveStep] = React.useState(0);
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
-  const videoSrc = mounted && resolvedTheme === "dark" ? WORKFLOW_VIDEO.dark : WORKFLOW_VIDEO.light;
+  const theme = mounted && resolvedTheme === "dark" ? "dark" : "light";
+  const videoSrc = WORKFLOW_VIDEO[theme];
+  const posterSrc = WORKFLOW_POSTER[theme];
+  const isStatic = useStaticWorkflow();
+  // Static mode shows the finished pipeline, so every step reads as complete.
+  const currentStep = isStatic ? LAST_STEP : activeStep;
   // Playback position carried across a theme switch (the video remounts with the new file).
   const resumeAt = React.useRef(0);
 
@@ -110,7 +171,7 @@ export function TechnologyWorkflow() {
   };
 
   const seekToStep = (index: number) => {
-    if (!videoRef.current) return;
+    if (isStatic || !videoRef.current) return;
     const total = videoRef.current.duration || 12;
     const targetTime = (index / VIDEO_PHASES) * total + 0.1;
     videoRef.current.currentTime = targetTime;
@@ -141,41 +202,47 @@ export function TechnologyWorkflow() {
 
       {/* Workflow animation, masked into the section surface at the edges */}
       <div ref={videoWrapRef} className="relative my-8 w-full select-none overflow-hidden sm:my-12 lg:my-16">
-        <video
-          key={nearView ? videoSrc : "idle"}
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload={nearView ? "auto" : "none"}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
-          onClick={togglePlay}
-          aria-label={isPlaying ? "Workflow animation (click to pause)" : "Workflow animation (click to play)"}
-          // Box is exactly 16:9 (the videos are 1920x1080) so the edge mask lands on the
-          // picture itself, never on letterbox bars. Width is capped so height stays ~106vh max.
-          className="mx-auto block aspect-video h-auto w-full max-w-[calc(106vh*16/9)] cursor-pointer object-cover [--fade-x:3%] [--fade-y:8%] sm:[--fade-x:9%] mix-blend-multiply dark:mix-blend-screen dark:[--fade-x:14%] dark:[--fade-y:14%]"
-          style={{
-            // Dissolve all four edges into the section surface in either theme. The dark
-            // render has a navy backdrop (not pure black), so it gets a wider fade.
-            maskImage:
-              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent)",
-            maskComposite: "intersect",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent, #000 var(--fade-x), #000 calc(100% - var(--fade-x)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade-y), #000 calc(100% - var(--fade-y)), transparent)",
-            WebkitMaskComposite: "source-in",
-          }}
-        >
-          {nearView && <VideoSources src={videoSrc} />}
-        </video>
+        {isStatic ? (
+          // Static version (reduced motion, Data Saver, slow network): the video never loads.
+          // eslint-disable-next-line @next/next/no-img-element -- same box and edge mask as the video
+          <img
+            src={posterSrc}
+            alt={WORKFLOW_ALT}
+            width={1920}
+            height={1080}
+            loading="lazy"
+            decoding="async"
+            className={MEDIA_CLASS}
+            style={MEDIA_STYLE}
+          />
+        ) : (
+          <video
+            key={nearView ? videoSrc : "idle"}
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload={nearView ? "auto" : "none"}
+            // Shown until the first frame plays, so the area is never blank on slow loads.
+            poster={posterSrc}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Workflow animation (click to pause)" : "Workflow animation (click to play)"}
+            className={cn(MEDIA_CLASS, "cursor-pointer")}
+            style={MEDIA_STYLE}
+          >
+            {nearView && <VideoSources src={videoSrc} />}
+          </video>
+        )}
       </div>
 
       <Container className="relative">
         {/* Step rail, synced with the video; click a step to seek */}
         <ol className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 border-t border-border-strong">
           {PIPELINE_STEPS.map((step, idx) => {
-            const isActive = activeStep === idx;
+            const isActive = currentStep === idx;
             return (
               <li key={step.num}>
                 <button
@@ -188,7 +255,7 @@ export function TechnologyWorkflow() {
                     aria-hidden="true"
                     className={cn(
                       "absolute left-0 right-3 -top-px h-0.5 origin-left bg-primary transition-transform duration-500",
-                      idx <= activeStep ? "scale-x-100" : "scale-x-0"
+                      idx <= currentStep ? "scale-x-100" : "scale-x-0"
                     )}
                   />
                   <span className={cn("block font-mono text-xs tabular-nums", isActive ? "text-primary" : "text-foreground-subtle")}>
