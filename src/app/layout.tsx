@@ -66,7 +66,7 @@ const googleSearchSchema = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   openGraph: {
-    title: siteConfig.name,
+    title: siteConfig.title,
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,

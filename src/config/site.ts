@@ -7,8 +7,11 @@ import { routes } from "@/config/routes";
 export const siteConfig = {
   name: "WE Healthcare",
   shortName: "WE Healthcare",
+  /** Home page <title> (and the default for pages without their own). */
+  title:
+    "Teleradiology Services for US Hospitals | ABR-Certified Radiologists | WE Healthcare",
   description:
-    "Premium US-based teleradiology services. Details pending content approval.",
+    "24x7 teleradiology reporting for US hospitals, imaging centers and emergency departments. ABR-certified final reads, PACS/RIS integration, HIPAA BAA available.",
   url: "https://www.wehealthcare.com", // placeholder - update on domain finalization
   locale: "en-US",
 } as const;
