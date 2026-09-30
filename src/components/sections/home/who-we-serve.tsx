@@ -35,7 +35,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     id: "hospitals",
     title: "Hospitals & Health Systems",
     description:
-      "Comprehensive teleradiology coverage to support inpatient, outpatient, and critical care needs with fast, accurate reporting.",
+      "Inpatient, outpatient and critical care reads, reported fast and accurately.",
     image:
       "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=1200&q=80",
     alt: "Modern hospital building exterior and medical health system entrance",
@@ -46,7 +46,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     id: "imaging-centers",
     title: "Imaging Centers",
     description:
-      "Flexible and scalable radiology support to help imaging centers maintain high turnaround times and deliver exceptional patient care.",
+      "Flexible reading capacity that keeps your turnaround times on target.",
     image: "/images/general/accuray-36i9vuZrVjc-unsplash.webp",
     alt: "Modern MRI and CT scanner suite inside an outpatient imaging center",
     href: `${routes.whoWeServe}#imaging-centers`,
@@ -56,7 +56,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     id: "healthcare-networks",
     title: "Healthcare Networks",
     description:
-      "Connected reporting support for organizations managing imaging across multiple hospitals, outpatient centers, and locations.",
+      "One reporting partner for imaging across all your hospitals and sites.",
     image: "/images/who-we-serve/healthcare-network-city-lights.webp",
     alt: "Aerial night view of a metropolitan area with lit roads connecting neighborhoods",
     href: `${routes.whoWeServe}#healthcare-networks`,
@@ -66,7 +66,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     id: "emergency-departments",
     title: "Emergency Departments",
     description:
-      "24/7 STAT radiology coverage for time-sensitive cases, ensuring rapid turnaround and real-time physician-to-physician communication.",
+      "24x7 STAT reads with critical findings phoned directly to your physicians.",
     image:
       "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=1200&q=80",
     alt: "Hospital emergency department clinical care and trauma triage",
@@ -134,7 +134,7 @@ export function WhoWeServe() {
                   <h3 className="mt-4 text-xl font-semibold tracking-tight text-white">
                     {card.title}
                   </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-white/75 line-clamp-3">
+                  <p className="mt-2.5 text-sm leading-relaxed text-white/75">
                     {card.description}
                   </p>
                   <Link

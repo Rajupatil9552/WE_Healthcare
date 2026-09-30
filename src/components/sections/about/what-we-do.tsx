@@ -2,20 +2,23 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowUpRight, Monitor, Receipt, UsersThree } from "@phosphor-icons/react";
+import { ArrowUpRight, Brain, FirstAidKit, Monitor, MoonStars, Siren, Stack } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { MOTION } from "@/lib/motion";
-import { WHAT_WE_DO as CONTENT, type AboutService } from "@/content/about";
+import { WHAT_WE_DO as CONTENT } from "@/content/about";
 
-const ICONS: Record<AboutService["id"], typeof Monitor> = {
-  teleradiology: Monitor,
-  "revenue-cycle": Receipt,
-  staffing: UsersThree,
+const ICONS: Record<(typeof CONTENT.services)[number]["id"], typeof Monitor> = {
+  "teleradiology-reporting": Monitor,
+  "overnight-weekend-coverage": MoonStars,
+  "overflow-backlog-support": Stack,
+  "emergency-stat-reporting": Siren,
+  "stroke-imaging-protocol": Brain,
+  "trauma-critical-care": FirstAidKit,
 };
 
-/** Sticky intro on the left, editorial service rows on the right. */
+/** Sticky intro on the left, teleradiology service rows on the right. */
 export function WhatWeDo() {
   return (
     <section className="relative overflow-clip bg-background py-section lg:py-section-lg">
@@ -40,10 +43,10 @@ export function WhatWeDo() {
                   <span className="font-mono text-sm tabular-nums text-foreground-subtle">0{i + 1}</span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-3">
-                      <Icon size={26} weight="duotone" aria-hidden="true" className="shrink-0 text-primary" />
-                      <h3 className="text-2xl font-semibold tracking-tight text-foreground lg:text-3xl">{s.title}</h3>
+                      <Icon size={24} weight="duotone" aria-hidden="true" className="shrink-0 text-primary" />
+                      <h3 className="text-xl font-semibold tracking-tight text-foreground lg:text-2xl">{s.title}</h3>
                     </div>
-                    <p className="mt-3 max-w-[52ch] text-base text-foreground-muted">{s.body}</p>
+                    <p className="mt-2 max-w-[52ch] text-base text-foreground-muted">{s.body}</p>
                   </div>
                   {s.href && (
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-on-primary">
@@ -52,7 +55,7 @@ export function WhatWeDo() {
                   )}
                 </>
               );
-              const rowClass = "group flex items-start gap-6 py-9 lg:gap-10 lg:py-11";
+              const rowClass = "group flex items-start gap-6 py-7 lg:gap-10 lg:py-8";
 
               return (
                 <motion.li
@@ -60,7 +63,7 @@ export function WhatWeDo() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.6, delay: i * 0.08, ease: MOTION.easeOut }}
+                  transition={{ duration: 0.6, delay: i * 0.05, ease: MOTION.easeOut }}
                   className="border-b border-border"
                 >
                   {s.href ? (

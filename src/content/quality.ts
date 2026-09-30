@@ -79,7 +79,7 @@ export const EXPERTISE = {
   ],
   // Brief: "Specific credentialing, licensing, and assignment processes
   // should be confirmed before publication."
-  note: "ABR certification, state licenses held, credentialing and privileging support, malpractice coverage and BAA availability",
+  note: "Credentialing details, including ABR certification, state licensure, privileging support, malpractice coverage and BAA terms, are shared with each client during onboarding.",
   // Brief: "Explore Radiologist Credentialing →" (the credentialing page no longer exists).
   cta: { label: "Explore Radiologist Credentialing", href: routes.contact },
 } as const;
