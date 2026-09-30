@@ -32,9 +32,10 @@ export function WhoWeAre() {
 
             <dl className="mt-10 grid grid-cols-1 gap-6 border-t border-border pt-8 sm:grid-cols-2">
               {CONTENT.facts.map((f) => (
-                <div key={f.label}>
+                <div key={f.label} className={cn("note" in f && "sm:col-span-2")}>
                   <dt className="font-mono text-xs uppercase tracking-[0.14em] text-foreground-subtle">{f.label}</dt>
                   <dd className="mt-2 text-lg font-semibold tracking-tight text-foreground">{f.value}</dd>
+                  {"note" in f && <dd className="mt-1 text-sm text-foreground-muted">{f.note}</dd>}
                 </div>
               ))}
             </dl>

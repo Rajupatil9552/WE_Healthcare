@@ -7,6 +7,7 @@ import { ArrowRight, Database, LockSimple, UserFocus } from "@phosphor-icons/rea
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -219,6 +220,7 @@ export function SubspecialtyJourneySection() {
                   {/* Series stack + transfer */}
                   <div>
                     <div className="relative mx-auto mt-5 aspect-[4/5] w-[85%]">
+                      <PreloadImages srcs={CONTENT.matches.map((m) => m.image.src)} sizes="(max-width: 640px) 80vw, 18rem" />
                       <AnimatePresence initial={false}>
                         {STACK.map((pos, i) => (
                           <motion.div

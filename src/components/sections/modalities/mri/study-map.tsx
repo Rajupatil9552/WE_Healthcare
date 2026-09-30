@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Lightning, MoonStars } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { MRI_STUDIES_CONTENT as CONTENT, type BodyRegion, type MriStudy } from "@/content/mri";
@@ -76,6 +77,7 @@ export function StudyMapSection() {
 
                 <div className="p-4 sm:border-l sm:border-white/10 sm:p-5">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-black">
+                    <PreloadImages srcs={STUDIES.map((s) => s.image.src)} sizes="(max-width: 640px) 90vw, 20rem" />
                     <AnimatePresence mode="popLayout" initial={false}>
                       <motion.div
                         key={active.id}

@@ -214,37 +214,7 @@ export function ServiceLevelsSection() {
                             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-4 ml-5 sm:ml-6 pl-7 sm:pl-8 pr-7 overflow-hidden"
                           >
-                            <p className="text-xs text-foreground-subtle mb-3 leading-relaxed">
-                              {param.detail}
-                            </p>
-
-                            {/* Parameter 01 Visual: Priority Categories */}
-                            {param.visualType === "categories" && (
-                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                                {param.tiers.map((tier) => (
-                                  <div
-                                    key={tier.label}
-                                    className="rounded-sm border border-border bg-card p-2.5"
-                                  >
-                                    <span
-                                      className={cn(
-                                        "block font-bold text-xs uppercase font-mono",
-                                        tier.label === "STAT" && "text-urgent ",
-                                        tier.label === "HIGH" && "text-warning ",
-                                        tier.label === "ROUTINE" && "text-foreground-muted "
-                                      )}
-                                    >
-                                      {tier.label}
-                                    </span>
-                                    <span className="block text-xs text-foreground-subtle mt-0.5">
-                                      {tier.tag}
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-
-                            {/* Parameter 02 Visual: Coverage Windows */}
+                            {/* 01: Coverage windows */}
                             {param.visualType === "windows" && (
                               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
                                 {param.windows.map((win) => (
@@ -263,8 +233,22 @@ export function ServiceLevelsSection() {
                               </div>
                             )}
 
-                            {/* Parameter 03 Visual: Escalation Rules */}
-                            {param.visualType === "escalation" && (
+                            {/* 02: Subspecialties */}
+                            {param.visualType === "specialties" && (
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-xs">
+                                {param.specialties.map((name) => (
+                                  <div
+                                    key={name}
+                                    className="rounded-sm border border-border bg-card p-2.5 font-semibold text-foreground"
+                                  >
+                                    {name}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* 03: Integration with existing systems */}
+                            {param.visualType === "flow" && (
                               <div className="flex items-center justify-between gap-1 p-2.5 rounded-lg bg-card border border-border text-xs">
                                 {param.steps.map((st, sIdx) => (
                                   <div key={st} className="flex items-center gap-1.5 flex-1 justify-center">
@@ -279,20 +263,15 @@ export function ServiceLevelsSection() {
                               </div>
                             )}
 
-                            {/* Parameter 04 Visual: Turnaround Commitments */}
-                            {param.visualType === "commitments" && (
-                              <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                                {param.phases.map((ph) => (
+                            {/* 04: Operational support pillars */}
+                            {param.visualType === "pillars" && (
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs">
+                                {param.pillars.map((pillar) => (
                                   <div
-                                    key={ph.phase}
-                                    className="rounded-sm border border-border bg-card p-2.5"
+                                    key={pillar}
+                                    className="rounded-sm border border-border bg-card p-2.5 font-semibold text-foreground"
                                   >
-                                    <span className="block font-bold text-xs text-foreground uppercase font-mono">
-                                      {ph.phase}
-                                    </span>
-                                    <span className="block text-xs text-foreground-subtle mt-0.5">
-                                      {ph.note}
-                                    </span>
+                                    {pillar}
                                   </div>
                                 ))}
                               </div>

@@ -22,16 +22,6 @@ export const services: ContentEntry[] = [
     title: "Emergency / STAT Reporting",
     summary: "Priority reads for time-sensitive cases, 24x7.",
   },
-  {
-    slug: "stroke-imaging-protocol",
-    title: "Stroke Imaging Protocol",
-    summary: "Accelerated neurovascular and perfusion reads.",
-  },
-  {
-    slug: "trauma-critical-care",
-    title: "Trauma & Critical Care",
-    summary: "High-acuity emergency radiology coverage.",
-  },
 ];
 
 export function getService(slug: string) {

@@ -7,6 +7,7 @@ import { Plus } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { COMMON_USE_CASES_CONTENT as CONTENT } from "@/content/emergency-stat-reporting";
@@ -28,6 +29,7 @@ export function CommonUseCasesSection() {
 
             <figure className="mt-10 hidden lg:block">
               <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-slate-950">
+                <PreloadImages srcs={CONTENT.useCases.map((u) => u.image)} sizes="40vw" />
                 <AnimatePresence initial={false}>
                   <motion.div
                     key={activeCase.id}

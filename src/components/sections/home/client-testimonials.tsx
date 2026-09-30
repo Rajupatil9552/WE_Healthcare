@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "motion/react";
 import { Quotes, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
@@ -196,7 +197,8 @@ export function ClientTestimonials() {
             </AnimatePresence>
           </div>
 
-          <div className="md:col-span-8">
+          <div className="relative md:col-span-8">
+            <PreloadImages srcs={TESTIMONIALS.map((t) => t.avatar)} sizes="56px" />
             <AnimatePresence mode="wait" initial={false}>
               <motion.figure
                 key={currentSlide.id}

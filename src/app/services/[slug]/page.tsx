@@ -8,14 +8,10 @@ import { TELERADIOLOGY_FAQ_ITEMS } from "@/content/teleradiology-reporting";
 import { OVERNIGHT_FAQ_ITEMS } from "@/content/overnight-weekend-coverage";
 import { OVERFLOW_FAQ_CONTENT } from "@/content/overflow-backlog-support";
 import { EMERGENCY_FAQ_CONTENT } from "@/content/emergency-stat-reporting";
-import { STROKE_FAQ_CONTENT } from "@/content/stroke-imaging-protocol";
-import { TRAUMA_FAQ_CONTENT } from "@/content/trauma-critical-care";
 import { TeleradiologyHero } from "@/components/sections/services/teleradiology-reporting/hero";
 import { OvernightHero } from "@/components/sections/services/overnight-weekend-coverage/hero";
 import { OverflowHero } from "@/components/sections/services/overflow-backlog-reporting/hero";
 import { EmergencyHero } from "@/components/sections/services/emergency-stat-reporting/hero";
-import { StrokeHero } from "@/components/sections/services/stroke-imaging-protocol/hero";
-import { TraumaHero } from "@/components/sections/services/trauma-critical-care/hero";
 
 // Below-the-fold sections: code-split so their JS loads and hydrates in
 // separate chunks after the hero (still server-rendered, so SEO/HTML is unchanged).
@@ -37,13 +33,8 @@ const CommonUseCasesSection = dynamic(() => import("@/components/sections/servic
 const EmergencyHowItWorks = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/how-it-works").then((m) => m.HowItWorksSection));
 const ServiceLevelsSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/service-levels").then((m) => m.ServiceLevelsSection));
 const EmergencyFAQCTASection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/faq-cta").then((m) => m.EmergencyFAQCTASection));
-const BuiltAroundWorkflowSection = dynamic(() => import("@/components/sections/services/stroke-imaging-protocol/built-around-workflow").then((m) => m.BuiltAroundWorkflowSection));
-const StrokeProtocolWorkflowSection = dynamic(() => import("@/components/sections/services/stroke-imaging-protocol/stroke-protocol-workflow").then((m) => m.StrokeProtocolWorkflowSection));
-const StrokeFinalSection = dynamic(() => import("@/components/sections/services/stroke-imaging-protocol/final-section").then((m) => m.StrokeFinalSection));
-const HighPressureEnvironmentsSection = dynamic(() => import("@/components/sections/services/trauma-critical-care/high-pressure-environments").then((m) => m.HighPressureEnvironmentsSection));
-const NeedsAndIncludedSection = dynamic(() => import("@/components/sections/services/trauma-critical-care/needs-and-included").then((m) => m.NeedsAndIncludedSection));
-const TraumaHowItWorks = dynamic(() => import("@/components/sections/services/trauma-critical-care/how-it-works").then((m) => m.HowItWorksSection));
-const FAQAndCTASection = dynamic(() => import("@/components/sections/services/trauma-critical-care/faq-and-cta").then((m) => m.FAQAndCTASection));
+const StrokeProtocolWorkflowSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/stroke-protocol-workflow").then((m) => m.StrokeProtocolWorkflowSection));
+const TraumaWorkflowSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/trauma-workflow").then((m) => m.TraumaWorkflowSection));
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -128,42 +119,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   }
-  if (slug === "stroke-imaging-protocol") {
-    return {
-      // Absolute: the title already carries the brand suffix.
-      title: { absolute: "Stroke Imaging Teleradiology Support | WE Healthcare" },
-      description:
-        "Teleradiology support for stroke imaging workflows, including priority routing, radiologist assignment, and defined communication processes.",
-      alternates: {
-        canonical: "/services/stroke-imaging-protocol",
-      },
-      openGraph: {
-        title: "Stroke Imaging Teleradiology Support | WE Healthcare",
-        description:
-          "Teleradiology support for stroke imaging workflows, including priority routing, radiologist assignment, and defined communication processes.",
-        url: "/services/stroke-imaging-protocol",
-        type: "website",
-      },
-    };
-  }
-  if (slug === "trauma-critical-care") {
-    return {
-      // Absolute: the title already carries the brand suffix.
-      title: { absolute: "Trauma & Critical Care Teleradiology | WE Healthcare" },
-      description:
-        "Priority radiology reporting support for trauma and critical care imaging, including multi-study workflows and direct clinical communication.",
-      alternates: {
-        canonical: "/services/trauma-critical-care",
-      },
-      openGraph: {
-        title: "Trauma & Critical Care Teleradiology | WE Healthcare",
-        description:
-          "Priority radiology reporting support for trauma and critical care imaging, including multi-study workflows and direct clinical communication.",
-        url: "/services/trauma-critical-care",
-        type: "website",
-      },
-    };
-  }
   const entry = getService(slug);
   return entry ? { title: entry.title, description: entry.summary } : {};
 }
@@ -200,26 +155,8 @@ const EMERGENCY_JSON_LD = buildServiceJsonLd({
   name: "Emergency & STAT Teleradiology Reporting | WE Healthcare",
   description:
     "Priority teleradiology reporting support for emergency departments, trauma studies, inpatient escalations, and time-sensitive imaging.",
-  specialties: ["Emergency Radiology", "Diagnostic Radiology", "Teleradiology"],
+  specialties: ["Emergency Radiology", "Trauma Radiology", "Neuroradiology", "Diagnostic Radiology", "Teleradiology"],
   faqs: EMERGENCY_FAQ_CONTENT.items,
-});
-
-const STROKE_JSON_LD = buildServiceJsonLd({
-  slug: "stroke-imaging-protocol",
-  name: "Stroke Imaging Teleradiology Support | WE Healthcare",
-  description:
-    "Teleradiology support for stroke imaging workflows, including priority routing, radiologist assignment, and defined communication processes.",
-  specialties: ["Diagnostic Radiology", "Neuroradiology", "Teleradiology"],
-  faqs: STROKE_FAQ_CONTENT.items,
-});
-
-const TRAUMA_JSON_LD = buildServiceJsonLd({
-  slug: "trauma-critical-care",
-  name: "Trauma & Critical Care Teleradiology | WE Healthcare",
-  description:
-    "Priority radiology reporting support for trauma and critical care imaging, including multi-study workflows and direct clinical communication.",
-  specialties: ["Trauma Radiology", "Emergency Radiology", "Diagnostic Radiology", "Teleradiology"],
-  faqs: TRAUMA_FAQ_CONTENT.items,
 });
 
 export default async function Page({ params }: Props) {
@@ -287,39 +224,10 @@ export default async function Page({ params }: Props) {
         <EmergencyHero />
         <CommonUseCasesSection />
         <EmergencyHowItWorks />
+        <StrokeProtocolWorkflowSection />
+        <TraumaWorkflowSection />
         <ServiceLevelsSection />
         <EmergencyFAQCTASection />
-      </main>
-    );
-  }
-
-  if (slug === "stroke-imaging-protocol") {
-    return (
-      <main className="services-theme flex-1 bg-background text-foreground">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(STROKE_JSON_LD) }}
-        />
-        <StrokeHero />
-        <BuiltAroundWorkflowSection />
-        <StrokeProtocolWorkflowSection />
-        <StrokeFinalSection />
-      </main>
-    );
-  }
-
-  if (slug === "trauma-critical-care") {
-    return (
-      <main className="services-theme flex-1 bg-background text-foreground">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(TRAUMA_JSON_LD) }}
-        />
-        <TraumaHero />
-        <HighPressureEnvironmentsSection />
-        <NeedsAndIncludedSection />
-        <TraumaHowItWorks />
-        <FAQAndCTASection />
       </main>
     );
   }

@@ -9,7 +9,7 @@ import { RevealHeading } from "@/components/ui/reveal-heading";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { STROKE_PROTOCOL_WORKFLOW_CONTENT as CONTENT } from "@/content/stroke-imaging-protocol";
+import { STROKE_PROTOCOL_WORKFLOW_CONTENT as CONTENT } from "@/content/emergency-stat-reporting";
 
 /**
  * Per-stage focus on the (illustrative) scan: the viewer zooms/pans to a
@@ -53,13 +53,17 @@ export function StrokeProtocolWorkflowSection() {
   const focus = FOCUS[activeStageIndex] ?? FOCUS[0];
 
   return (
-    <section id="stroke-protocol" className="relative overflow-clip py-section lg:py-section-lg bg-background">
+    <section id="stroke" className="relative overflow-clip py-section lg:py-section-lg bg-surface scroll-mt-20">
       <DecorativeLines variant="top-right" />
       <Container className="relative">
-        <div className="max-w-3xl">
-          <p className="eyebrow">{CONTENT.eyebrow}</p>
-          <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">{CONTENT.heading}</RevealHeading>
-          <p className="mt-6 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow [--eyebrow-color:var(--color-urgent)]">{CONTENT.eyebrow}</p>
+            <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
+              From <span className="text-urgent">Stroke Imaging</span> to Clinical Communication
+            </RevealHeading>
+          </div>
+          <p className="lg:col-span-5 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -139,10 +143,10 @@ export function StrokeProtocolWorkflowSection() {
                         setActiveStageIndex(idx);
                       }
                     }}
-                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-urgent"
                   >
                     <div className="flex items-baseline gap-5">
-                      <span className={cn("font-mono text-sm tabular-nums transition-colors", isActive ? "text-primary" : "text-foreground-subtle")}>
+                      <span className={cn("font-mono text-sm tabular-nums transition-colors", isActive ? "text-urgent" : "text-foreground-subtle")}>
                         {stage.step}
                       </span>
                       <div>
@@ -154,13 +158,13 @@ export function StrokeProtocolWorkflowSection() {
                         >
                           {stage.title.toLowerCase()}
                         </h3>
-                        <p className="mt-1 font-mono text-xs text-primary">{stage.detailBadge}</p>
+                        <p className="mt-1 font-mono text-xs text-urgent">{stage.detailBadge}</p>
                         <p className={cn("mt-3 text-base leading-relaxed transition-colors", isActive ? "text-foreground-muted" : "text-foreground-subtle")}>
                           {stage.description}
                         </p>
                         {isActive && (
-                          <p className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                            <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
+                          <p className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-urgent">
+                            <span aria-hidden="true" className="size-1.5 rounded-full bg-urgent" />
                             Inspecting Scan
                           </p>
                         )}
@@ -171,6 +175,16 @@ export function StrokeProtocolWorkflowSection() {
               );
             })}
           </ol>
+        </div>
+
+        <div className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-6 text-sm">
+          <p className="text-foreground-subtle">{CONTENT.transition.note}</p>
+          <a
+            href={CONTENT.transition.href}
+            className="shrink-0 rounded-sm font-semibold text-urgent underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-urgent"
+          >
+            Next: {CONTENT.transition.nextSectionName}
+          </a>
         </div>
       </Container>
     </section>

@@ -7,6 +7,7 @@ import { Lightning, Pause, Play } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { HOW_IT_WORKS_CONTENT as CONTENT } from "@/content/emergency-stat-reporting";
@@ -192,6 +193,7 @@ export function HowItWorksSection() {
           <div className="lg:col-span-5">
             <figure>
               <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-slate-950">
+                <PreloadImages srcs={CONTENT.steps.map((s) => s.image)} sizes="(max-width: 1024px) 100vw, 40vw" />
                 <AnimatePresence initial={false}>
                   <motion.div
                     key={currentStep.id}
@@ -228,7 +230,7 @@ export function HowItWorksSection() {
             Conceptual operational representation. Actual turnaround and escalation protocols are established in collaboration with facility leadership.
           </p>
           <a
-            href="#service-levels"
+            href={CONTENT.transition.href}
             className="shrink-0 rounded-sm font-semibold text-urgent underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-urgent"
           >
             {CONTENT.transition.from} → {CONTENT.transition.arrow} · Next: {CONTENT.transition.nextSectionName}

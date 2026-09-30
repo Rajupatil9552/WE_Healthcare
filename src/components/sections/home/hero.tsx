@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
  * (CSS object-position), only relevant if no mobile file is set.
  */
 const HERO_VIDEO = {
-  desktop: "/videos/Hero%20Video.mp4",
+  desktop: "/videos/hero-desktop.mp4",
   mobile: "/videos/hero-mobile.mp4",
   mobileFocus: "50% 50%",
 };

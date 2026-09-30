@@ -123,8 +123,8 @@ export const EMERGENCY_SUPPORT = {
   body: "Emergency departments are an important part of the organizations we support—not a separate audience that needs its own page. WE Healthcare can support approved Emergency / STAT, trauma, stroke, overnight, and other time-sensitive imaging workflows as part of the appropriate hospital or healthcare organization engagement.",
   workflows: [
     { label: "Emergency / STAT", href: routes.service("emergency-stat-reporting") },
-    { label: "Trauma", href: routes.service("trauma-critical-care") },
-    { label: "Stroke", href: routes.service("stroke-imaging-protocol") },
+    { label: "Trauma", href: `${routes.service("emergency-stat-reporting")}#trauma` },
+    { label: "Stroke", href: `${routes.service("emergency-stat-reporting")}#stroke` },
     { label: "Overnight", href: routes.service("overnight-weekend-coverage") },
   ],
   cta: { label: "Explore Emergency & STAT Reporting", href: routes.service("emergency-stat-reporting") },

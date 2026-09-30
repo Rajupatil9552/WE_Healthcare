@@ -5,11 +5,12 @@ import Image from "next/image";
 import { motion, LayoutGroup } from "motion/react";
 import { PhoneCall } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
+import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { TRAUMA_HOW_IT_WORKS_CONTENT as CONTENT } from "@/content/trauma-critical-care";
+import { TRAUMA_WORKFLOW_CONTENT as CONTENT } from "@/content/emergency-stat-reporting";
 
 const STAGE_BADGE = ["FLAGGED", "BATCHED", "IN REVIEW", "VERBAL OUTREACH"];
 /** Slight scatter for the "flagged" state: studies arrive separately. */
@@ -21,7 +22,7 @@ const SCATTER = [
 ];
 const layoutTransition = { layout: { duration: 0.7, ease: MOTION.easeOut } };
 
-export function HowItWorksSection() {
+export function TraumaWorkflowSection() {
   const [stage, setStage] = useState(0);
   const listRef = useRef<HTMLOListElement>(null);
   const stageRefs = useRef<(HTMLLIElement | null)[]>([]);
@@ -45,12 +46,17 @@ export function HowItWorksSection() {
   const activeStage = CONTENT.stages[stage];
 
   return (
-    <section id="how-it-works" className="py-section lg:py-section-lg bg-surface">
-      <Container>
-        <div className="max-w-3xl">
-          <p className="eyebrow">{CONTENT.eyebrow}</p>
-          <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">{CONTENT.heading}</RevealHeading>
-          <p className="mt-6 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
+    <section id="trauma" className="relative overflow-clip py-section lg:py-section-lg bg-background scroll-mt-20">
+      <DecorativeLines variant="top-right" />
+      <Container className="relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow [--eyebrow-color:var(--color-urgent)]">{CONTENT.eyebrow}</p>
+            <RevealHeading className="mt-4 text-h2 font-semibold text-foreground text-balance">
+              From <span className="text-urgent">Multiple Trauma Studies</span> to Coordinated Clinical Communication
+            </RevealHeading>
+          </div>
+          <p className="lg:col-span-5 text-base text-foreground-muted leading-relaxed">{CONTENT.supportingText}</p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -59,7 +65,7 @@ export function HowItWorksSection() {
             <div className="rounded-lg border border-border bg-card p-5 sm:p-7 shadow-md">
               <div className="flex items-center justify-between border-b border-border pb-3">
                 <p className="font-mono text-xs uppercase tracking-[0.14em] text-foreground">Multi-Study Trauma Workup</p>
-                <p className="font-mono text-xs text-primary">Stage {activeStage.step} / 04</p>
+                <p className="font-mono text-xs text-urgent">Stage {activeStage.step} / 04</p>
               </div>
 
               <LayoutGroup>
@@ -70,9 +76,9 @@ export function HowItWorksSection() {
                     className={cn(
                       "grid w-full",
                       stage === 0 && "grid-cols-2 gap-6",
-                      stage === 1 && "grid-cols-2 gap-1.5 rounded-md border border-primary/40 p-1.5",
+                      stage === 1 && "grid-cols-2 gap-1.5 rounded-md border border-urgent/40 p-1.5",
                       stage === 2 && "grid-cols-3 gap-2",
-                      stage === 3 && "grid-cols-4 gap-1.5 rounded-md border border-primary/40 p-1.5 sm:mr-28"
+                      stage === 3 && "grid-cols-4 gap-1.5 rounded-md border border-urgent/40 p-1.5 sm:mr-28"
                     )}
                   >
                     {CONTENT.studies.map((study, idx) => {
@@ -90,7 +96,7 @@ export function HowItWorksSection() {
                           }}
                           className={cn(
                             "flex items-center gap-3 rounded-md border border-border bg-card p-2.5",
-                            isFocus && "col-span-3 border-primary p-3",
+                            isFocus && "col-span-3 border-urgent p-3",
                             stage === 3 && "flex-col items-start gap-2"
                           )}
                         >
@@ -104,7 +110,7 @@ export function HowItWorksSection() {
                           <motion.div layout="position" transition={layoutTransition} className="min-w-0">
                             <p className="truncate text-sm font-semibold text-foreground">{study.name}</p>
                             <p className="truncate text-xs text-foreground-muted">{study.region}</p>
-                            <p className="mt-1 font-mono text-xs text-primary">{STAGE_BADGE[stage]}</p>
+                            <p className="mt-1 font-mono text-xs text-urgent">{STAGE_BADGE[stage]}</p>
                           </motion.div>
                         </motion.div>
                       );
@@ -123,9 +129,9 @@ export function HowItWorksSection() {
                       initial={false}
                       animate={{ scaleX: stage === 3 ? 1 : 0 }}
                       transition={{ duration: 0.5, delay: stage === 3 ? 0.5 : 0, ease: MOTION.easeOut }}
-                      className="block h-px w-10 origin-left bg-primary"
+                      className="block h-px w-10 origin-left bg-urgent"
                     />
-                    <span className="flex size-16 flex-col items-center justify-center rounded-full border border-primary bg-primary-soft text-primary">
+                    <span className="flex size-16 flex-col items-center justify-center rounded-full border border-urgent bg-urgent-soft text-urgent">
                       <PhoneCall size={18} />
                       <span className="mt-0.5 text-[11px] font-medium leading-none">Care team</span>
                     </span>
@@ -167,15 +173,15 @@ export function HowItWorksSection() {
                         setStage(idx);
                       }
                     }}
-                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="w-full cursor-pointer py-8 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-urgent"
                   >
                     <div className="flex items-baseline gap-5">
-                      <span className={cn("font-mono text-sm tabular-nums", isActive ? "text-primary" : "text-foreground-subtle")}>{s.step}</span>
+                      <span className={cn("font-mono text-sm tabular-nums", isActive ? "text-urgent" : "text-foreground-subtle")}>{s.step}</span>
                       <div>
                         <h3 className={cn("text-2xl font-semibold tracking-tight capitalize transition-colors", isActive ? "text-foreground" : "text-foreground-subtle")}>
                           {s.title.toLowerCase()}
                         </h3>
-                        <p className="mt-1 font-mono text-xs text-primary">{s.detailBadge}</p>
+                        <p className="mt-1 font-mono text-xs text-urgent">{s.detailBadge}</p>
                         <p className={cn("mt-3 text-base leading-relaxed transition-colors", isActive ? "text-foreground-muted" : "text-foreground-subtle")}>
                           {s.description}
                         </p>
@@ -187,9 +193,19 @@ export function HowItWorksSection() {
             })}
           </ol>
         </div>
+
+        <div className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-border pt-6 text-sm">
+          <p className="text-foreground-subtle">{CONTENT.transition.note}</p>
+          <a
+            href={CONTENT.transition.href}
+            className="shrink-0 rounded-sm font-semibold text-urgent underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-urgent"
+          >
+            Next: {CONTENT.transition.nextSectionName}
+          </a>
+        </div>
       </Container>
     </section>
   );
 }
 
-export default HowItWorksSection;
+export default TraumaWorkflowSection;

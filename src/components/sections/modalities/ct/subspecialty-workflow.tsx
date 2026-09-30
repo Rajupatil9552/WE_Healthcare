@@ -7,6 +7,7 @@ import { ArrowRight, CheckCircle, Pause, Play } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -197,6 +198,7 @@ export function SubspecialtyWorkflowSection() {
         {/* Stage: the CT study and its report */}
         <div className="mt-12 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12 lg:gap-6">
           <div aria-hidden="true" className="relative aspect-[4/3] overflow-hidden rounded-lg bg-black shadow-lg lg:col-span-5 lg:aspect-auto lg:min-h-[22rem]">
+            <PreloadImages srcs={CONTENT.subspecialties.map((s) => s.image.src)} sizes="(max-width: 1024px) 100vw, 40vw" />
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={active.id}

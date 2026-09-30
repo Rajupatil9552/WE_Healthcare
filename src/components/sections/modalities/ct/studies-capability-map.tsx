@@ -3,9 +3,9 @@
 import { useId, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowRight, Lightning } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { CT_STUDIES_CONTENT as CONTENT } from "@/content/ct";
@@ -33,6 +33,7 @@ export function StudiesCapabilityMapSection() {
 
             <figure className="mt-10 lg:sticky lg:top-28">
               <div id={`${uid}-viewport`} className="relative aspect-[4/3] overflow-hidden rounded-lg bg-black shadow-lg">
+                <PreloadImages srcs={CONTENT.studies.map((s) => s.preview.image.src)} sizes="(max-width: 1024px) 100vw, 40vw" />
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.div
                     key={study.id}
@@ -62,11 +63,6 @@ export function StudiesCapabilityMapSection() {
                 <p className="pointer-events-none absolute right-3 top-3 rounded-sm bg-black/60 px-1.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.14em] text-white/85">
                   {study.label}
                 </p>
-                {"urgent" in study && study.urgent && (
-                  <p className="pointer-events-none absolute right-4 bottom-3 inline-flex items-center gap-1.5 rounded-full border border-rose-400/60 bg-rose-500/25 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-rose-100">
-                    <Lightning size={11} weight="fill" aria-hidden="true" /> Priority
-                  </p>
-                )}
                 <p className="pointer-events-none absolute bottom-3 left-3 rounded-sm bg-black/60 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">
                   Illustrative · Non-PHI
                 </p>
@@ -85,7 +81,6 @@ export function StudiesCapabilityMapSection() {
             <ol aria-label={CONTENT.studiesHeading}>
               {CONTENT.studies.map((item, i) => {
                 const isActive = i === active;
-                const urgent = "urgent" in item && item.urgent;
                 return (
                   <li key={item.id} className="border-b border-border">
                     <button
@@ -103,17 +98,11 @@ export function StudiesCapabilityMapSection() {
                       <span
                         className={cn(
                           "flex-1 text-2xl font-semibold uppercase tracking-tight transition-colors sm:text-3xl",
-                          urgent ? "text-urgent" : isActive ? "text-foreground" : "text-foreground-muted group-hover:text-foreground"
+                          isActive ? "text-foreground" : "text-foreground-muted group-hover:text-foreground"
                         )}
                       >
                         {item.label}
                       </span>
-                      {urgent && <Lightning size={18} weight="fill" aria-hidden="true" className="text-urgent" />}
-                      <ArrowRight
-                        size={18}
-                        aria-hidden="true"
-                        className={cn("shrink-0 transition-all duration-300", isActive ? "translate-x-0 text-primary opacity-100" : "-translate-x-2 opacity-0")}
-                      />
                     </button>
                   </li>
                 );

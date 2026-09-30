@@ -7,7 +7,7 @@ export const contactEmail = "sales@wehealthcare.us";
 
 export const contactPhones = [
    { label: "USA", display: "+1 202 810 6050", tel: "+12028106050" },
-  { label: "India", display: "+91 95119 17233", tel: "+919511917233" },
+  { label: "India", display: "+18883767812", tel: "+18883767812" },
  
 ] as const;
 
@@ -19,14 +19,14 @@ export const offices = [
     short: "10080 Reflections Blvd West, Sunrise, Florida, 33351, USA",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=10080+Reflections+Blvd+West+Sunrise+FL+33351",
   },
-  {
-    id: "pune",
-    label: "India Office",
-    lines: ["Amanora Chambers, 4th Floor, Office No. 421", "Pune - 411028, Maharashtra, India"],
-    /** Single-line form, used by the footer. */
-    short: "Amanora chambers, 4th floor, Office no. 421, Pune - 411028, Maharashtra, India.",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Amanora+Chambers+Pune+411028",
-  },
+  // {
+  //   id: "pune",
+  //   label: "India Office",
+  //   lines: ["Amanora Chambers, 4th Floor, Office No. 421", "Pune - 411028, Maharashtra, India"],
+  //   /** Single-line form, used by the footer. */
+  //   short: "Amanora chambers, 4th floor, Office no. 421, Pune - 411028, Maharashtra, India.",
+  //   mapUrl: "https://www.google.com/maps/search/?api=1&query=Amanora+Chambers+Pune+411028",
+  // },
   
 ] as const;
 

@@ -112,8 +112,7 @@ export const CT_STUDIES_CONTENT = {
     { id: "spine", label: "Spine", preview: { image: CT_IMAGES.spine } },
     { id: "msk", label: "Musculoskeletal", preview: { image: CT_IMAGES.abdomenPelvis, scale: 2, origin: "36% 80%" } },
     { id: "lung-screening", label: "Lung Screening", preview: { image: CT_IMAGES.chest, scale: 1.7, origin: "22% 50%" } },
-    { id: "emergency", label: "Emergency / STAT", preview: { image: CT_IMAGES.head }, urgent: true },
-  ] satisfies { id: string; label: string; preview: Preview; urgent?: boolean }[],
+  ] satisfies { id: string; label: string; preview: Preview }[],
 };
 
 export const CT_WORKFLOW_CONTENT = {

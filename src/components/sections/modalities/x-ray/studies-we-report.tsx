@@ -10,6 +10,7 @@ import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { XRAY_STUDIES_CONTENT as CONTENT } from "@/content/x-ray";
 import { Radiograph } from "./radiograph";
+import { PreloadImages } from "@/components/ui/preload-images";
 
 /**
  * Studies index: a film strip of four regions (ARIA tabs) drives one large
@@ -120,8 +121,9 @@ export function StudiesWeReportSection() {
           {/* Viewer */}
           <div
             ref={viewerRef}
-            className="h-[26rem] overflow-hidden rounded-lg shadow-lg sm:h-[34rem] lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:h-auto lg:min-h-[38rem]"
+            className="relative h-[26rem] overflow-hidden rounded-lg shadow-lg sm:h-[34rem] lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:h-auto lg:min-h-[38rem]"
           >
+            <PreloadImages srcs={CONTENT.groups.map((g) => g.film.src)} sizes="(max-width: 1024px) 100vw, 40vw" />
             <Radiograph film={group.film} annotate={inView} sizes="(max-width: 1024px) 100vw, 40vw" />
           </div>
 

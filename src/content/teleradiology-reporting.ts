@@ -112,7 +112,7 @@ export const SUBSPECIALTY_COVERAGE_CONTENT = {
     {
       title: "Neuroradiology",
       modalities: "CT / MRI",
-      description: "Interpretation of acute stroke, head trauma, spinal cord pathology, and complex intracranial disease.",
+      description: "Interpretation of acute stroke (CT, CTA and perfusion read as STAT), head trauma, spinal cord pathology, and complex intracranial disease.",
       image: "/images/teleradiology-reporting/subspecialty-mri.webp",
       alt: "Diagnostic high-resolution MRI scan evaluation in neuroradiology",
     },

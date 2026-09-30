@@ -124,18 +124,18 @@ export const COMMON_USE_CASES_CONTENT = {
       number: "02",
       title: "Trauma Studies",
       description:
-        "High-velocity injuries, multi-system blunt trauma, and acute orthopedic injuries requiring immediate multi-slice cross-sectional assessment.",
-      clinicalFocus: "Whole-body trauma CT, spinal stability, and hemorrhage detection",
-      image: "/images/emergency-stat-reporting/trauma-radiology.webp",
-      alt: "Diagnostic trauma radiology workstation reviewing multi-slice CT spine and pelvic fracture scans",
+        "High-velocity injuries, multi-system blunt trauma, and acute orthopedic injuries requiring immediate multi-slice cross-sectional assessment. Related CT head, chest, abdomen, and X-ray studies from the same patient can be grouped and reviewed together.",
+      clinicalFocus: "Whole-body trauma CT, multi-study workups, spinal stability, and hemorrhage detection",
+      image: "/images/trauma-critical-care/hero-trauma-radiology.webp",
+      alt: "Diagnostic radiologist reviewing multi-study trauma CT imaging across multiple medical displays",
     },
     {
       id: "inpatient-escalations",
       number: "03",
-      title: "Inpatient Escalations",
+      title: "Inpatient & Critical Care Escalations",
       description:
-        "Sudden clinical deterioration on medical or surgical floors, postoperative concerns, and acute changes in inpatient vital parameters.",
-      clinicalFocus: "Post-op bleeding, acute pulmonary changes, and neuro checks",
+        "Sudden clinical deterioration on medical or surgical floors, intensive care imaging, postoperative concerns, and acute changes in inpatient vital parameters.",
+      clinicalFocus: "ICU imaging, post-op bleeding, acute pulmonary changes, and neuro checks",
       image: "/images/emergency-stat-reporting/priority-radiology-worklist.webp",
       alt: "Teleradiology reading room multi-monitor diagnostic workstation",
     },
@@ -152,12 +152,12 @@ export const COMMON_USE_CASES_CONTENT = {
     {
       id: "time-sensitive-imaging",
       number: "05",
-      title: "Time-Sensitive Imaging",
+      title: "Stroke & Time-Sensitive Imaging",
       description:
-        "Studies with high likelihood of critical pathology—such as acute stroke, pulmonary embolism, or intracranial hemorrhage—requiring urgent direct communication.",
+        "Studies with high likelihood of critical pathology—such as acute stroke, pulmonary embolism, or intracranial hemorrhage—requiring urgent direct communication. Stroke CT, CTA, and perfusion studies follow the facility's stroke protocol.",
       clinicalFocus: "Stroke protocols, aortic dissection, and tension pneumothorax",
-      image: "/images/emergency-stat-reporting/trauma-radiology.webp",
-      alt: "Diagnostic monitor displaying urgent time-sensitive radiology scans",
+      image: "/images/stroke-imaging-protocol/hero-stroke-ct-imaging.webp",
+      alt: "Diagnostic radiologist reviewing axial brain CT slices and CTA head and neck vascular imaging",
     },
     {
       id: "volume-surges",
@@ -180,7 +180,8 @@ export const HOW_IT_WORKS_CONTENT = {
   transition: {
     from: "Communication",
     arrow: "Defined Clinical Escalation Pathway",
-    nextSectionName: "Service Levels",
+    nextSectionName: "Stroke Imaging Protocol",
+    href: "#stroke",
   },
   study: {
     exam: "CT Head w/o Contrast",
@@ -272,6 +273,145 @@ export const HOW_IT_WORKS_CONTENT = {
   ],
 } as const;
 
+/** Stroke protocol variant of the STAT workflow (formerly the Stroke Imaging Protocol page). */
+export const STROKE_PROTOCOL_WORKFLOW_CONTENT = {
+  eyebrow: "STROKE IMAGING PROTOCOL",
+  heading: "From Stroke Imaging to Clinical Communication",
+  supportingText:
+    "A defined workflow can help coordinate study routing, radiologist review, escalation, and communication around time-sensitive stroke imaging.",
+  transition: {
+    note: "Conceptual stroke pathway. Priority rules and communication steps follow the facility's existing stroke protocol.",
+    nextSectionName: "Trauma Multi-Study Workflow",
+    href: "#trauma",
+  },
+  image: "/images/stroke-imaging-protocol/stroke-protocol-workflow.webp",
+  alt: "Diagnostic multi-planar stroke imaging study showing axial brain CT perfusion maps and CTA cerebral angiography on medical display",
+  stages: [
+    {
+      step: "01",
+      id: "flag",
+      title: "FLAG",
+      description:
+        "Identify the stroke-related imaging study within the established workflow.",
+      detailBadge: "Ingestion & Protocol Recognition",
+      visualFocus: "Study identified upon transmission from facility PACS",
+    },
+    {
+      step: "02",
+      id: "auto-prioritize",
+      title: "AUTO-PRIORITIZE",
+      description:
+        "Route the study according to the facility’s defined priority rules.",
+      detailBadge: "Priority Worklist Alignment",
+      visualFocus: "Elevated through facility-defined queue rules",
+    },
+    {
+      step: "03",
+      id: "immediate-review",
+      title: "IMMEDIATE REVIEW",
+      description:
+        "Direct the study for appropriate radiologist review.",
+      detailBadge: "Diagnostic Neuroradiology Match",
+      visualFocus: "Assigned for diagnostic radiologist review",
+    },
+    {
+      step: "04",
+      id: "direct-voice-contact",
+      title: "DIRECT VOICE CONTACT",
+      description:
+        "Communicate time-sensitive findings through the facility-established communication pathway.",
+      detailBadge: "Direct Clinical Outreach",
+      visualFocus: "Verbal communication & EHR documentation",
+    },
+  ],
+} as const;
+
+/** Trauma multi-study variant of the STAT workflow (formerly the Trauma & Critical Care page). */
+export const TRAUMA_WORKFLOW_CONTENT = {
+  eyebrow: "TRAUMA & CRITICAL CARE",
+  heading: "From Multiple Trauma Studies to Coordinated Clinical Communication",
+  supportingText:
+    "The workflow can be configured around facility requirements, helping organize priority studies, multi-study routing, radiologist review, and clinical communication.",
+  disclaimer: "The exact workflow is configured around facility requirements.",
+  transition: {
+    note: "Conceptual multi-study workflow. Grouping, routing, and escalation are configured around facility requirements.",
+    nextSectionName: "Service Levels",
+    href: "#service-levels",
+  },
+  studies: [
+    {
+      id: "ct-head",
+      modality: "CT",
+      name: "CT HEAD",
+      region: "Acute Neuro",
+      image: "/images/trauma-critical-care/trauma-multi-study-head-ct.webp",
+      alt: "CT Head scan axial slices",
+    },
+    {
+      id: "ct-chest",
+      modality: "CT",
+      name: "CT CHEST",
+      region: "Cardiothoracic",
+      image: "/images/trauma-critical-care/trauma-multi-study-chest-ct.webp",
+      alt: "CT Chest scan axial slices",
+    },
+    {
+      id: "ct-abdomen",
+      modality: "CT",
+      name: "CT ABDOMEN",
+      region: "Abdominopelvic",
+      image: "/images/trauma-critical-care/trauma-multi-study-abdomen-ct.webp",
+      alt: "CT Abdomen scan axial slices",
+    },
+    {
+      id: "xray",
+      modality: "XR",
+      name: "X-RAY",
+      region: "Trauma Skeletal",
+      image: "/images/trauma-critical-care/trauma-multi-study-xray.webp",
+      alt: "Radiography skeletal series",
+    },
+  ],
+  stages: [
+    {
+      step: "01",
+      id: "flag",
+      title: "FLAG",
+      description:
+        "Identify priority trauma or critical-care imaging within the established workflow.",
+      detailBadge: "Ingestion & Priority Recognition",
+      visualFocus: "Acute multi-study workup identified upon PACS ingestion",
+    },
+    {
+      step: "02",
+      id: "batch-route",
+      title: "BATCH ROUTE",
+      description:
+        "Group and route related studies according to the facility's defined workflow.",
+      detailBadge: "Polytrauma Study Grouping",
+      visualFocus: "Concurrent anatomical series grouped for unified review",
+    },
+    {
+      step: "03",
+      id: "priority-read",
+      title: "PRIORITY READ",
+      description:
+        "Direct the studies for appropriate radiologist review.",
+      detailBadge: "Diagnostic Cross-Correlation",
+      focusText: "Targeted cross-correlation across neuro, torso, and skeletal views",
+    },
+    {
+      step: "04",
+      id: "direct-contact",
+      title: "DIRECT CONTACT WITH TRAUMA TEAM",
+      description:
+        "Communicate time-sensitive findings through the facility-established communication pathway.",
+      detailBadge: "Direct Clinical Outreach",
+      focusText: "Physician telephone consultation and EHR documentation",
+    },
+  ],
+} as const;
+
 export const CRITICAL_FINDINGS_PROTOCOL_CONTENT = {
   eyebrow: "CRITICAL FINDINGS PROTOCOL",
   heading: "A Defined Path for Critical Findings",
@@ -334,8 +474,8 @@ export const CRITICAL_FINDINGS_PROTOCOL_CONTENT = {
 
 export const SERVICE_LEVELS_CONTENT = {
   eyebrow: "SERVICE LEVELS",
-  heading: "Defined Around Your Operational Requirements",
-  body: "Priority categories, coverage windows, escalation rules, and turnaround commitments should be agreed before launch.",
+  heading: "Radiology Support That Adapts to Your Workflow",
+  body: "Every imaging operation has different needs. WE Healthcare provides flexible teleradiology support designed to work alongside your existing team, technology, and reporting workflow.",
   verificationNote: "[VERIFY: service-level details]",
   transition: {
     message: "Questions about how priority reporting support can fit your workflow?",
@@ -343,28 +483,10 @@ export const SERVICE_LEVELS_CONTENT = {
   },
   parameters: [
     {
-      id: "param-priority-categories",
+      id: "param-flexible-coverage",
       number: "01",
-      title: "Priority Categories",
-      description:
-        "Define how STAT, high-priority, and routine studies are classified.",
-      detail:
-        "Studies are mapped to clear clinical acuity tiers upon ingestion, ensuring high-urgency emergent protocols receive immediate priority handling.",
-      visualType: "categories" as const,
-      tiers: [
-        { label: "STAT", tag: "Urgent Emergent" },
-        { label: "HIGH", tag: "Inpatient Priority" },
-        { label: "ROUTINE", tag: "Standard Queue" },
-      ],
-    },
-    {
-      id: "param-coverage-windows",
-      number: "02",
-      title: "Coverage Windows",
-      description:
-        "Define when priority reporting support is required.",
-      detail:
-        "Coverage can be tailored to after-hours, overnight shifts, weekend coverage, daytime volume spikes, or continuous 24/7/365 emergency support.",
+      title: "Flexible Coverage",
+      description: "Support designed around your operational and reporting needs.",
       visualType: "windows" as const,
       windows: [
         { label: "DAY", desc: "Volume Surge Support" },
@@ -374,34 +496,36 @@ export const SERVICE_LEVELS_CONTENT = {
       ],
     },
     {
-      id: "param-escalation-rules",
-      number: "03",
-      title: "Escalation Rules",
-      description:
-        "Define the communication and escalation pathway.",
-      detail:
-        "Establish specific physician contact hierarchies, notification channels, and failover pathways for unexpected critical diagnostic findings.",
-      visualType: "escalation" as const,
-      steps: [
-        "Finding Identified",
-        "Agreed Escalation",
-        "Direct Outreach",
+      id: "param-subspecialty-expertise",
+      number: "02",
+      title: "Subspecialty Expertise",
+      description: "Access to radiologists with expertise across a range of imaging specialties.",
+      visualType: "specialties" as const,
+      specialties: [
+        "Neuroradiology",
+        "Musculoskeletal",
+        "Body & Abdominal",
+        "Cardiothoracic",
+        "Pediatric",
+        "Emergency & Trauma",
       ],
     },
     {
-      id: "param-turnaround-commitments",
+      id: "param-seamless-integration",
+      number: "03",
+      title: "Seamless Integration",
+      description: "Designed to work with your existing PACS, RIS, and imaging workflow.",
+      visualType: "flow" as const,
+      steps: ["Your PACS", "Your RIS", "Your Imaging Workflow"],
+    },
+    {
+      id: "param-operational-support",
       number: "04",
-      title: "Turnaround Commitments",
+      title: "Operational Support",
       description:
-        "Define agreed reporting expectations before launch.",
-      detail:
-        "Turnaround expectations are formally established in clinical service level agreements during onboarding, aligned with your departmental benchmarks.",
-      visualType: "commitments" as const,
-      phases: [
-        { phase: "Defined", note: "Target Benchmarks Established" },
-        { phase: "Agreed", note: "Service Agreement Codified" },
-        { phase: "Documented", note: "EHR Timestamp Tracked" },
-      ],
+        "A structured approach to communication, reporting coordination, and ongoing collaboration.",
+      visualType: "pillars" as const,
+      pillars: ["Communication", "Reporting Coordination", "Ongoing Collaboration"],
     },
   ],
 } as const;
@@ -429,6 +553,30 @@ export const EMERGENCY_FAQ_CONTENT = {
       question: "How are STAT studies prioritized?",
       answer:
         "STAT studies are flagged at transmission, moved to the front of the queue and assigned to the next available radiologist licensed in the patient's state.",
+    },
+    {
+      id: "faq-stroke-imaging",
+      question: "Can teleradiology support stroke imaging workflows?",
+      answer:
+        "Yes. Stroke CT, CT angiography and perfusion studies are read as STAT, following your facility's stroke protocol. Studies flagged as a stroke alert go to the top of the STAT queue ahead of all other work.",
+    },
+    {
+      id: "faq-stroke-radiologist",
+      question: "How is the radiologist assigned for stroke studies?",
+      answer:
+        "The study is assigned to the next available radiologist with neuroimaging experience who is licensed in the patient's state.",
+    },
+    {
+      id: "faq-trauma-imaging",
+      question: "Can teleradiology support trauma imaging?",
+      answer:
+        "Yes. Trauma CT and X-ray studies are read as STAT, with critical findings phoned directly to the trauma team.",
+    },
+    {
+      id: "faq-trauma-multi-study",
+      question: "Can multiple trauma studies be handled together?",
+      answer:
+        "Yes. Studies from the same trauma patient are read together by one radiologist where possible so findings stay consistent across body regions.",
     },
     {
       id: "faq-critical-findings",

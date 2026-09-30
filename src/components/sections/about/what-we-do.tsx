@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowUpRight, Brain, FirstAidKit, Monitor, MoonStars, Siren, Stack } from "@phosphor-icons/react";
+import { ArrowUpRight, Monitor, MoonStars, Siren, Stack } from "@phosphor-icons/react";
 import { Container } from "@/components/ui/container";
 import { DecorativeLines } from "@/components/ui/decorative-lines";
 import { RevealHeading } from "@/components/ui/reveal-heading";
@@ -14,8 +14,6 @@ const ICONS: Record<(typeof CONTENT.services)[number]["id"], typeof Monitor> = {
   "overnight-weekend-coverage": MoonStars,
   "overflow-backlog-support": Stack,
   "emergency-stat-reporting": Siren,
-  "stroke-imaging-protocol": Brain,
-  "trauma-critical-care": FirstAidKit,
 };
 
 /** Sticky intro on the left, teleradiology service rows on the right. */

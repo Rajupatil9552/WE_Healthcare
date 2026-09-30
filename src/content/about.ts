@@ -43,6 +43,11 @@ export const WHO_WE_ARE = {
   facts: [
     { label: "Reach", value: "United States & International" },
     { label: "Core Service", value: "Teleradiology Reporting" },
+    {
+      label: "Delivery",
+      value: "India Offshore Delivery Center",
+      note: "Supporting WE Healthcare's radiology operations and technology workflows.",
+    },
   ],
 } as const;
 
@@ -80,20 +85,8 @@ export const WHAT_WE_DO = {
     {
       id: "emergency-stat-reporting",
       title: "Emergency / STAT Reporting",
-      body: "Time-sensitive studies read first, with critical findings phoned directly to the ordering physician.",
+      body: "Time-sensitive studies, including stroke and trauma imaging, read first, with critical findings phoned directly to the ordering physician.",
       href: routes.service("emergency-stat-reporting"),
-    },
-    {
-      id: "stroke-imaging-protocol",
-      title: "Stroke Imaging Protocol",
-      body: "Stroke CT, CTA and perfusion studies read as STAT, following your stroke protocol.",
-      href: routes.service("stroke-imaging-protocol"),
-    },
-    {
-      id: "trauma-critical-care",
-      title: "Trauma & Critical Care",
-      body: "Trauma CT and X-ray read as STAT, with findings phoned directly to the trauma team.",
-      href: routes.service("trauma-critical-care"),
     },
   ] satisfies AboutService[],
 } as const;

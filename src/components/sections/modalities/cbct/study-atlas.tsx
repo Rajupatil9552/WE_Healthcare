@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Container } from "@/components/ui/container";
 import { RevealHeading } from "@/components/ui/reveal-heading";
+import { PreloadImages } from "@/components/ui/preload-images";
 import { useAutoCycle } from "@/components/sections/modalities/shared/use-auto-cycle";
 import { MOTION } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -69,6 +70,7 @@ export function StudyAtlasSection() {
                 <span className="font-mono uppercase tracking-[0.12em]">{study.view}</span>
               </div>
               <div className="relative aspect-[4/3]">
+                <PreloadImages srcs={CONTENT.studies.map((s) => s.image.src)} sizes="(max-width: 1024px) 100vw, 45vw" />
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.div
                     key={study.image.src}

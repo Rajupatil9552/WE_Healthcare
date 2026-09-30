@@ -326,6 +326,12 @@ export const OVERNIGHT_FAQ_ITEMS: { id: string; question: string; answer: string
       "Yes. Overnight coverage includes STAT reads for emergency departments. STAT studies move to the front of the queue. Critical findings are phoned directly to the ED physician.",
   },
   {
+    id: "faq-overnight-trauma",
+    question: "Can overnight trauma volume be supported?",
+    answer:
+      "Yes. Trauma reads are covered 24x7, including overnight and weekend peaks.",
+  },
+  {
     id: "faq-team-handover",
     question: "How are studies handed over between teams?",
     answer:
