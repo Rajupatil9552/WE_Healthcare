@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     const page = "/technology-security";
     return [
+      // The Services hub page was removed; every service has its own page.
+      { source: "/services", destination: "/#services", permanent: true },
       // Request a Demo is the contact form with "demo" pre-selected.
       { source: "/request-a-demo", destination: "/contact?inquiry=demo", permanent: true },
       { source: "/technology", destination: page, permanent: true },

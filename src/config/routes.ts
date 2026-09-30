@@ -8,7 +8,8 @@
 export const routes = {
   home: "/",
 
-  services: "/services",
+  // No hub page: each service has its own page; "Services" links go to the homepage section.
+  services: "/#services",
   service: (slug: string) => `/services/${slug}`,
 
   modalities: "/modalities",

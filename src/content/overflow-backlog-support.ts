@@ -304,7 +304,7 @@ export const OVERFLOW_FINAL_CTA_CONTENT = {
   },
   secondaryBtn: {
     label: "Explore Coverage Options",
-    href: "/services",
+    href: "/#services",
   },
   image: "/images/overflow-backlog-reporting/reporting-workflow.webp",
   alt: "Teleradiology team collaborating on diagnostic imaging case triage and reporting",
