@@ -3,7 +3,7 @@
  * and the contact page.
  */
 
-export const contactEmail = "alish@wehealthcare.us";
+export const contactEmail = "sales@wehealthcare.us";
 
 export const contactPhones = [
    { label: "USA", display: "+1 202 810 6050", tel: "+12028106050" },
