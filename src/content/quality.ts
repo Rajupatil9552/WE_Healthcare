@@ -49,7 +49,7 @@ export const QUALITY_HERO = {
     { label: "Communication of significant findings", target: "critical-findings" },
     { label: "Consistent operational processes", target: "operations-support" },
   ] satisfies { label: string; target: QualitySectionId }[],
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   secondaryCta: { label: "See How It Works", href: "#radiologists" },
 } as const;
 
@@ -189,7 +189,7 @@ export const QUALITY_FAQ = [
 export const QUALITY_CTA = {
   heading: "Quality You Can Build Into Your Workflow",
   body: "Let's discuss your reporting requirements, quality processes, and operational needs.",
-  cta: { label: "Request a Consultation", href: routes.contact },
+  cta: { label: "Request a Demo", href: routes.requestDemo },
   image: {
     src: "/images/overnight-weekend-coverage/night-radiology-reading-room.webp",
     alt: "",

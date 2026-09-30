@@ -22,6 +22,11 @@ export const services: ContentEntry[] = [
     title: "Emergency / STAT Reporting",
     summary: "Priority reads for time-sensitive cases, 24x7.",
   },
+  {
+    slug: "spinal-annotation",
+    title: "Spinal Annotation",
+    summary: "Structured spinal annotation support for imaging workflows.",
+  },
 ];
 
 export function getService(slug: string) {

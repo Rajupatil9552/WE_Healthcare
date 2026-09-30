@@ -8,10 +8,12 @@ import { TELERADIOLOGY_FAQ_ITEMS } from "@/content/teleradiology-reporting";
 import { OVERNIGHT_FAQ_ITEMS } from "@/content/overnight-weekend-coverage";
 import { OVERFLOW_FAQ_CONTENT } from "@/content/overflow-backlog-support";
 import { EMERGENCY_FAQ_CONTENT } from "@/content/emergency-stat-reporting";
+import { SPINAL_FAQ_CONTENT, SPINAL_PAGE_METADATA, SPINE_IMAGES } from "@/content/spinal-annotation";
 import { TeleradiologyHero } from "@/components/sections/services/teleradiology-reporting/hero";
 import { OvernightHero } from "@/components/sections/services/overnight-weekend-coverage/hero";
 import { OverflowHero } from "@/components/sections/services/overflow-backlog-reporting/hero";
 import { EmergencyHero } from "@/components/sections/services/emergency-stat-reporting/hero";
+import { SpinalAnnotationHero } from "@/components/sections/services/spinal-annotation/hero";
 
 // Below-the-fold sections: code-split so their JS loads and hydrates in
 // separate chunks after the hero (still server-rendered, so SEO/HTML is unchanged).
@@ -33,6 +35,9 @@ const CommonUseCasesSection = dynamic(() => import("@/components/sections/servic
 const EmergencyHowItWorks = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/how-it-works").then((m) => m.HowItWorksSection));
 const ServiceLevelsSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/service-levels").then((m) => m.ServiceLevelsSection));
 const EmergencyFAQCTASection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/faq-cta").then((m) => m.EmergencyFAQCTASection));
+const WhatIsSection = dynamic(() => import("@/components/sections/services/spinal-annotation/what-is").then((m) => m.WhatIsSection));
+const SpinalWorkflowSection = dynamic(() => import("@/components/sections/services/spinal-annotation/workflow").then((m) => m.SpinalWorkflowSection));
+const SpinalFaqCtaSection = dynamic(() => import("@/components/sections/services/spinal-annotation/faq-cta").then((m) => m.SpinalFaqCtaSection));
 const StrokeProtocolWorkflowSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/stroke-protocol-workflow").then((m) => m.StrokeProtocolWorkflowSection));
 const TraumaWorkflowSection = dynamic(() => import("@/components/sections/services/emergency-stat-reporting/trauma-workflow").then((m) => m.TraumaWorkflowSection));
 
@@ -119,6 +124,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   }
+  if (slug === "spinal-annotation") {
+    const { title, description, canonical } = SPINAL_PAGE_METADATA;
+    return {
+      // Absolute: the title already carries the brand suffix.
+      title: { absolute: title },
+      description,
+      alternates: { canonical },
+      openGraph: {
+        title,
+        description,
+        url: canonical,
+        type: "website",
+        images: [{ url: SPINE_IMAGES.lumbarMri.src, alt: SPINE_IMAGES.lumbarMri.alt }],
+      },
+    };
+  }
   const entry = getService(slug);
   return entry ? { title: entry.title, description: entry.summary } : {};
 }
@@ -157,6 +178,14 @@ const EMERGENCY_JSON_LD = buildServiceJsonLd({
     "Priority teleradiology reporting support for emergency departments, trauma studies, inpatient escalations, and time-sensitive imaging.",
   specialties: ["Emergency Radiology", "Trauma Radiology", "Neuroradiology", "Diagnostic Radiology", "Teleradiology"],
   faqs: EMERGENCY_FAQ_CONTENT.items,
+});
+
+const SPINAL_JSON_LD = buildServiceJsonLd({
+  slug: "spinal-annotation",
+  name: SPINAL_PAGE_METADATA.title,
+  description: SPINAL_PAGE_METADATA.description,
+  specialties: ["Diagnostic Radiology"],
+  faqs: SPINAL_FAQ_CONTENT.items,
 });
 
 export default async function Page({ params }: Props) {
@@ -228,6 +257,21 @@ export default async function Page({ params }: Props) {
         <TraumaWorkflowSection />
         <ServiceLevelsSection />
         <EmergencyFAQCTASection />
+      </main>
+    );
+  }
+
+  if (slug === "spinal-annotation") {
+    return (
+      <main className="services-theme flex-1 bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SPINAL_JSON_LD) }}
+        />
+        <SpinalAnnotationHero />
+        <WhatIsSection />
+        <SpinalWorkflowSection />
+        <SpinalFaqCtaSection />
       </main>
     );
   }

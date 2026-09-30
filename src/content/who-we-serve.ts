@@ -17,7 +17,7 @@ export const WHO_WE_SERVE_HERO = {
   eyebrow: "Who We Serve",
   heading: "Teleradiology Built Around Your Organization",
   body: "Healthcare organizations face different imaging volumes, coverage requirements, and operational challenges. WE Healthcare provides remote radiology reporting support designed to fit your existing workflow from routine reporting and overflow volume to overnight, emergency, and subspecialty coverage.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   secondaryCta: { label: "Who We Support", href: "#who-we-support" },
 } as const;
 
@@ -161,7 +161,6 @@ export const MODALITIES_STRIP = {
     { label: "PET-CT", slug: "pet-ct", image: "/images/modalities/pet-ct/pet-ct-coronal-pet.webp" },
     { label: "CBCT", slug: "cbct", image: "/images/modalities/cbct/cbct-panoramic.webp" },
     { label: "Nuclear Medicine", slug: "nuclear-medicine", image: "/images/modalities/nuclear-medicine/nm-bone-scan-anterior.webp" },
-    { label: "Spinal Annotation", slug: "spinal-annotation", image: "/images/modalities/mri/mri-lumbar-spine-sagittal.webp" },
   ],
   cta: { label: "Explore All Modalities", href: routes.modalities },
 } as const;
@@ -213,5 +212,5 @@ export const WHO_WE_SERVE_CTA = {
   heading: "Let's Talk About Your Radiology Workflow",
   body: "Whether you need additional capacity, after-hours coverage, overflow support, or a reporting model across multiple locations, WE Healthcare can work with you to understand your requirements.",
   needs: ["Additional capacity", "After-hours coverage", "Overflow support", "Multi-location reporting"],
-  cta: { label: "Request a Consultation", href: routes.contact },
+  cta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

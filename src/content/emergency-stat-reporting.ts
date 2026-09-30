@@ -19,8 +19,8 @@ export const EMERGENCY_HERO_CONTENT = {
   body: "Routine studies are reported within 12 to 24 hours. STAT studies are moved to the front of the queue 24x7, with turnaround targets agreed for each facility and written into your service agreement. Critical findings are phoned directly to the referring physician with read-back documented.",
   verificationNote: "[VERIFY: exact STAT capability and turnaround commitments]",
   primaryCta: {
-    label: "Request a Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
     supportingText: "Tell us about your radiology coverage needs.",
   },
   secondaryCta: {
@@ -605,8 +605,8 @@ export const EMERGENCY_FINAL_CTA_CONTENT = {
   supportingText:
     "Tell us about your radiology coverage needs, priority workflows, and operational requirements.",
   primaryBtn: {
-    label: "Request a Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
   },
   secondaryBtn: {
     label: "Contact Our Team",

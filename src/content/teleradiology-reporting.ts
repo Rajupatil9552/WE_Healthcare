@@ -27,8 +27,8 @@ export const HERO_CONTENT = {
   description:
     "Reliable, high-quality preliminary and final radiology reads for hospitals, imaging centers, emergency departments, and healthcare networks across the United States.",
   primaryCta: {
-    label: "Request Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
   },
   secondaryCta: {
     label: "Explore Coverage Models",
@@ -493,12 +493,12 @@ export const FINAL_CTA_CONTENT = {
   description:
     "Contact our clinical partnership team to discuss your facility's coverage requirements, turnaround targets, and technical workflow integration.",
   primaryCta: {
-    label: "Schedule Consultation",
-    href: "/contact",
-  },
-  secondaryCta: {
     label: "Request a Demo",
     href: "/contact?inquiry=demo",
+  },
+  secondaryCta: {
+    label: "Contact Us",
+    href: "/contact",
   },
   image: "/images/teleradiology-reporting/final-cta-radiology.webp",
   alt: "Healthcare leadership and radiology team discussing clinical teleradiology partnership",

@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       // Stroke and Trauma are workflows within Emergency / STAT, not standalone services.
       { source: "/services/stroke-imaging-protocol", destination: "/services/emergency-stat-reporting#stroke", permanent: true },
       { source: "/services/trauma-critical-care", destination: "/services/emergency-stat-reporting#trauma", permanent: true },
+      // Spinal Annotation is a service, not an imaging modality.
+      { source: "/modalities/spinal-annotation", destination: "/services/spinal-annotation", permanent: true },
       // Request a Demo is the contact form with "demo" pre-selected.
       { source: "/request-a-demo", destination: "/contact?inquiry=demo", permanent: true },
       { source: "/technology", destination: page, permanent: true },

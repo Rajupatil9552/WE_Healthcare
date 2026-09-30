@@ -1,7 +1,7 @@
 /**
  * Content definition for the Spinal Annotation page.
- * Route: /modalities/spinal-annotation (kept where the nav already links;
- * the brief listed /services/spinal-annotation).
+ * Route: /services/spinal-annotation (a service, not an imaging modality;
+ * the old /modalities/spinal-annotation URL redirects here).
  *
  * Copy follows the approved Spinal Annotation content. The Quality & Review
  * text is shown verbatim as supplied. [VERIFY: Quality & Review detail]
@@ -74,14 +74,14 @@ export const SPINAL_PAGE_METADATA = {
   title: "Spinal Annotation Services | Radiology Imaging Support | WE Healthcare",
   description:
     "Spinal annotation support for imaging workflows, with service scope and output configured around approved clinical and operational requirements.",
-  canonical: routes.modality("spinal-annotation"),
+  canonical: routes.service("spinal-annotation"),
 } as const;
 
 export const SPINAL_HERO_CONTENT = {
   eyebrow: "Specialized Service · Spinal Annotation",
   heading: "Spinal Annotation Services",
   subheading: "Structured spinal annotation support for imaging workflows.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;
 
 export const SPINAL_WHAT_CONTENT = {
@@ -142,6 +142,6 @@ export const SPINAL_FAQ_CONTENT = {
 
 export const SPINAL_CTA_CONTENT = {
   heading: "Discuss Spinal Annotation Support",
-  body: "Request a consultation to discuss your annotation scope, supported studies, and deliverable requirements.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your annotation scope, supported studies, and deliverable requirements.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

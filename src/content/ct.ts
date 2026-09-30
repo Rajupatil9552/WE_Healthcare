@@ -83,7 +83,7 @@ export const CT_HERO_CONTENT = {
   heading: "CT Reporting Services",
   subheading: "Subspecialty CT interpretation for routine, urgent, and emergency imaging.",
   body: "WE Healthcare provides remote CT reporting support for healthcare organizations that need additional subspecialty capacity, after-hours coverage, or flexible reporting support.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   /** CT study → subspecialty review → reporting, shown under the viewer. */
   pipeline: [
     { id: "study", label: "CT study", detail: "Head / Brain · Axial" },
@@ -184,6 +184,6 @@ export const CT_FAQ_CONTENT = {
 
 export const CT_CTA_CONTENT = {
   heading: "Need Additional CT Reporting Support?",
-  body: "Request a consultation to discuss your CT reporting workflow, study volumes, and subspecialty reporting requirements.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your CT reporting workflow, study volumes, and subspecialty reporting requirements.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

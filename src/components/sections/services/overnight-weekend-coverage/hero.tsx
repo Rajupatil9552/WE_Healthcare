@@ -49,8 +49,8 @@ export function OvernightHero() {
             </motion.ul>
 
             <motion.div {...fadeIn(0.28)} className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link href="/contact" className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}>
-                <span>Request a Consultation</span>
+              <Link href="/contact?inquiry=demo" className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}>
+                <span>Request a Demo</span>
                 <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="#coverage-timeline" className={buttonVariants({ variant: "outline", size: "lg" })}>

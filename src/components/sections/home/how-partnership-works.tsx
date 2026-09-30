@@ -176,7 +176,7 @@ export function HowPartnershipWorks() {
               </h3>
             </div>
           </div>
-          <Link href={routes.contact} className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group shrink-0")}>
+          <Link href={routes.requestDemo} className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group shrink-0")}>
             <span>Request a Demo</span>
             <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
           </Link>

@@ -18,8 +18,6 @@ import { CBCT_FAQ_CONTENT, CBCT_IMAGES, CBCT_PAGE_METADATA } from "@/content/cbc
 import { CbctHero } from "@/components/sections/modalities/cbct/hero";
 import { NM_FAQ_CONTENT, NM_IMAGES, NM_PAGE_METADATA } from "@/content/nuclear-medicine";
 import { NuclearMedicineHero } from "@/components/sections/modalities/nuclear-medicine/hero";
-import { SPINAL_FAQ_CONTENT, SPINAL_PAGE_METADATA, SPINE_IMAGES } from "@/content/spinal-annotation";
-import { SpinalAnnotationHero } from "@/components/sections/modalities/spinal-annotation/hero";
 
 // Below-the-fold sections: code-split so their JS loads and hydrates in
 // separate chunks after the hero (still server-rendered, so SEO/HTML is unchanged).
@@ -44,9 +42,6 @@ const CbctFaqCtaSection = dynamic(() => import("@/components/sections/modalities
 const ReviewScreenSection = dynamic(() => import("@/components/sections/modalities/nuclear-medicine/review-screen").then((m) => m.ReviewScreenSection));
 const NmSubspecialtyWorkflowSection = dynamic(() => import("@/components/sections/modalities/nuclear-medicine/subspecialty-workflow").then((m) => m.NmSubspecialtyWorkflowSection));
 const NmFaqCtaSection = dynamic(() => import("@/components/sections/modalities/nuclear-medicine/faq-cta").then((m) => m.NmFaqCtaSection));
-const WhatIsSection = dynamic(() => import("@/components/sections/modalities/spinal-annotation/what-is").then((m) => m.WhatIsSection));
-const SpinalWorkflowSection = dynamic(() => import("@/components/sections/modalities/spinal-annotation/workflow").then((m) => m.SpinalWorkflowSection));
-const SpinalFaqCtaSection = dynamic(() => import("@/components/sections/modalities/spinal-annotation/faq-cta").then((m) => m.SpinalFaqCtaSection));
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -165,21 +160,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   }
-  if (slug === "spinal-annotation") {
-    const { title, description, canonical } = SPINAL_PAGE_METADATA;
-    return {
-      title: { absolute: title },
-      description,
-      alternates: { canonical },
-      openGraph: {
-        title,
-        description,
-        url: canonical,
-        type: "website",
-        images: [{ url: SPINE_IMAGES.lumbarMri.src, alt: SPINE_IMAGES.lumbarMri.alt }],
-      },
-    };
-  }
   const entry = getModality(slug);
   return entry ? { title: entry.title, description: entry.summary } : {};
 }
@@ -245,15 +225,6 @@ const NM_JSON_LD = buildServiceJsonLd({
   description: NM_PAGE_METADATA.description,
   specialties: ["Nuclear Medicine", "Diagnostic Radiology", "Teleradiology"],
   faqs: NM_FAQ_CONTENT.items,
-});
-
-const SPINAL_JSON_LD = buildServiceJsonLd({
-  section: "modalities",
-  slug: "spinal-annotation",
-  name: SPINAL_PAGE_METADATA.title,
-  description: SPINAL_PAGE_METADATA.description,
-  specialties: ["Diagnostic Radiology"],
-  faqs: SPINAL_FAQ_CONTENT.items,
 });
 
 export default async function Page({ params }: Props) {
@@ -362,21 +333,6 @@ export default async function Page({ params }: Props) {
         <ReviewScreenSection />
         <NmSubspecialtyWorkflowSection />
         <NmFaqCtaSection />
-      </main>
-    );
-  }
-
-  if (slug === "spinal-annotation") {
-    return (
-      <main className="site-theme flex-1 bg-background text-foreground">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SPINAL_JSON_LD) }}
-        />
-        <SpinalAnnotationHero />
-        <WhatIsSection />
-        <SpinalWorkflowSection />
-        <SpinalFaqCtaSection />
       </main>
     );
   }

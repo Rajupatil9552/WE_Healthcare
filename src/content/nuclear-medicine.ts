@@ -50,7 +50,7 @@ export const NM_HERO_CONTENT = {
   heading: "Nuclear Medicine Reporting Services",
   subheading: "Nuclear medicine reporting supported by subspecialty-trained radiologists.",
   body: "WE Healthcare provides remote nuclear medicine reporting support for hospitals, imaging centers, and healthcare networks managing nuclear medicine and hybrid imaging workloads.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;
 
 export type NmStudyId = "pet-ct" | "bone" | "thyroid" | "cardiac" | "renal" | "oncology";
@@ -133,6 +133,6 @@ export const NM_FAQ_CONTENT = {
 
 export const NM_CTA_CONTENT = {
   heading: "Need Additional Nuclear Medicine Reporting Support?",
-  body: "Request a consultation to discuss your nuclear medicine study mix, hybrid imaging volumes, and reporting workflow.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your nuclear medicine study mix, hybrid imaging volumes, and reporting workflow.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

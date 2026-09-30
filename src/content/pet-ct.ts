@@ -55,7 +55,7 @@ export const PET_HERO_CONTENT = {
   heading: "PET-CT Reporting Services",
   subheading: "PET-CT interpretation for complex diagnostic and oncology imaging.",
   body: "WE Healthcare provides PET-CT reporting support for healthcare organizations requiring additional nuclear medicine and hybrid imaging interpretation capacity.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;
 
 export const PET_STUDIES_CONTENT = {
@@ -143,6 +143,6 @@ export const PET_FAQ_CONTENT = {
 
 export const PET_CTA_CONTENT = {
   heading: "Need Additional PET-CT Reporting Support?",
-  body: "Request a consultation to discuss your PET-CT study volumes, reporting workflow, and nuclear medicine interpretation needs.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your PET-CT study volumes, reporting workflow, and nuclear medicine interpretation needs.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

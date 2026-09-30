@@ -142,7 +142,7 @@ export const US_HERO_CONTENT = {
   heading: "Ultrasound Reporting Services",
   subheading: "Ultrasound interpretation for routine, vascular, and emergency imaging.",
   body: "WE Healthcare supports ultrasound reporting requirements across hospitals, imaging centers, and healthcare networks, including routine studies, emergency imaging, and additional reporting capacity.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   /** Mirrors the subheading: routine, vascular, emergency. */
   modes: [
     { id: "routine", label: "Routine", image: US_IMAGES.abdominal },
@@ -237,6 +237,6 @@ export const US_FAQ_CONTENT = {
 
 export const US_CTA_CONTENT = {
   heading: "Need Additional Ultrasound Reporting Support?",
-  body: "Request a consultation to discuss your ultrasound study mix, reporting workflow, and capacity needs.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your ultrasound study mix, reporting workflow, and capacity needs.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

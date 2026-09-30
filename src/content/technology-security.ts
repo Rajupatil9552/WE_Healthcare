@@ -186,5 +186,5 @@ export const TECH_CTA = {
   heading: "Connect Your Imaging Workflow",
   body: "Have questions about PACS/RIS integration, image transfer, security, or technical requirements?",
   sub: "Let's discuss your workflow and integration requirements.",
-  cta: { label: "Request a Consultation", href: routes.contact },
+  cta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

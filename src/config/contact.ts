@@ -7,7 +7,7 @@ export const contactEmail = "sales@wehealthcare.us";
 
 export const contactPhones = [
    { label: "USA", display: "+1 202 810 6050", tel: "+12028106050" },
-  { label: "India", display: "+18883767812", tel: "+18883767812" },
+  { label: "India", display: "+1 888 376 7812", tel: "+18883767812" },
  
 ] as const;
 

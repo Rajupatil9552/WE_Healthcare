@@ -103,5 +103,5 @@ export const PARTNERSHIPS = {
 
 export const LEADERSHIP_CTA = {
   heading: "Let's Build a Better Radiology Workflow Together.",
-  cta: { label: "Request a Consultation", href: routes.contact },
+  cta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

@@ -78,7 +78,7 @@ export const CBCT_HERO_CONTENT = {
   heading: "CBCT Reporting Services",
   subheading: "Cone Beam CT reporting for dental, maxillofacial, and ENT imaging.",
   body: "WE Healthcare provides remote CBCT interpretation support for organizations using cone beam CT across dental, maxillofacial, ENT, and related imaging applications.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   /** Areas the hero rotation names (from the subheading). */
   areas: ["Dental", "Maxillofacial", "ENT"],
 } as const;
@@ -163,6 +163,6 @@ export const CBCT_FAQ_CONTENT = {
 
 export const CBCT_CTA_CONTENT = {
   heading: "Need CBCT Reporting Support?",
-  body: "Request a consultation to discuss your CBCT applications, study volumes, and reporting workflow.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your CBCT applications, study volumes, and reporting workflow.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

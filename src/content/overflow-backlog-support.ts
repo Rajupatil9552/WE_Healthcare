@@ -19,8 +19,8 @@ export const OVERFLOW_HERO_CONTENT = {
   subheading: "Add reporting capacity when your imaging volume increases.",
   body: "When imaging volume rises faster than available reporting capacity, worklists can grow and reporting pressure can increase. WE Healthcare provides flexible support for overflow, backlog, and temporary capacity needs.",
   primaryCta: {
-    label: "Request a Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
   },
   secondaryCta: {
     label: "See How It Works",
@@ -299,8 +299,8 @@ export const OVERFLOW_FINAL_CTA_CONTENT = {
   subheading:
     "Protect your clinical team from burnout and keep diagnostic turnaround on schedule with flexible overflow support.",
   primaryBtn: {
-    label: "Request a Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
   },
   secondaryBtn: {
     label: "Explore Coverage Options",

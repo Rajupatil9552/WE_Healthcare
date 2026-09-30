@@ -96,7 +96,7 @@ export const MRI_HERO_CONTENT = {
   heading: "MRI Reporting Services",
   subheading: "Subspecialty-matched MRI reporting for complex imaging workloads.",
   body: "WE Healthcare provides remote MRI interpretation designed to support organizations managing routine MRI volumes, subspecialty requirements, after-hours studies, and reporting capacity constraints.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   /** Labels on the central sagittal image, in % of the image. */
   points: [
     { x: 48, y: 26, label: "Brain", side: "right" },
@@ -219,6 +219,6 @@ export const MRI_FAQ_CONTENT = {
 
 export const MRI_CTA_CONTENT = {
   heading: "Need Additional MRI Reporting Support?",
-  body: "Request a consultation to discuss your MRI reporting workflow, study volumes, subspecialty requirements, and reporting capacity needs.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  body: "Request a demo to discuss your MRI reporting workflow, study volumes, subspecialty requirements, and reporting capacity needs.",
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
 } as const;

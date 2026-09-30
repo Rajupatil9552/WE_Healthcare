@@ -20,7 +20,7 @@ export function FAQCTASection() {
           "Seamless PACS/RIS interoperability with zero technologist retraining",
           "Customizable shifts for night, weekend, holiday, and surge support",
         ]}
-        primary={{ label: "Request a Consultation", href: "/contact" }}
+        primary={{ label: "Request a Demo", href: "/contact?inquiry=demo" }}
         image={{
           src: "/images/overnight-weekend-coverage/final-cta-radiology.webp",
           alt: "Clinical radiology reading room and hospital leadership consultation at dusk",

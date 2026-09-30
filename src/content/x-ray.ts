@@ -126,7 +126,7 @@ export const XRAY_HERO_CONTENT = {
   heading: "X-Ray Reporting Services",
   subheading: "High-volume X-ray reporting support for routine and time-sensitive imaging.",
   body: "WE Healthcare provides remote X-ray interpretation designed to support hospitals, imaging centers, emergency departments, and healthcare networks managing routine volume, after-hours coverage, or reporting backlogs.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
   secondaryCta: { label: "Studies we report", href: "#studies" },
   readouts: [
     { label: "Volume", value: "Routine & STAT" },
@@ -268,9 +268,9 @@ export const XRAY_FAQ_CONTENT = {
 } as const;
 
 export const XRAY_CTA_CONTENT = {
-  eyebrow: "Consultation",
-  heading: "Request a Consultation",
+  eyebrow: "Get Started",
+  heading: "Request a Demo",
   body: "Talk with WE Healthcare about X-ray reporting for routine volume, after-hours coverage, or reporting backlogs.",
-  primaryCta: { label: "Request a Consultation", href: routes.contact },
-  secondaryCta: { label: "Request a Demo", href: routes.requestDemo },
+  primaryCta: { label: "Request a Demo", href: routes.requestDemo },
+  secondaryCta: { label: "Contact Us", href: routes.contact },
 } as const;

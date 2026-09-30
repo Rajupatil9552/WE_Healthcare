@@ -22,8 +22,8 @@ export const OVERNIGHT_HERO_CONTENT = {
   subheading: "Dependable off-hours diagnostic reporting to support your team when regular shifts end.",
   body: "Extend reporting capacity across night shifts, weekends, and holidays. WE Healthcare provides seamless, subspecialty teleradiology coverage designed to protect on-site clinical teams from burnout, prevent case backlogs, and maintain rapid interpretations for acute and routine patient care.",
   primaryCta: {
-    label: "Request Coverage Consultation",
-    href: "/contact",
+    label: "Request a Demo",
+    href: "/contact?inquiry=demo",
   },
   secondaryCta: {
     label: "View Coverage Schedule",
@@ -288,8 +288,8 @@ export const FAQ_CTA_CONTENT = {
     heading: "Protect your clinical team with dependable off-hours coverage.",
     body: "Tell us about your organization's overnight, weekend, or holiday reporting needs. We will design a custom coverage model tailored to your schedule.",
     primaryBtn: {
-      label: "Request Coverage Consultation",
-      href: "/contact",
+      label: "Request a Demo",
+      href: "/contact?inquiry=demo",
     },
     secondaryBtn: {
       label: "Speak with Our Clinical Team",

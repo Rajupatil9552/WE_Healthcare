@@ -21,8 +21,8 @@ export function BlogCta() {
           <p className="mx-auto mt-6 max-w-[54ch] text-lead text-slate-300">
             Talk to us about coverage, reporting volume, and how a support model could fit your organization.
           </p>
-          <Link href={routes.contact} className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group mt-10")}>
-            <span>Request a Consultation</span>
+          <Link href={routes.requestDemo} className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group mt-10")}>
+            <span>Request a Demo</span>
             <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

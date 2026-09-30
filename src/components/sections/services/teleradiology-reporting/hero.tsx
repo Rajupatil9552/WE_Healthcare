@@ -44,8 +44,8 @@ export function TeleradiologyHero() {
               WE Healthcare provides teleradiology reporting support for hospitals, imaging centers, emergency departments, and healthcare networks across the United States. Extend reporting capacity for routine, overnight, weekend, overflow, and time-sensitive imaging needs.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link href="/contact" className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}>
-                <span>Request a Consultation</span>
+              <Link href="/contact?inquiry=demo" className={cn(buttonVariants({ variant: "brand", size: "lg" }), "group")}>
+                <span>Request a Demo</span>
                 <ArrowRight size={16} weight="bold" aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="#workflow" className={buttonVariants({ variant: "outline", size: "lg" })}>
