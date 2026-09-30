@@ -20,7 +20,7 @@ export const services: ContentEntry[] = [
   {
     slug: "emergency-stat-reporting",
     title: "Emergency / STAT Reporting",
-    summary: "Sub-30 min critical turnaround times.",
+    summary: "Priority reads for time-sensitive cases, 24x7.",
   },
   {
     slug: "stroke-imaging-protocol",
